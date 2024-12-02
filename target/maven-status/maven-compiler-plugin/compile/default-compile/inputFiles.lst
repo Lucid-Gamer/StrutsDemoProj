@@ -1,1 +1,7 @@
+/home/credentek/All_Java_WS/Practice_WS/StrutsProject/src/main/java/com/apptrove/ledgerly/admin/models/Role.java
+/home/credentek/All_Java_WS/Practice_WS/StrutsProject/src/main/java/com/apptrove/ledgerly/admin/models/User.java
+/home/credentek/All_Java_WS/Practice_WS/StrutsProject/src/main/java/com/apptrove/ledgerly/admin/payload/RegisterModel.java
+/home/credentek/All_Java_WS/Practice_WS/StrutsProject/src/main/java/com/apptrove/ledgerly/database/utils/DatabaseUtils.java
+/home/credentek/All_Java_WS/Practice_WS/StrutsProject/src/main/java/com/apptrove/ledgerly/register/dao/UserDao.java
+/home/credentek/All_Java_WS/Practice_WS/StrutsProject/src/main/java/com/apptrove/ledgerly/register/dao/UserDaoImplementation.java
 /home/credentek/All_Java_WS/Practice_WS/StrutsProject/src/main/java/com/example/actions/WelcomeAction.java
