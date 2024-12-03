@@ -14,5 +14,7 @@
 		<property name="format_sql">true</property>
 		<mapping class="com.apptrove.ledgerly.admin.models.User"/>
 		<mapping class="com.apptrove.ledgerly.admin.models.Role"/>
+		<mapping class="com.apptrove.ledgerly.admin.models.BUILDING_MST"/>
+		<mapping class="com.apptrove.ledgerly.admin.models.APARTMENT_MST"/>
 	</session-factory>
 </hibernate-configuration>

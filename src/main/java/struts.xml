@@ -4,9 +4,19 @@
     "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
-    <package name="default" extends="struts-default">
+    <package name="default" extends="struts-default,json-default">
         <action name="welcome" class="com.example.actions.WelcomeAction">
             <result>/welcome.jsp</result>
+        </action>
+        <action name="getAllRoles" method="getAllRoles" class="com.apptrove.ledgerly.register.action.RegisterAction">
+        	<result name="success" type="json">
+        		<param name="root">roleList</param>
+        	</result>
+        </action>
+        <action name="getAllBuildings" method="getAllBuildings" class="com.apptrove.ledgerly.register.action.RegisterAction">
+        	<result name="success" type="json">
+        		<param name="root">bldngList</param>
+        	</result>
         </action>
     </package>
 </struts>
