@@ -1,7 +1,12 @@
 com/apptrove/ledgerly/admin/models/User.class
 com/apptrove/ledgerly/register/dao/UserDao.class
 com/apptrove/ledgerly/admin/payload/RegisterModel.class
+com/apptrove/ledgerly/register/service/RegisterService.class
 com/apptrove/ledgerly/admin/models/Role.class
 com/example/actions/WelcomeAction.class
+com/apptrove/ledgerly/register/service/RegisterServiceImpl.class
+com/apptrove/ledgerly/register/action/RegisterAction.class
 com/apptrove/ledgerly/database/utils/DatabaseUtils.class
+com/apptrove/ledgerly/admin/utils/CommonUtils.class
 com/apptrove/ledgerly/register/dao/UserDaoImplementation.class
+com/apptrove/ledgerly/admin/payload/RoleDTO.class
