@@ -40,7 +40,7 @@ public class APARTMENT_MST implements Serializable{
 	private Integer authorId;
 	
 	@Column(name = "author_date")
-	private Integer authorDate;
+	private Date authorDate;
 	
 	@Column(name = "is_active")
 	private boolean isActive;
@@ -50,7 +50,7 @@ public class APARTMENT_MST implements Serializable{
 	}
 
 	public APARTMENT_MST(Integer aptmntId, Integer bldngId, String aptmntNo, String aptmntDesc, Integer makerId,
-			Date makerDate, Integer authorId, Integer authorDate, boolean isActive) {
+			Date makerDate, Integer authorId, Date authorDate, boolean isActive) {
 		super();
 		this.aptmntId = aptmntId;
 		this.bldngId = bldngId;
@@ -119,11 +119,11 @@ public class APARTMENT_MST implements Serializable{
 		this.authorId = authorId;
 	}
 
-	public Integer getAuthorDate() {
+	public Date getAuthorDate() {
 		return authorDate;
 	}
 
-	public void setAuthorDate(Integer authorDate) {
+	public void setAuthorDate(Date authorDate) {
 		this.authorDate = authorDate;
 	}
 

@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import com.apptrove.ledgerly.admin.models.APARTMENT_MST;
 import com.apptrove.ledgerly.admin.models.BUILDING_MST;
 import com.apptrove.ledgerly.admin.models.Role;
 import com.apptrove.ledgerly.admin.models.User;
@@ -67,6 +68,41 @@ public class RegisterDaoImpl implements RegisterDao {
 			e.printStackTrace();
 		}
 		return bldngList;
+	}
+
+	@Override
+	public List<APARTMENT_MST> getApartmentByBuilding(Integer bldngId) {
+		List<APARTMENT_MST> aptList = new ArrayList<APARTMENT_MST>();
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			logger.info("Inside getApartmentByBuilding method:::::::::::::::::::::::::::::::::::::::::::");
+			String hql = "FROM APARTMENT_MST WHERE bldngId = :bldngId";
+	        Query<APARTMENT_MST> query = session.createQuery(hql, APARTMENT_MST.class);
+	        query.setParameter("bldngId", bldngId);
+			aptList = query.getResultList();
+			logger.info("Found List of aptmnts: "+aptList.size());
+			logger.info("Exiting getApartmentByBuilding method:::::::::::::::::::::::::::::::::::::::::::");
+		} catch (Exception e) {
+			logger.info("An exception occurred: "+e.getMessage());
+			e.printStackTrace();
+		}
+		return aptList;
+	}
+
+	@Override
+	public boolean checkUsernameValidity(String username) {
+		boolean flag = false;
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			logger.info("Inside checkUsernameValidity method:::::::::::::::::::::::::::::::::::::::::::");
+			String hql = "SELECT CASE WHEN COUNT(*) > 0 THEN FALSE ELSE TRUE END FROM User WHERE username= :username";
+			Query<?> query = session.createQuery(hql);
+			query.setParameter("username",username);
+			flag = (Boolean)query.getSingleResult();
+			logger.info("Exiting checkUsernameValidity method:::::::::::::::::::::::::::::::::::::::::::");
+		} catch (Exception e) {
+			logger.info("An exception occurred: "+e.getMessage());
+			e.printStackTrace();
+		}
+		return flag;
 	}
 	
 	

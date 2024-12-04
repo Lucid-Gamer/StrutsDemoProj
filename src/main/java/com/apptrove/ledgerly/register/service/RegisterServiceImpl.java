@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.apptrove.ledgerly.admin.models.APARTMENT_MST;
 import com.apptrove.ledgerly.admin.models.BUILDING_MST;
 import com.apptrove.ledgerly.admin.models.User;
 import com.apptrove.ledgerly.admin.payload.RoleDTO;
@@ -41,6 +42,16 @@ public class RegisterServiceImpl implements RegisterService{
 	@Override
 	public List<BUILDING_MST> getAllBuildings() {
 		return this.registerDaoImpl.getAllBuidings();
+	}
+
+	@Override
+	public List<APARTMENT_MST> getAptmntByBuilding(Integer bldngId) {
+		return registerDaoImpl.getApartmentByBuilding(bldngId);
+	}
+
+	@Override
+	public boolean isValidUsername(String username) {
+		return registerDaoImpl.checkUsernameValidity(username);
 	}
 
 }
