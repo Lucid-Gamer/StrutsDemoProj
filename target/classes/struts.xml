@@ -18,5 +18,24 @@
         		<param name="root">bldngList</param>
         	</result>
         </action>
+        <action name="getAptmntByBldng" method="getAptmntByBldng" class="com.apptrove.ledgerly.register.action.RegisterAction">
+        	<result name="success" type="json">
+        		<param name="root">aptmntList</param>
+        	</result>
+        </action>
+        <action name="checkUsernameValidity" method="checkUsernameValidity" class="com.apptrove.ledgerly.register.action.RegisterAction">
+        	<result name="success" type="json">
+        		<param name="root">response</param>
+        		<param name="excludeNullProperties">true</param> 
+        	</result>
+        	<result name="error" type="json">
+        		<param name="root">response</param>
+        		<param name="excludeNullProperties">true</param> 
+        	</result>
+        	<result name="input" type="json">
+        		<param name="root">response</param>
+        		<param name="excludeNullProperties">true</param> 
+        	</result>
+        </action>
     </package>
 </struts>
