@@ -4,10 +4,7 @@
     "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
-    <package name="default" extends="struts-default,json-default">
-        <action name="welcome" class="com.example.actions.WelcomeAction">
-            <result>/welcome.jsp</result>
-        </action>
+    <package name="register" namespace="/register" extends="struts-default,json-default">
         <action name="getAllRoles" method="getAllRoles" class="com.apptrove.ledgerly.register.action.RegisterAction">
         	<result name="success" type="json">
         		<param name="root">roleList</param>
@@ -36,6 +33,10 @@
         		<param name="root">response</param>
         		<param name="excludeNullProperties">true</param> 
         	</result>
+        </action>
+        <action name="registerUserAlt" method="registerUser" class="com.apptrove.ledgerly.register.action.RegisterAction">
+        	<result name="success" type="redirectAction">welcome.jsp</result>
+        	<result name="error">register.jsp</result>
         </action>
     </package>
 </struts>

@@ -93,7 +93,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$.ajax({
-			url: "getAllRoles",
+			url: "register/getAllRoles",
 			method: "GET",
 			success: function(response) {
 				let roleList = response;
@@ -120,7 +120,7 @@
 		});
 		
 		$.ajax({
-		    url: "getAllBuildings",
+		    url: "register/getAllBuildings",
 		    method: "GET",
 		    success: function(response) {
 		        let bldngList = response;
@@ -148,7 +148,7 @@
 			var selectedBldngId = $(this).val();
 			if(selectedBldngId) {
 				$.ajax({
-					url : "getAptmntByBldng",
+					url : "register/getAptmntByBldng",
 					method : "GET",
 					data: { "selectedBldngId" : selectedBldngId },
 					success: function(response) {
@@ -180,7 +180,7 @@
             var username = $('#username').val();
             if(username.length > 0) {
                 $.ajax({
-                    url: 'checkUsernameValidity',
+                    url: 'register/checkUsernameValidity',
                     method: 'GET',
                     data: {'username': username}, 
                     success: function(response) {
@@ -197,6 +197,33 @@
                     $('#usernameStatus').text('');
             }
         });
+		
+		$('#registerFormSubmit').click(function() {
+			var formData = {
+				"registerModel.user.firstName": $("#firstName").val(),
+				"registerModel.user.lastName": $("#lastName").val(),
+				"registerModel.user.username": $("#username").val(),
+				"registerModel.user.password": $("#password").val(),
+				"registerModel.user.apartmentId": $("#aptmntSelect").val(),
+				"registerModel.user.emailId": $("#emailId").val(),
+				"registerModel.user.contactNum": $("#contactNum").val(),
+				"registerModel.roleId":$("#roleSelect").val()
+			};
+
+			$.ajax({
+				url: "register/registerUserAlt",
+				contentType: "application/json",
+				type: 'POST',
+				data: formData,
+				success: function(response) {
+					/* alert("Registration successful!"); */
+					debugger;
+                },
+                error: function(xhr, status, error) {
+                    alert("An error occurred: " + error);
+                }
+			});
+		});
 	});
 </script>
 <script>
@@ -211,13 +238,45 @@
 			if(passwordInput.value === confirmPasswordInput.value) {
 				confirmPasswordInput.classList.add('valid');
 				passwordInput.classList.add('valid');
-				console.log("Password Match");
 			} else {
 				confirmPasswordInput.classList.add('invalid');
 				passwordInput.classList.add('invalid');
-				console.log("Password mismatch");
 			}
 		});
+		
+		document.getElementById('registerForm').addEventListener('submit', function(event) {
+			event.preventDefault();
+
+			handleRegisterUser();
+		})
+
+		function handleRegisterUser() {
+			const formData = {
+				"registerModal.user.firstName": document.getElementById("firstName").value,
+				"registerModel.user.lastName": document.getElementById("lastName").value,
+				"registerModel.user.username": document.getElementById("username").value,
+				"registerModel.user.password": document.getElementById("password").value,
+				"registerModel.user.apartmentId": document.getElementById("aptmntSelect").value,
+				"registerModel.user.emailId": document.getElementById("emailId").value,
+				"registerModel.user.contactNum": document.getElementById("contactNum").value,
+				"registerModel.roleId":document.getElementById("roleSelect").value
+			};
+
+			fetch('register/registerUserAlt', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(formData)
+			})
+			.then(response => response.json())
+			.then(data => {
+				alert("Registration Succesfull");
+			})
+			.catch(error => {
+				alert("An error occurred: "+error.message);
+			})
+		}
 	});
 </script>
 	<div class="container custom-registration-container">
@@ -226,7 +285,7 @@
 				<h1>Registration Form</h1>
 			</div>
 			<div class="card-body custom-register-card-body">
-				<form>
+				<form id="registerForm" action="javascript:void(0);">
                     <!-- Tab navigation -->
                     <ul class="nav nav-tabs custom-register-nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item custom-register-nav-item">
@@ -324,8 +383,15 @@
                         			<input type="password" id="confirmPassword" class="form-control custom-register-form-control reg-user-cred-confirm-password-input" placeholder="Confirm Password">
                         		</div>
                         	</div>
+                        	<div class="btn-grp text-center">
+                        		<button class="btn btn-outline-success" id="FormSubmitButton" type="submit" >Submit</button>
+                        		<button class="btn btn-outline-danger" type="reset">Cancel</button>
+                        	</div>
                         </div>
+                        
                          <!-- End of Credential Information Tab -->
+                        
+                        
                         
                     </div>
                 </form>
