@@ -198,7 +198,7 @@
             }
         });
 		
-		$('#registerFormSubmit').click(function() {
+	  /* $('#registerFormSubmit').click(function() {
 			var formData = {
 				"registerModel.user.firstName": $("#firstName").val(),
 				"registerModel.user.lastName": $("#lastName").val(),
@@ -216,14 +216,14 @@
 				type: 'POST',
 				data: formData,
 				success: function(response) {
-					/* alert("Registration successful!"); */
+					alert("Registration successful!"); 
 					debugger;
                 },
                 error: function(xhr, status, error) {
                     alert("An error occurred: " + error);
                 }
 			});
-		});
+		});*/ 
 	});
 </script>
 <script>
