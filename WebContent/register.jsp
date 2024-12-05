@@ -66,6 +66,27 @@
 .custom-register-username-check-button {
 	margin-top: 17%;
 }
+
+
+.reg-user-cred-password-input.valid{
+	border: 3px solid green;
+}
+
+.reg-user-cred-password-input.invalid{
+	border: 3px solid red;
+}
+
+.reg-user-cred-confirm-password-input.valid{
+	border: 3px solid green;
+}
+
+.reg-user-cred-confirm-password-input.invalid{
+	border: 3px solid red;
+}
+
+.custom-register-nav-item {
+	margin-left: 2px;
+}
 </style>
 </head>
 <body>
@@ -178,6 +199,27 @@
         });
 	});
 </script>
+<script>
+	document.addEventListener('DOMContentLoaded',function() {
+		const passwordInput = document.getElementById('password');
+		const confirmPasswordInput = document.getElementById('confirmPassword');
+		
+		confirmPasswordInput.addEventListener('input', function() {
+			confirmPasswordInput.classList.remove('invalid','valid');
+			passwordInput.classList.remove('invalid','valid');
+			
+			if(passwordInput.value === confirmPasswordInput.value) {
+				confirmPasswordInput.classList.add('valid');
+				passwordInput.classList.add('valid');
+				console.log("Password Match");
+			} else {
+				confirmPasswordInput.classList.add('invalid');
+				passwordInput.classList.add('invalid');
+				console.log("Password mismatch");
+			}
+		});
+	});
+</script>
 	<div class="container custom-registration-container">
 		<div class="card custom-register-card">
 			<div class="card-header custom-register-card-header text-center">
@@ -187,13 +229,13 @@
 				<form>
                     <!-- Tab navigation -->
                     <ul class="nav nav-tabs custom-register-nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
+                        <li class="nav-item custom-register-nav-item">
                             <a class="nav-link active" id="perInfoTag" data-toggle="tab" href="#per-info" role="tab" aria-controls="per-info" aria-selected="true">Personal Information</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item custom-register-nav-item">
                             <a class="nav-link" id="contactTag" data-toggle="tab" href="#con-info" role="tab" aria-controls="con-info" aria-selected="false">Contact Information</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item custom-register-nav-item">
                         	<a class="nav-link" id="userCredentialTab" data-toggle="tab" href="#user-info" role="tab" aria-controls="user-info" aria-selected="false">User Credentials</a>
                         </li>
                     </ul>
@@ -261,7 +303,7 @@
                         <!-- End of Contact Information Tab -->
                         
                         <!-- User Credential Information Tab -->
-                        <div class="tab-pane fade" id="user-info" role="tabpanel" aria-labelledby="userCredentialTab">
+                        <div class="tab-pane fade register-user-credential-tab-form-div" id="user-info" role="tabpanel" aria-labelledby="userCredentialTab">
                         	<div class="row custom-personal-register-row">
                         		<div class="col-6">
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Username</label>
@@ -272,14 +314,14 @@
                         			<button class="btn btn-outline-primary custom-register-username-check-button" id="checkUsername" type="button">Check Username</button>
                         		</div>
                         	</div>
-                        	<div class="row custom-personal-register-row">
-                        		<div class="col-6">
+                        	<div class="row custom-personal-register-row register-user-cred-pass-div">
+                        		<div class="col-6 reg-user-cred-password-div">
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
-                        			<input type="password" name="password" id="password" class="form-control custom-register-form-control" placeholder="Enter Password">
+                        			<input type="password" name="password" id="password" class="form-control custom-register-form-control reg-user-cred-password-input" placeholder="Enter Password">
                         		</div>
-                        		<div class="col-6">
-                        			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
-                        			<input type="password" id="confirmPassword" class="form-control custom-register-form-control" placeholder="Confirm Password">
+                        		<div class="col-6 reg-user-cred-confirm-password-div">
+                        			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Confirm Password</label>
+                        			<input type="password" id="confirmPassword" class="form-control custom-register-form-control reg-user-cred-confirm-password-input" placeholder="Confirm Password">
                         		</div>
                         	</div>
                         </div>

@@ -52,6 +52,20 @@
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
+
+.custom-personal-register-row {
+	margin-bottom: 3%;
+}
+
+.custom-register-form-select {
+	width: 100%;
+	height: 50%;
+	border: none;
+}
+
+.custom-register-username-check-button {
+	margin-top: 17%;
+}
 </style>
 </head>
 <body>
@@ -64,8 +78,14 @@
 				let roleList = response;
 				let roleSelect = $('#roleSelect');
 				roleSelect.empty();
+				roleSelect.append($('<option>', {
+					value: '',
+					text: "Select Role",
+					disabled: true,
+					selected: true
+				}))
 				$.each(roleList,function(index,role) {
-					if (role.roleName !== 'ROLE_ADMIN') {
+					if (role.roleName !== 'ROLE_ADMIN' && role.roleName !== 'ROLE_MAKER' && role.roleName !== 'ROLE_AUTHOR') {
 						roleSelect.append($('<option>',{
 						value: role.roleId,
 						text: role.roleName.substring(5)
@@ -77,6 +97,85 @@
 					console.error("Error fetching roles: "+error);
 				}
 		});
+		
+		$.ajax({
+		    url: "getAllBuildings",
+		    method: "GET",
+		    success: function(response) {
+		        let bldngList = response;
+		        let bldngSelect = $('#bldngSelect');
+		        bldngSelect.empty();
+		        bldngSelect.append($('<option>', {
+		        	value:'',
+		        	text: 'Select Building',
+		        	disabled: true,
+		        	selected: true
+		        }))
+		        $.each(bldngList, function(index, bldng) {
+		            bldngSelect.append($('<option>', {
+		                value: bldng.bldngId,
+		                text: bldng.bldngName
+		            }));
+		        });
+		    },
+		    error: function(xhr, status, error) {
+		        console.error("Error fetching buildings: " + error);
+		    }
+		});
+		
+		$('#bldngSelect').change(function() {
+			var selectedBldngId = $(this).val();
+			if(selectedBldngId) {
+				$.ajax({
+					url : "getAptmntByBldng",
+					method : "GET",
+					data: { "selectedBldngId" : selectedBldngId },
+					success: function(response) {
+						console.log(response);
+						let aptmntList = response;
+						let aptmntSelect = $('#aptmntSelect');
+						aptmntSelect.empty();
+						aptmntSelect.append($('<option>', {
+		                    value: '',
+		                    text: "Select Apartment",
+		                    disabled: true, 
+		                    selected: true  
+		                }));
+						$.each(aptmntList,function(index,aptmnt) {
+							aptmntSelect.append($('<option>',{
+								value: aptmnt.aptmntId,
+								text: aptmnt.aptmntNo
+							}));
+						});
+					},
+					error: function(xhr,status,error) {
+						console.error("Error fetching apartments: "+error);
+					}
+				})
+			}
+		});
+		
+		$('#checkUsername').click(function() {
+            var username = $('#username').val();
+            if(username.length > 0) {
+                $.ajax({
+                    url: 'checkUsernameValidity',
+                    method: 'GET',
+                    data: {'username': username}, 
+                    success: function(response) {
+                        if (response.flag) {
+                            $('#usernameStatus').text(response.message).css('color','green');
+                        } else {
+                            $('#usernameStatus').text(response.message).css('color','red');
+                        }
+                    },error: function(xhr, status, error) {
+                            console.error("Error checking username: ", error);
+                    }
+                });
+            } else {
+                    $('#usernameStatus').text('');
+            }
+        });
 	});
 </script>
 	<div class="container custom-registration-container">
@@ -94,6 +193,9 @@
                         <li class="nav-item">
                             <a class="nav-link" id="contactTag" data-toggle="tab" href="#con-info" role="tab" aria-controls="con-info" aria-selected="false">Contact Information</a>
                         </li>
+                        <li class="nav-item">
+                        	<a class="nav-link" id="userCredentialTab" data-toggle="tab" href="#user-info" role="tab" aria-controls="user-info" aria-selected="false">User Credentials</a>
+                        </li>
                     </ul>
 
                     <!-- Tab content -->
@@ -101,7 +203,7 @@
       
                         <!-- Personal Information Tab -->
                         <div class="tab-pane fade show active" id="per-info" role="tabpanel" aria-labelledby="perInfoTag">
-                            <div class="row">
+                            <div class="row custom-personal-register-row">
                             	<div class="col-6">
                                 	<label class="form-label custom-register-form-label">First Name</label>
                                 	<input class="form-control custom-register-form-control" type="text" name="firstName" id="firstName" placeholder="First Name">
@@ -111,10 +213,24 @@
                             		<input class="form-control custom-register-form-control" type="text" name="lastName" id="lastName" placeholder="Last Name">
                             	</div>
                             </div>
-                            <div class="row">
-                            		<div>
-                            			<select id="roleSelect">Role</select>
-                            		</div>
+                            <div class="row custom-personal-register-row">
+                            	<div class="col-6">
+                            		<label class="form-label" >New Registration for </label>
+                            		<select id="roleSelect" class="form-select custom-register-form-select" aria-label="Default select example"></select>
+                            	</div>
+                            </div>
+                            <div class="row custom-personal-register-row">
+                            	<div class="col-6">
+                            		<label>Building</label>
+                            		<select id="bldngSelect" class="form-select custom-register-form-select" aria-label="Default select example"></select>
+                            	</div>
+                            	<div class="col-6">
+                            		<label>Apartment</label>
+                            		<select id="aptmntSelect" class="form-select custom-register-form-select" aria-label="Default select example"></select>
+                            	</div>
+                            </div>
+                            <div class="row custom-personal-register-row">
+                            	
                             </div>
                         </div>
                         <!-- End of Personal Information Tab -->
@@ -143,6 +259,32 @@
                             </div>
                         </div>
                         <!-- End of Contact Information Tab -->
+                        
+                        <!-- User Credential Information Tab -->
+                        <div class="tab-pane fade" id="user-info" role="tabpanel" aria-labelledby="userCredentialTab">
+                        	<div class="row custom-personal-register-row">
+                        		<div class="col-6">
+                        			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Username</label>
+                        			<input class="form-control custom-register-form-control" type="text" name="username" id="username" placeholder="Username">
+                        			<span id="usernameStatus"></span> 
+                        		</div>
+                        		<div class="col-3 custom-register-username-check-button-div">
+                        			<button class="btn btn-outline-primary custom-register-username-check-button" id="checkUsername" type="button">Check Username</button>
+                        		</div>
+                        	</div>
+                        	<div class="row custom-personal-register-row">
+                        		<div class="col-6">
+                        			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
+                        			<input type="password" name="password" id="password" class="form-control custom-register-form-control" placeholder="Enter Password">
+                        		</div>
+                        		<div class="col-6">
+                        			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
+                        			<input type="password" id="confirmPassword" class="form-control custom-register-form-control" placeholder="Confirm Password">
+                        		</div>
+                        	</div>
+                        </div>
+                         <!-- End of Credential Information Tab -->
+                        
                     </div>
                 </form>
 			</div>
