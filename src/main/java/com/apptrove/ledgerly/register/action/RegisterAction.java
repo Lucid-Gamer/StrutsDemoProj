@@ -1,7 +1,11 @@
 package com.apptrove.ledgerly.register.action;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.HashMap;
+=======
+import java.util.Arrays;
+>>>>>>> 7ad1ae2 (Commit)
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +15,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+<<<<<<< HEAD
 import org.json.JSONObject;
+=======
+import org.apache.struts2.dispatcher.Parameter;
+>>>>>>> 7ad1ae2 (Commit)
 
 import com.apptrove.ledgerly.admin.models.APARTMENT_MST;
 import com.apptrove.ledgerly.admin.models.BUILDING_MST;
@@ -113,6 +121,7 @@ public class RegisterAction extends ActionSupport{
 	public String registerUser() {
 		try {
 			logger.info("Entering registerUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+<<<<<<< HEAD
 			HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
 			HttpSession session = httpRequest.getSession();
 			User user = registerService.registerUser(registerModel.getUser(), registerModel.getRoleId());
@@ -128,6 +137,20 @@ public class RegisterAction extends ActionSupport{
 				respObj.put("message", "Registration Failed!!");
 				logger.info("User Registration Failed!!!!!::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
 				logger.info("Exiting registerUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+=======
+			Map<String, Parameter> params = ActionContext.getContext().getParameters();
+			params.forEach((key, value) -> System.out.println(key + ": " + (value.toString())));
+			if (registerModel != null && registerModel.getUser() != null) {
+				HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+				HttpSession session = httpRequest.getSession();
+				
+				User user = registerService.registerUser(registerModel.getUser(), registerModel.getRoleId());
+				session.setAttribute("user", user);
+				logger.info("Exiting registerUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+				return SUCCESS;
+			} else {
+				addActionError("RegisterModel/User is null");
+>>>>>>> 7ad1ae2 (Commit)
 				return ERROR;
 			}
 		} catch (Exception e) {
