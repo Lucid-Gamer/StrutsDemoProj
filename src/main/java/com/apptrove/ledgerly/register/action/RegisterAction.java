@@ -1,7 +1,9 @@
 package com.apptrove.ledgerly.register.action;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.dispatcher.Parameter;
 
 import com.apptrove.ledgerly.admin.models.APARTMENT_MST;
 import com.apptrove.ledgerly.admin.models.BUILDING_MST;
@@ -108,12 +111,20 @@ public class RegisterAction extends ActionSupport{
 	public String registerUser() {
 		try {
 			logger.info("Entering registerUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-			HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
-			HttpSession session = httpRequest.getSession();
-			User user = registerService.registerUser(registerModel.getUser(), registerModel.getRoleId());
-			session.setAttribute("user", user);
-			logger.info("Exiting registerUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-			return SUCCESS;
+			Map<String, Parameter> params = ActionContext.getContext().getParameters();
+			params.forEach((key, value) -> System.out.println(key + ": " + (value.toString())));
+			if (registerModel != null && registerModel.getUser() != null) {
+				HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+				HttpSession session = httpRequest.getSession();
+				
+				User user = registerService.registerUser(registerModel.getUser(), registerModel.getRoleId());
+				session.setAttribute("user", user);
+				logger.info("Exiting registerUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+				return SUCCESS;
+			} else {
+				addActionError("RegisterModel/User is null");
+				return ERROR;
+			}
 		} catch (Exception e) {
 			logger.error("An error occurred: "+e.getMessage());
 			e.printStackTrace();

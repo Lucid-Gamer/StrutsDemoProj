@@ -198,7 +198,7 @@
             }
         });
 		
-		$('#registerFormSubmit').click(function() {
+	  /* $('#registerFormSubmit').click(function() {
 			var formData = {
 				"registerModel.user.firstName": $("#firstName").val(),
 				"registerModel.user.lastName": $("#lastName").val(),
@@ -212,17 +212,18 @@
 
 			$.ajax({
 				url: "register/registerUserAlt",
+				contentType: "application/json",
 				type: 'POST',
 				data: formData,
 				success: function(response) {
-					/* alert("Registration successful!"); */
+					alert("Registration successful!"); 
 					debugger;
                 },
                 error: function(xhr, status, error) {
                     alert("An error occurred: " + error);
                 }
 			});
-		});
+		});*/ 
 	});
 </script>
 <script>
@@ -242,6 +243,41 @@
 				passwordInput.classList.add('invalid');
 			}
 		});
+		
+		document.getElementById('registerForm').addEventListener('submit', function(event) {
+			event.preventDefault();
+
+			handleRegisterUser();
+		})
+
+		function handleRegisterUser() {
+			const formData = {
+				"registerModel.user.firstName": document.getElementById("firstName").value,
+				"registerModel.user.lastName": document.getElementById("lastName").value,
+				"registerModel.user.username": document.getElementById("username").value,
+				"registerModel.user.password": document.getElementById("password").value,
+				"registerModel.user.apartmentId": document.getElementById("aptmntSelect").value,
+				"registerModel.user.emailId": document.getElementById("emailId").value,
+				"registerModel.user.contactNum": document.getElementById("contactNum").value,
+				"registerModel.roleId":document.getElementById("roleSelect").value
+			};
+
+			fetch('register/registerUserAlt', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json'
+				},
+				body: JSON.stringify(formData)
+			})
+			.then(response => response.json())
+			.then(data => {
+				alert("Registration Succesfull");
+			})
+			.catch(error => {
+				alert("An error occurred: "+error.message);
+			});
+		}
 	});
 </script>
 	<div class="container custom-registration-container">
@@ -250,7 +286,7 @@
 				<h1>Registration Form</h1>
 			</div>
 			<div class="card-body custom-register-card-body">
-				<form>
+				<form id="registerForm" action="javascript:void(0);">
                     <!-- Tab navigation -->
                     <ul class="nav nav-tabs custom-register-nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item custom-register-nav-item">
@@ -272,11 +308,11 @@
                             <div class="row custom-personal-register-row">
                             	<div class="col-6">
                                 	<label class="form-label custom-register-form-label">First Name</label>
-                                	<input class="form-control custom-register-form-control" type="text" name="firstName" id="firstName" placeholder="First Name">
+                                	<input class="form-control custom-register-form-control" type="text" autocomplete="off" name="firstName" id="firstName" placeholder="First Name">
                             	</div>
                             	<div class="col-6">
                             		<label class="form-label custom-register-form-label">Last Name</label>
-                            		<input class="form-control custom-register-form-control" type="text" name="lastName" id="lastName" placeholder="Last Name">
+                            		<input class="form-control custom-register-form-control" type="text" autocomplete="off" name="lastName" id="lastName" placeholder="Last Name">
                             	</div>
                             </div>
                             <div class="row custom-personal-register-row">
@@ -306,21 +342,21 @@
                             <div class="row custom-contact-register-row">
                             	<div class="col-6">
                                 	<label class="form-label custom-register-form-label" for="contactNum" id="contactLabel">Contact Number</label>
-                                	<input class="form-control custom-register-form-control" type="text" name="contactNum" id="contactNum" placeholder="Contact Number">
+                                	<input class="form-control custom-register-form-control" type="text"  autocomplete="off" name="contactNum" id="contactNum" placeholder="Contact Number">
                             	</div>
                             	<div class="col-6">
                                 	<label class="form-label custom-register-form-label" for="altContactNum" id="altContactLabel">Alternate Contact Number (Optional)</label>
-                                	<input class="form-control custom-register-form-control" type="text" name="altContactNum" id="altContactNum" placeholder="Alternate Contact Number">
+                                	<input class="form-control custom-register-form-control" type="text" autocomplete="off" name="altContactNum" id="altContactNum" placeholder="Alternate Contact Number">
                             	</div>
                             </div>
                             <div class="row custom-contact-register-row">
                             	<div class="col-6">
                             		<label class="form-label custom-register-form-label" for="emailId" id="emailLabel">Email Id</label>
-                            		<input class="form-control custom-register-form-control" type="email" name="emailId" id="emailId" placeholder="Email Id">
+                            		<input class="form-control custom-register-form-control" type="email" autocomplete="off" name="emailId" id="emailId" placeholder="Email Id">
                             	</div>
                             	<div class="col-6">
                             		<label class="form-label custom-register-form-label" for="altEmailId" id="altEmailLabel">Alternate Email Id (Optional)</label>
-                            		<input class="form-control custom-register-form-control" type="email" name="altEmailId" id="altEmailId" placeholder="Alternate Email Id">
+                            		<input class="form-control custom-register-form-control" type="email" autocomplete="off" name="altEmailId" id="altEmailId" placeholder="Alternate Email Id">
                             	</div>
                             </div>
                         </div>
@@ -331,7 +367,7 @@
                         	<div class="row custom-personal-register-row">
                         		<div class="col-6">
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Username</label>
-                        			<input class="form-control custom-register-form-control" type="text" name="username" id="username" placeholder="Username">
+                        			<input class="form-control custom-register-form-control" type="text" autocomplete="off" name="username" id="username" placeholder="Username">
                         			<span id="usernameStatus"></span> 
                         		</div>
                         		<div class="col-3 custom-register-username-check-button-div">
@@ -341,15 +377,15 @@
                         	<div class="row custom-personal-register-row register-user-cred-pass-div">
                         		<div class="col-6 reg-user-cred-password-div">
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
-                        			<input type="password" name="password" id="password" class="form-control custom-register-form-control reg-user-cred-password-input" placeholder="Enter Password">
+                        			<input type="password" name="password" id="password" autocomplete="off" class="form-control custom-register-form-control reg-user-cred-password-input" placeholder="Enter Password">
                         		</div>
                         		<div class="col-6 reg-user-cred-confirm-password-div">
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Confirm Password</label>
-                        			<input type="password" id="confirmPassword" class="form-control custom-register-form-control reg-user-cred-confirm-password-input" placeholder="Confirm Password">
+                        			<input type="password" id="confirmPassword" autocomplete="off" class="form-control custom-register-form-control reg-user-cred-confirm-password-input" placeholder="Confirm Password">
                         		</div>
                         	</div>
                         	<div class="btn-grp text-center">
-                        		<button class="btn btn-outline-success" id="registerFormSubmit" type="submit">Submit</button>
+                        		<button class="btn btn-outline-success" id="FormSubmitButton" type="submit" >Submit</button>
                         		<button class="btn btn-outline-danger" type="reset">Cancel</button>
                         	</div>
                         </div>
