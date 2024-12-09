@@ -1,7 +1,11 @@
 package com.apptrove.ledgerly.register.action;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Arrays;
+=======
+import java.util.HashMap;
+>>>>>>> efa0aa8 (Commit)
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +15,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+<<<<<<< HEAD
 import org.apache.struts2.dispatcher.Parameter;
+=======
+import org.json.JSONObject;
+>>>>>>> efa0aa8 (Commit)
 
 import com.apptrove.ledgerly.admin.models.APARTMENT_MST;
 import com.apptrove.ledgerly.admin.models.BUILDING_MST;
@@ -44,6 +52,11 @@ public class RegisterAction extends ActionSupport{
 	private UsernameValidityResponse response;
 	
 	private RegisterModel registerModel;
+<<<<<<< HEAD
+=======
+	
+	private Map<String, Object> respObj = new HashMap<String, Object>();
+>>>>>>> efa0aa8 (Commit)
 
 	private RegisterServiceImpl registerService = new RegisterServiceImpl();
 	
@@ -111,6 +124,7 @@ public class RegisterAction extends ActionSupport{
 	public String registerUser() {
 		try {
 			logger.info("Entering registerUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+<<<<<<< HEAD
 			Map<String, Parameter> params = ActionContext.getContext().getParameters();
 			params.forEach((key, value) -> System.out.println(key + ": " + (value.toString())));
 			if (registerModel != null && registerModel.getUser() != null) {
@@ -126,6 +140,29 @@ public class RegisterAction extends ActionSupport{
 				return ERROR;
 			}
 		} catch (Exception e) {
+=======
+			HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+			HttpSession session = httpRequest.getSession();
+			User user = registerService.registerUser(registerModel.getUser(), registerModel.getRoleId());
+			if (user!=null) {
+				session.setAttribute("user", user);
+				respObj.put("status", "success");
+				respObj.put("message", "Registration Succesfull");
+				logger.info("User Registration Successfull::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+				logger.info("Exiting registerUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+				return SUCCESS;
+			} else {
+				respObj.put("status", "error");
+				respObj.put("message", "Registration Failed!!");
+				logger.info("User Registration Failed!!!!!::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+				logger.info("Exiting registerUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+				return ERROR;
+			}
+		} catch (Exception e) {
+			respObj.put("success", false);
+			respObj.put("Message", "Registration Failed!!");
+			respObj.put("errorMsg", e.getMessage());
+>>>>>>> efa0aa8 (Commit)
 			logger.error("An error occurred: "+e.getMessage());
 			e.printStackTrace();
 			return ERROR;
@@ -197,6 +234,17 @@ public class RegisterAction extends ActionSupport{
 	public void setRegisterModel(RegisterModel registerModel) {
 		this.registerModel = registerModel;
 	}
+<<<<<<< HEAD
 	
+=======
+
+	public Map<String,Object> getRespObj() {
+		return respObj;
+	}
+
+	public void setRespObj(Map<String,Object> respObj) {
+		this.respObj = respObj;
+	}
+>>>>>>> efa0aa8 (Commit)
 	
 }

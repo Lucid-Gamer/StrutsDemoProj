@@ -67,6 +67,7 @@
 	margin-top: 17%;
 }
 
+<<<<<<< HEAD
 
 .reg-user-cred-password-input.valid{
 	border: 3px solid green;
@@ -86,6 +87,22 @@
 
 .custom-register-nav-item {
 	margin-left: 2px;
+=======
+.custom-register-confirm-password.valid {
+	border: 2px solid green;
+}
+
+.custom-register-confirm-password.invalid {
+	border: 2px solid red;
+}
+
+.custom-register-password.valid {
+	border: 2px solid green;
+}
+
+.custom-register-password.invalid {
+	border: 2px solid red;
+>>>>>>> efa0aa8 (Commit)
 }
 </style>
 </head>
@@ -212,12 +229,29 @@
 
 			$.ajax({
 				url: "register/registerUserAlt",
+<<<<<<< HEAD
 				contentType: "application/json",
 				type: 'POST',
 				data: formData,
 				success: function(response) {
 					alert("Registration successful!"); 
 					debugger;
+=======
+				
+				type: 'POST',
+				data: formData,
+				success: function(response) {
+<<<<<<< HEAD
+					if (response.status === "success") {
+						window.location.href="welcome.jsp";
+					} else if (response.status === "error") {
+						alert("Registration failed!!");
+					}
+=======
+					alert("Registration successful!"); 
+					debugger;
+>>>>>>> 313c312 (Commit)
+>>>>>>> efa0aa8 (Commit)
                 },
                 error: function(xhr, status, error) {
                     alert("An error occurred: " + error);
@@ -226,6 +260,10 @@
 		});*/ 
 	});
 </script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> efa0aa8 (Commit)
 <script>
 	document.addEventListener('DOMContentLoaded',function() {
 		const passwordInput = document.getElementById('password');
@@ -244,14 +282,22 @@
 			}
 		});
 		
+<<<<<<< HEAD
 		document.getElementById('registerForm').addEventListener('submit', function(event) {
+=======
+		/*document.getElementById('registerForm').addEventListener('submit', function(event) {
+>>>>>>> efa0aa8 (Commit)
 			event.preventDefault();
 
 			handleRegisterUser();
 		})
 
 		function handleRegisterUser() {
+<<<<<<< HEAD
 			const formData = {
+=======
+			const registerModel = {
+>>>>>>> efa0aa8 (Commit)
 				"registerModel.user.firstName": document.getElementById("firstName").value,
 				"registerModel.user.lastName": document.getElementById("lastName").value,
 				"registerModel.user.username": document.getElementById("username").value,
@@ -265,10 +311,16 @@
 			fetch('register/registerUserAlt', {
 				method: 'POST',
 				headers: {
+<<<<<<< HEAD
 					'Content-Type': 'application/json',
 					'Accept': 'application/json'
 				},
 				body: JSON.stringify(formData)
+=======
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(registerModel)
+>>>>>>> efa0aa8 (Commit)
 			})
 			.then(response => response.json())
 			.then(data => {
@@ -276,8 +328,13 @@
 			})
 			.catch(error => {
 				alert("An error occurred: "+error.message);
+<<<<<<< HEAD
 			});
 		}
+=======
+			})
+		}*/
+>>>>>>> efa0aa8 (Commit)
 	});
 </script>
 	<div class="container custom-registration-container">
@@ -377,6 +434,7 @@
                         	<div class="row custom-personal-register-row register-user-cred-pass-div">
                         		<div class="col-6 reg-user-cred-password-div">
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
+<<<<<<< HEAD
                         			<input type="password" name="password" id="password" autocomplete="off" class="form-control custom-register-form-control reg-user-cred-password-input" placeholder="Enter Password">
                         		</div>
                         		<div class="col-6 reg-user-cred-confirm-password-div">
@@ -386,6 +444,17 @@
                         	</div>
                         	<div class="btn-grp text-center">
                         		<button class="btn btn-outline-success" id="FormSubmitButton" type="submit" >Submit</button>
+=======
+                        			<input type="password" name="password" id="password" class="form-control custom-register-form-control custom-register-password" placeholder="Enter Password">
+                        		</div>
+                        		<div class="col-6">
+                        			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
+                        			<input type="password" id="confirmPassword" class="form-control custom-register-form-control custom-register-confirm-password" placeholder="Confirm Password">
+                        		</div>
+                        	</div>
+                        	<div class="btn-grp text-center">
+                        		<button class="btn btn-outline-success" id="registerFormSubmit" type="submit" >Submit</button>
+>>>>>>> efa0aa8 (Commit)
                         		<button class="btn btn-outline-danger" type="reset">Cancel</button>
                         	</div>
                         </div>
