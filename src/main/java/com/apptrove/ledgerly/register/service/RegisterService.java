@@ -11,7 +11,7 @@ public interface RegisterService {
 
 	public List<RoleDTO> getAllRoles();
 	
-	public User registerUser(User newUser);
+	public User registerUser(User newUser,Integer roleId);
 	
 	public List<BUILDING_MST> getAllBuildings();
 	

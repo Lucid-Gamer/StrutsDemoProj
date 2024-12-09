@@ -66,13 +66,29 @@
 .custom-register-username-check-button {
 	margin-top: 17%;
 }
+
+.custom-register-confirm-password.valid {
+	border: 2px solid green;
+}
+
+.custom-register-confirm-password.invalid {
+	border: 2px solid red;
+}
+
+.custom-register-password.valid {
+	border: 2px solid green;
+}
+
+.custom-register-password.invalid {
+	border: 2px solid red;
+}
 </style>
 </head>
 <body>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$.ajax({
-			url: "getAllRoles",
+			url: "register/getAllRoles",
 			method: "GET",
 			success: function(response) {
 				let roleList = response;
@@ -99,7 +115,7 @@
 		});
 		
 		$.ajax({
-		    url: "getAllBuildings",
+		    url: "register/getAllBuildings",
 		    method: "GET",
 		    success: function(response) {
 		        let bldngList = response;
@@ -127,7 +143,7 @@
 			var selectedBldngId = $(this).val();
 			if(selectedBldngId) {
 				$.ajax({
-					url : "getAptmntByBldng",
+					url : "register/getAptmntByBldng",
 					method : "GET",
 					data: { "selectedBldngId" : selectedBldngId },
 					success: function(response) {
@@ -159,7 +175,7 @@
             var username = $('#username').val();
             if(username.length > 0) {
                 $.ajax({
-                    url: 'checkUsernameValidity',
+                    url: 'register/checkUsernameValidity',
                     method: 'GET',
                     data: {'username': username}, 
                     success: function(response) {
@@ -176,6 +192,95 @@
                     $('#usernameStatus').text('');
             }
         });
+		
+	  /* $('#registerFormSubmit').click(function() {
+			var formData = {
+				"registerModel.user.firstName": $("#firstName").val(),
+				"registerModel.user.lastName": $("#lastName").val(),
+				"registerModel.user.username": $("#username").val(),
+				"registerModel.user.password": $("#password").val(),
+				"registerModel.user.apartmentId": $("#aptmntSelect").val(),
+				"registerModel.user.emailId": $("#emailId").val(),
+				"registerModel.user.contactNum": $("#contactNum").val(),
+				"registerModel.roleId":$("#roleSelect").val()
+			};
+
+			$.ajax({
+				url: "register/registerUserAlt",
+				
+				type: 'POST',
+				data: formData,
+				success: function(response) {
+<<<<<<< HEAD
+					if (response.status === "success") {
+						window.location.href="welcome.jsp";
+					} else if (response.status === "error") {
+						alert("Registration failed!!");
+					}
+=======
+					alert("Registration successful!"); 
+					debugger;
+>>>>>>> 313c312 (Commit)
+                },
+                error: function(xhr, status, error) {
+                    alert("An error occurred: " + error);
+                }
+			});
+		});*/ 
+	});
+</script>
+
+<script>
+	document.addEventListener('DOMContentLoaded',function() {
+		const passwordInput = document.getElementById('password');
+		const confirmPasswordInput = document.getElementById('confirmPassword');
+		
+		confirmPasswordInput.addEventListener('input', function() {
+			confirmPasswordInput.classList.remove('invalid','valid');
+			passwordInput.classList.remove('invalid','valid');
+			
+			if(passwordInput.value === confirmPasswordInput.value) {
+				confirmPasswordInput.classList.add('valid');
+				passwordInput.classList.add('valid');
+			} else {
+				confirmPasswordInput.classList.add('invalid');
+				passwordInput.classList.add('invalid');
+			}
+		});
+		
+		/*document.getElementById('registerForm').addEventListener('submit', function(event) {
+			event.preventDefault();
+
+			handleRegisterUser();
+		})
+
+		function handleRegisterUser() {
+			const registerModel = {
+				"registerModel.user.firstName": document.getElementById("firstName").value,
+				"registerModel.user.lastName": document.getElementById("lastName").value,
+				"registerModel.user.username": document.getElementById("username").value,
+				"registerModel.user.password": document.getElementById("password").value,
+				"registerModel.user.apartmentId": document.getElementById("aptmntSelect").value,
+				"registerModel.user.emailId": document.getElementById("emailId").value,
+				"registerModel.user.contactNum": document.getElementById("contactNum").value,
+				"registerModel.roleId":document.getElementById("roleSelect").value
+			};
+
+			fetch('register/registerUserAlt', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(registerModel)
+			})
+			.then(response => response.json())
+			.then(data => {
+				alert("Registration Succesfull");
+			})
+			.catch(error => {
+				alert("An error occurred: "+error.message);
+			})
+		}*/
 	});
 </script>
 	<div class="container custom-registration-container">
@@ -184,7 +289,7 @@
 				<h1>Registration Form</h1>
 			</div>
 			<div class="card-body custom-register-card-body">
-				<form>
+				<form id="registerForm" action="javascript:void(0);">
                     <!-- Tab navigation -->
                     <ul class="nav nav-tabs custom-register-nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
@@ -275,15 +380,22 @@
                         	<div class="row custom-personal-register-row">
                         		<div class="col-6">
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
-                        			<input type="password" name="password" id="password" class="form-control custom-register-form-control" placeholder="Enter Password">
+                        			<input type="password" name="password" id="password" class="form-control custom-register-form-control custom-register-password" placeholder="Enter Password">
                         		</div>
                         		<div class="col-6">
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
-                        			<input type="password" id="confirmPassword" class="form-control custom-register-form-control" placeholder="Confirm Password">
+                        			<input type="password" id="confirmPassword" class="form-control custom-register-form-control custom-register-confirm-password" placeholder="Confirm Password">
                         		</div>
                         	</div>
+                        	<div class="btn-grp text-center">
+                        		<button class="btn btn-outline-success" id="registerFormSubmit" type="submit" >Submit</button>
+                        		<button class="btn btn-outline-danger" type="reset">Cancel</button>
+                        	</div>
                         </div>
+                        
                          <!-- End of Credential Information Tab -->
+                        
+                        
                         
                     </div>
                 </form>

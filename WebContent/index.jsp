@@ -4,8 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css"
-	href="./resources/bootstrap-4.5.3-dist/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
+<link rel="stylesheet" type="text/css" href="./resources/bootstrap-4.5.3-dist/css/bootstrap.min.css">
+<script type="text/javascript" src="./resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
+<script src="./resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
 <title>Index Page</title>
 <style type="text/css">
 .custom-login-card {
@@ -59,6 +62,37 @@
 </style>
 </head>
 <body>
+<script>
+	$(document).ready(function() {
+        $("#customLoginButton").click(function()  {
+            var loginModel = {
+                "username" : $("#username").val(),
+                "password" : $("#password").val()
+            };
+            $.ajax({
+                url: "login/loginUser",
+                method: "POST",
+                data: {
+                    "loginModel.username" : $("#username").val(),
+                    "loginModel.password" : $("#password").val()
+                },
+                success: function(response) {
+                	debugger;
+                	console.log(response.status);
+                	debugger;
+                    if (response.status === "success") {
+                        alert("Login Successfull");
+                    } else if (response.status === "error") {
+                        alert(response.message);
+                    }
+                },
+                error : function(xhr,status,error) {
+                    alert("An error occurred: "+error);
+                }
+            });
+        });
+    });
+</script>
 	<div class="container custom-login-container">
 		<div class="card custom-login-card">
 			<div class="card-header custom-login-card-header text-center">
@@ -75,7 +109,7 @@
 						<input class="form-control custom-login-input col-9" type="password" id="password" placeholder="Enter Password" name="password">
 					</div>
 					<div class="text-center">
-						<button class="btn btn-outline-success custom-login-btn">Submit</button>
+						<button class="btn btn-outline-success custom-login-btn" id="customLoginButton">Submit</button>
 					</div>
 				</form>
 			</div>
