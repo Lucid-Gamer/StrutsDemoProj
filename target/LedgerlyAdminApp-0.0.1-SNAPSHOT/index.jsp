@@ -64,6 +64,8 @@
 <body>
 <script>
 		$(document).ready(function() {
+			// $("#username").val('');
+			// $("#password").val('');
 	        $("#customLoginButton").click(function(event)  {
 	        	event.preventDefault();
 	        	var formdata = {
@@ -96,7 +98,7 @@
 				<h1 class="custom-login-card-header-text">Login</h1>
 			</div>
 			<div class="card-body custom-login-card-body">
-				<form>
+				<form id="customLoginForm" autocomplete="off">
 					<div data-mdb-input-init class="row mb-4 custom-login-input-div">
 						<!-- <label class="form-label text-center login-form-label col-3">Username</label> -->
 						<input class="form-control custom-login-input col-9" 
