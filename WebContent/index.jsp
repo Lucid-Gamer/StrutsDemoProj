@@ -63,35 +63,34 @@
 </head>
 <body>
 <script>
-	$(document).ready(function() {
-        $("#customLoginButton").click(function()  {
-            var loginModel = {
-                "username" : $("#username").val(),
-                "password" : $("#password").val()
-            };
-            $.ajax({
-                url: "login/loginUser",
-                method: "POST",
-                data: {
-                    "loginModel.username" : $("#username").val(),
-                    "loginModel.password" : $("#password").val()
-                },
-                success: function(response) {
-                	debugger;
-                	console.log(response.status);
-                	debugger;
-                    if (response.status === "success") {
-                        alert("Login Successfull");
-                    } else if (response.status === "error") {
-                        alert(response.message);
-                    }
-                },
-                error : function(xhr,status,error) {
-                    alert("An error occurred: "+error);
-                }
-            });
-        });
-    });
+		$(document).ready(function() {
+			// $("#username").val('');
+			// $("#password").val('');
+	        $("#customLoginButton").click(function(event)  {
+	        	event.preventDefault();
+	        	var formdata = {
+	        		    "loginModel.username": $("#username").val(),
+	        		    "loginModel.password": $("#password").val()
+	        		};
+	            $.ajax({
+	                url: "login/loginUser",
+	                method: "POST",
+	                data: formdata,
+	                success: function(response) {
+	                	console.log(response);
+	                	if (response.status === "success") {
+							alert("Login Successfull");
+							window.location.href='pages/homepage.jsp';
+						} else {
+							alert(response.message);
+						}
+	                },
+	                error : function(xhr,status,error) {
+	                    console.log(error);
+	                }
+	            });
+	        });
+	    });
 </script>
 	<div class="container custom-login-container">
 		<div class="card custom-login-card">
@@ -99,14 +98,28 @@
 				<h1 class="custom-login-card-header-text">Login</h1>
 			</div>
 			<div class="card-body custom-login-card-body">
-				<form>
+				<form id="customLoginForm" autocomplete="off">
 					<div data-mdb-input-init class="row mb-4 custom-login-input-div">
 						<!-- <label class="form-label text-center login-form-label col-3">Username</label> -->
-						<input class="form-control custom-login-input col-9" type="text" id="username" placeholder="Enter username" name="username">
+						<input class="form-control custom-login-input col-9" 
+							   type="text" 
+							   id="username" 
+							   placeholder="Enter username" 
+							   name="username"
+							   required
+							   autocomplete="off"
+							   >
 					</div>
 					<div class="row mb-4 custom-login-input-div">
 						<!-- <label class="form-label custom-login-form-label text-center col-3">Password</label> -->
-						<input class="form-control custom-login-input col-9" type="password" id="password" placeholder="Enter Password" name="password">
+						<input class="form-control custom-login-input col-9" 
+							   type="password" 
+							   id="password" 
+							   placeholder="Enter Password" 
+							   name="password"
+							   required
+							   autocomplete="off"
+							   >
 					</div>
 					<div class="text-center">
 						<button class="btn btn-outline-success custom-login-btn" id="customLoginButton">Submit</button>

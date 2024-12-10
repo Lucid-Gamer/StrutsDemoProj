@@ -35,9 +35,6 @@
         	</result>
         </action>
         <action name="registerUserAlt" method="registerUser" class="com.apptrove.ledgerly.register.action.RegisterAction">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
         	<result name="success" type="json">
         		<param name="root">respObj</param>
         	</result>
@@ -55,18 +52,5 @@
         		<param name="root">respObject</param>
         	</result>
         </action>
-=======
->>>>>>> efa0aa8 (Commit)
-    		<result name="success" type="json">
-        		<param name="root">success</param>
-    		</result>
-    		<result name="error" type="json">
-       			<param name="root">error</param>
-    		</result>
-		</action>
-<<<<<<< HEAD
-=======
->>>>>>> 313c312 (Commit)
->>>>>>> efa0aa8 (Commit)
     </package>
 </struts>

@@ -7,6 +7,6 @@
 <title>Dashboard Page</title>
 </head>
 <body>
-	<div></div>
+	<div>Dashboard Page</div>
 </body>
 </html>

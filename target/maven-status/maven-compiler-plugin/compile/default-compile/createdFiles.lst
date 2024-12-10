@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 com/apptrove/ledgerly/login/dao/LoginDaoImpl.class
->>>>>>> efa0aa8 (Commit)
 com/apptrove/ledgerly/admin/payload/UsernameValidityResponse.class
 com/apptrove/ledgerly/admin/models/User.class
 com/apptrove/ledgerly/admin/models/BUILDING_MST.class
@@ -10,19 +7,13 @@ com/apptrove/ledgerly/admin/models/Role.class
 com/apptrove/ledgerly/register/service/RegisterServiceImpl.class
 com/apptrove/ledgerly/database/utils/DatabaseUtils.class
 com/apptrove/ledgerly/admin/utils/CommonUtils.class
-<<<<<<< HEAD
-=======
 com/apptrove/ledgerly/login/service/LoginService.class
->>>>>>> efa0aa8 (Commit)
 com/apptrove/ledgerly/admin/models/APARTMENT_MST.class
 com/apptrove/ledgerly/admin/payload/RegisterModel.class
 com/apptrove/ledgerly/register/action/RegisterAction.class
 com/apptrove/ledgerly/register/dao/RegisterDaoImpl.class
 com/apptrove/ledgerly/register/dao/RegisterDao.class
-<<<<<<< HEAD
-=======
 com/apptrove/ledgerly/login/dao/LoginDao.class
 com/apptrove/ledgerly/login/action/LoginAction.class
->>>>>>> efa0aa8 (Commit)
 com/apptrove/ledgerly/admin/payload/RoleDTO.class
 com/apptrove/ledgerly/admin/payload/LoginModel.class
