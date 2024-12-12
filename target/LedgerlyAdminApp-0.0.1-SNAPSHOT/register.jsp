@@ -229,6 +229,60 @@
 		});
 	});
 </script>
+
+<script>
+	document.addEventListener('DOMContentLoaded',function() {
+		const passwordInput = document.getElementById('password');
+		const confirmPasswordInput = document.getElementById('confirmPassword');
+		
+		confirmPasswordInput.addEventListener('input', function() {
+			confirmPasswordInput.classList.remove('invalid','valid');
+			passwordInput.classList.remove('invalid','valid');
+			
+			if(passwordInput.value === confirmPasswordInput.value) {
+				confirmPasswordInput.classList.add('valid');
+				passwordInput.classList.add('valid');
+			} else {
+				confirmPasswordInput.classList.add('invalid');
+				passwordInput.classList.add('invalid');
+			}
+		});
+		
+		/*document.getElementById('registerForm').addEventListener('submit', function(event) {
+			event.preventDefault();
+
+			handleRegisterUser();
+		})
+
+		function handleRegisterUser() {
+			const registerModel = {
+				"registerModel.user.firstName": document.getElementById("firstName").value,
+				"registerModel.user.lastName": document.getElementById("lastName").value,
+				"registerModel.user.username": document.getElementById("username").value,
+				"registerModel.user.password": document.getElementById("password").value,
+				"registerModel.user.apartmentId": document.getElementById("aptmntSelect").value,
+				"registerModel.user.emailId": document.getElementById("emailId").value,
+				"registerModel.user.contactNum": document.getElementById("contactNum").value,
+				"registerModel.roleId":document.getElementById("roleSelect").value
+			};
+
+			fetch('register/registerUserAlt', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(registerModel)
+			})
+			.then(response => response.json())
+			.then(data => {
+				alert("Registration Succesfull");
+			})
+			.catch(error => {
+				alert("An error occurred: "+error.message);
+			})
+		}*/
+	});
+</script>
 <script>
 	document.addEventListener('DOMContentLoaded',function() {
 		const passwordInput = document.getElementById('password');
@@ -387,6 +441,18 @@
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
 
 
+                        	<div class="row custom-personal-register-row">
+                        		<div class="col-6">
+                        			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
+                        			<input type="password" name="password" id="password" class="form-control custom-register-form-control custom-register-password" placeholder="Enter Password">
+                        		</div>
+                        		<div class="col-6">
+                        			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
+                        			<input type="password" id="confirmPassword" class="form-control custom-register-form-control custom-register-confirm-password" placeholder="Confirm Password">
+                        		</div>
+                        	</div>
+                        	<div class="btn-grp text-center">
+                        		<button class="btn btn-outline-success" id="registerFormSubmit" type="submit" >Submit</button>
                         			<input type="password" name="password" id="password" autocomplete="off" class="form-control custom-register-form-control reg-user-cred-password-input" placeholder="Enter Password">
                         		</div>
                         		<div class="col-6 reg-user-cred-confirm-password-div">
@@ -397,6 +463,7 @@
                         	<div class="btn-grp text-center">
                         		<button class="btn btn-outline-success" id="registerFormSubmit" type="button" >Submit</button>
 								<button class="btn btn-outline-danger" type="reset">Cancel</button>
+                        		<button class="btn btn-outline-danger" type="reset">Cancel</button>
                         	</div>
                         </div>
                         

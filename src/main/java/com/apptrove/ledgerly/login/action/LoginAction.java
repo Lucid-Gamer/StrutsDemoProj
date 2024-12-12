@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.json.JSONPropertyIgnore;
 
 import com.apptrove.ledgerly.admin.models.User;
 import com.apptrove.ledgerly.admin.payload.LoginModel;
@@ -22,11 +23,7 @@ public class LoginAction extends ActionSupport{
 	
 	public static final Logger logger = LogManager.getLogger(LoginAction.class);
 
-	private LoginModel loginModel = new LoginModel();
-	
-//	private String username;
-	
-//	private String password;
+	private LoginModel loginModel;
 
 	private Map<String,Object> respObject = new HashMap<String,Object>();
 
@@ -39,7 +36,6 @@ public class LoginAction extends ActionSupport{
 	public void setRespObject(Map<String, Object> respObject) {
 		this.respObject = respObject;
 	}
-	
 	public LoginModel getLoginModel() {
 		return loginModel;
 	}
@@ -47,21 +43,17 @@ public class LoginAction extends ActionSupport{
 	public void setLoginModel(LoginModel loginModel) {
 		this.loginModel = loginModel;
 	}
-
+	
+	@JSONPropertyIgnore
 	public String login() {
 		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
 		HttpSession session = httpRequest.getSession();
 		try {
-//			loginModel = new LoginModel(username, password);
-			if (loginModel!=null && loginModel.getUsername()!=null) {
-				respObject = loginService.loginUser(loginModel);
-				if (respObject.containsKey("user") && respObject.get("user")!=null) {
-					User user = (User) respObject.get("user"); 
-					session.setAttribute("user", user);
-					return SUCCESS;
-				} else {
-					return ERROR;
-				}
+			respObject = loginService.loginUser(loginModel);
+			if (respObject.containsKey("user") && respObject.get("user")!=null) {
+				User user = (User) respObject.get("user"); 
+				session.setAttribute("user", user);
+				return SUCCESS;
 			} else {
 				return ERROR;
 			}

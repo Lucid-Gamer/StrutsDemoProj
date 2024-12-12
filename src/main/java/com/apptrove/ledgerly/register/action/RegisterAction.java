@@ -2,6 +2,8 @@ package com.apptrove.ledgerly.register.action;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +14,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.Parameter;
+import org.json.JSONObject;
+import org.apache.struts2.dispatcher.Parameter;
+
 
 import com.apptrove.ledgerly.admin.models.APARTMENT_MST;
 import com.apptrove.ledgerly.admin.models.BUILDING_MST;
@@ -130,12 +135,10 @@ public class RegisterAction extends ActionSupport{
 				logger.info("Exiting registerUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
 				return ERROR;
 			}
-		
 		} catch (Exception e) {
 			respObj.put("success", false);
 			respObj.put("Message", "Registration Failed!!");
 			respObj.put("errorMsg", e.getMessage());
-
 			logger.error("An error occurred: "+e.getMessage());
 			e.printStackTrace();
 			return ERROR;
@@ -208,9 +211,6 @@ public class RegisterAction extends ActionSupport{
 		this.registerModel = registerModel;
 	}
 
-	
-
-
 	public Map<String,Object> getRespObj() {
 		return respObj;
 	}
@@ -218,6 +218,5 @@ public class RegisterAction extends ActionSupport{
 	public void setRespObj(Map<String,Object> respObj) {
 		this.respObj = respObj;
 	}
-
 	
 }
