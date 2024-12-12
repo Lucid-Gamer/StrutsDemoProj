@@ -18,18 +18,54 @@ public class LoginService {
 
     public Map<String,Object> loginUser(LoginModel loginModel) {
         Map<String,Object> respObj = new HashMap<>();
+        boolean flag = false;
         logger.info("Inside loginUser method::::::::::::::::::::::::");
         try {
-            User user = loginDaoImpl.loginUser(loginModel.getUsername(), loginModel.getPassword());
-            if (user!=null) {
-                respObj.put("user", user);
-                respObj.put("status", "success");
-                respObj.put("message", "User Login Successfull");
-            } else {
-                respObj.put("user", null);
-                respObj.put("status", "error");
-                respObj.put("message", "Invalid credentials");
-            }
+            
+            
+            flag = loginDaoImpl.validateUsername(loginModel.getUsername());
+            if (flag) {
+            	User user = loginDaoImpl.loginUser(loginModel.getUsername(), loginModel.getPassword());
+            	if (user!=null) {
+                    Integer retryCount = (Integer) user.getLoginTries();
+                    if (retryCount < 3 && !user.getAccountLocked()) {
+						loginDaoImpl.updateLoginDate(user);
+					} else if (retryCount >= 3) {
+						if (user.getAccountLocked()) {
+							respObj.put("user", null);
+		                    respObj.put("status", "errorLock");
+		                    respObj.put("message", "Account Locked");
+						} else {
+							loginDaoImpl.lockUserAccount(user.getUsername());
+							respObj.put("user", null);
+		                    respObj.put("status", "errorLock");
+		                    respObj.put("message", "Account Locked");
+						}
+					}
+                } else {
+                	Integer count = loginDaoImpl.getLoginTries(loginModel.getUsername());
+                	if (count == 2) {
+                		loginDaoImpl.lockUserAccount(loginModel.getUsername());
+						respObj.put("user", null);
+	                    respObj.put("status", "errorLock");
+	                    respObj.put("message", "Account Locked");
+					} else if (count < 2) {
+						loginDaoImpl.updateRetryCountFail(loginModel.getUsername(), count+1);
+						respObj.put("user", null);
+	                    respObj.put("status", "errorPass");
+	                    respObj.put("message", "Invalid Password");
+					} else {
+						respObj.put("user", null);
+	                    respObj.put("status", "errorLock");
+	                    respObj.put("message", "Account Locked due to too many retries");
+					}
+                }
+			} else {
+				respObj.put("user", null);
+                respObj.put("status", "errorUname");
+                respObj.put("message", "Username is incorrect");
+			}
+            
         } catch (Exception e) {
             logger.info("An error occurred: "+e.getMessage());
             e.printStackTrace();
