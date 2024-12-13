@@ -1,5 +1,7 @@
 package com.apptrove.ledgerly.login.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
 import com.apptrove.ledgerly.admin.models.User;
@@ -18,9 +20,9 @@ public interface LoginDao {
     
     public void lockUserAccount(String username);
     
-    public void unlockUserAccount(String username);
+    public boolean unlockUserAccount(String username);
     
-    public void getLockedAccounts();
+    public List<User> getLockedAccounts();
     
     public Integer getLoginTries(String username);
 

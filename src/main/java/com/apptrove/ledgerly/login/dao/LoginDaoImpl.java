@@ -1,6 +1,8 @@
 package com.apptrove.ledgerly.login.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -128,15 +130,46 @@ public class LoginDaoImpl implements LoginDao{
 	}
 
 	@Override
-	public void unlockUserAccount(String username) {
-		// TODO Auto-generated method stub
-		
+	public boolean unlockUserAccount(String username) {
+		boolean flag = false;
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			logger.info("Inside unlockUserAccount method for username: "+username+" :::::::::::::::::::::::::::::::::::::::::::::::");
+			session.beginTransaction();
+			String hql = "Update User set accountLocked = :accountLocked , loginTries = :loginTries WHERE username = :username";
+			Query<?> query = session.createQuery(hql);
+			query.setParameter("username", username);
+			query.setParameter("accountLocked",false);
+			query.setParameter("loginTries",0);
+			Integer res = query.executeUpdate();
+			flag = res > 0 ? true : false;
+			if (flag) {
+				logger.info("Successfully unlocked User account with username: "+username+" :::::::::::::::::::::::::::::::::::::::::::::::");
+			}
+			session.getTransaction().commit();
+			logger.info("Exiting unlockUserAccount method:::::::::::::::::::::::::::::::::::::::::::::::");
+		} catch (Exception e) {
+			logger.error("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+		}
+		return flag ;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void getLockedAccounts() {
-		// TODO Auto-generated method stub
-		
+	public List<User> getLockedAccounts() {
+		List<User> lockedAccountList = new ArrayList<User>();
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			logger.info("Inside getLockedAccounts method:::::::::::::::::::::::::::::::::::::::::::::::");
+			String hql = "FROM User WHERE accountLocked = :accountLocked";
+			Query<?> query = session.createQuery(hql);
+			query.setParameter("accountLocked", true);
+			lockedAccountList = (List<User>) query.getResultList();
+			logger.info("Found "+lockedAccountList.size()+" locked Accounts:::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			logger.info("Exiting getLockedAccounts method:::::::::::::::::::::::::::::::::::::::::::::::");
+		} catch (Exception e) {
+			logger.error("An error occurred: "+e.getMessage());
+			e.printStackTrace();		}
+		return lockedAccountList;
 	}
 
 	@Override

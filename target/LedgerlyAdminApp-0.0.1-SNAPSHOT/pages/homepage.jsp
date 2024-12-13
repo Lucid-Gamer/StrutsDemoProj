@@ -9,18 +9,18 @@
 </head>
 <body>
 <% 
-	User user = (User) session.getAttribute("user");
-	String username = user.getUsername();
-	if(user!=null && username!=null)
+	if(session.getAttribute("user") != null)
 	{
+		User user = (User) session.getAttribute("user");
+		String username = user.getUsername();
 %>
 	<div>Welcome to Dashboard <%= username %></div>
 <%
 	} else {
 %>
-	<a href="index.jsp">Please login again</a>
+	<a href="../index.jsp">Please login again</a>
 <%
-	} 
+	}
 %>
 </body>
 </html>
