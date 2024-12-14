@@ -34,9 +34,8 @@ public class RegisterServiceImpl implements RegisterService{
 	}
 
 	@Override
-	public User registerUser(User newUser) {
-		// TODO Auto-generated method stub
-		return null;
+	public User registerUser(User newUser,Integer roleId) {
+		return registerDaoImpl.registerUser(newUser, roleId);
 	}
 
 	@Override

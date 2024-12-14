@@ -1,12 +1,15 @@
 package com.apptrove.ledgerly.register.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.apptrove.ledgerly.admin.models.APARTMENT_MST;
 import com.apptrove.ledgerly.admin.models.BUILDING_MST;
@@ -19,17 +22,40 @@ import com.apptrove.ledgerly.database.utils.DatabaseUtils;
 public class RegisterDaoImpl implements RegisterDao {
 	
 	private static final Logger logger = LogManager.getLogger(RegisterDaoImpl.class);
+	
+	private static final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@Override
-	public User registerUser(User newUser) {
-		User user = new User();
-		try {
+	public User registerUser(User user, Integer roleId) {
+		Date today = new  Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(today);
+		calendar.add(Calendar.YEAR, 2);
+		Date validTill = calendar.getTime();
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			session.beginTransaction();
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			user.setAccountLocked(false);
+			user.setCredentialBlocked(false);
+			user.setCreatedOn(today);
+			user.setLoginTries(0);
+			user.setIsActive(false);
+			user.setValidTill(validTill);
 			
+			Integer userId = (Integer) session.save(user);
+			
+			String hql = "INSERT INTO com_ldgr_user_roles(role_id,user_id) values (:roleId,:userId)";
+			Query<?> query = session.createNativeQuery(hql);
+			query.setParameter("roleId", roleId);
+			query.setParameter("userId", userId);
+			int res = query.executeUpdate();
+			session.getTransaction().commit();
+			logger.info("User registered with ID: " + userId + " and Role ID: " + roleId);
 		} catch (Exception e) {
-			
-		}
-		
-		return null;
+			e.printStackTrace();
+			logger.error("An Error Occurred: "+e.getMessage());
+		}		
+		return user;
 	}
 
 	@Override
