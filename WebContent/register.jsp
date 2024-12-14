@@ -197,6 +197,8 @@
                     $('#usernameStatus').text('');
             }
         });
+		
+		
 	});
 </script>
 <script>
@@ -249,26 +251,31 @@
                             	<div class="col-6">
                                 	<label class="form-label custom-register-form-label">First Name</label>
                                 	<input class="form-control custom-register-form-control" type="text" name="firstName" id="firstName" placeholder="First Name">
+                                	<span id="firstNameStatus"></span>
                             	</div>
                             	<div class="col-6">
                             		<label class="form-label custom-register-form-label">Last Name</label>
                             		<input class="form-control custom-register-form-control" type="text" name="lastName" id="lastName" placeholder="Last Name">
+                            		<span id="lastNameStatus"></span>
                             	</div>
                             </div>
                             <div class="row custom-personal-register-row">
                             	<div class="col-6">
                             		<label class="form-label" >New Registration for </label>
                             		<select id="roleSelect" class="form-select custom-register-form-select" aria-label="Default select example"></select>
+                            		<span id="roleSelectStatus"></span>
                             	</div>
                             </div>
                             <div class="row custom-personal-register-row">
                             	<div class="col-6">
                             		<label>Building</label>
                             		<select id="bldngSelect" class="form-select custom-register-form-select" aria-label="Default select example"></select>
+                            		<span id="bldngSelectStatus"></span>
                             	</div>
                             	<div class="col-6">
                             		<label>Apartment</label>
                             		<select id="aptmntSelect" class="form-select custom-register-form-select" aria-label="Default select example"></select>
+                            		<span id="aptmntSelectStatus"></span>
                             	</div>
                             </div>
                             <div class="row custom-personal-register-row">
@@ -283,20 +290,24 @@
                             	<div class="col-6">
                                 	<label class="form-label custom-register-form-label" for="contactNum" id="contactLabel">Contact Number</label>
                                 	<input class="form-control custom-register-form-control" type="text" name="contactNum" id="contactNum" placeholder="Contact Number">
+                                	<span id="contactNumStatus"></span>
                             	</div>
                             	<div class="col-6">
                                 	<label class="form-label custom-register-form-label" for="altContactNum" id="altContactLabel">Alternate Contact Number (Optional)</label>
                                 	<input class="form-control custom-register-form-control" type="text" name="altContactNum" id="altContactNum" placeholder="Alternate Contact Number">
+                                	<span id="altContactNumStatus"></span>
                             	</div>
                             </div>
                             <div class="row custom-contact-register-row">
                             	<div class="col-6">
                             		<label class="form-label custom-register-form-label" for="emailId" id="emailLabel">Email Id</label>
                             		<input class="form-control custom-register-form-control" type="email" name="emailId" id="emailId" placeholder="Email Id">
+                            		<span id="emaiLidStatus"></span>
                             	</div>
                             	<div class="col-6">
                             		<label class="form-label custom-register-form-label" for="altEmailId" id="altEmailLabel">Alternate Email Id (Optional)</label>
                             		<input class="form-control custom-register-form-control" type="email" name="altEmailId" id="altEmailId" placeholder="Alternate Email Id">
+                            		<span id="altEmailIdStatus"></span>
                             	</div>
                             </div>
                         </div>
@@ -318,6 +329,7 @@
                         		<div class="col-6 reg-user-cred-password-div">
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
                         			<input type="password" name="password" id="password" class="form-control custom-register-form-control reg-user-cred-password-input" placeholder="Enter Password">
+                        			
                         		</div>
                         		<div class="col-6 reg-user-cred-confirm-password-div">
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Confirm Password</label>
