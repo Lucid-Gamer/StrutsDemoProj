@@ -14,7 +14,7 @@
 		User user = (User) session.getAttribute("user");
 		String username = user.getUsername();
 %>
-	<div>Welcome to Dashboard <%= username %></div>
+	<div></div>
 <%
 	} else {
 %>

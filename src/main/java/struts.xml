@@ -52,12 +52,5 @@
         		<param name="root">respObject</param>
         	</result>
         </action>
-    		<result name="success" type="json">
-        		<param name="root">success</param>
-    		</result>
-    		<result name="error" type="json">
-       			<param name="root">error</param>
-    		</result>
-		</action>
     </package>
 </struts>

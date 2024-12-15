@@ -27,9 +27,12 @@ public class LoginService {
             if (flag) {
             	User user = loginDaoImpl.loginUser(loginModel.getUsername(), loginModel.getPassword());
             	if (user!=null) {
-                    Integer retryCount = (Integer) user.getLoginTries();
+                    Integer retryCount = user.getLoginTries() == null ? 0 : user.getLoginTries() ;
                     if (retryCount < 3 && !user.getAccountLocked()) {
 						loginDaoImpl.updateLoginDate(user);
+						respObj.put("user", user);
+	                    respObj.put("status", "success");
+	                    respObj.put("message", "Login succesfull");
 					} else if (retryCount >= 3) {
 						if (user.getAccountLocked()) {
 							respObj.put("user", null);

@@ -382,16 +382,19 @@
                             	<div class="col-6">
                             		<label class="form-label" >New Registration for </label>
                             		<select id="roleSelect" class="form-select custom-register-form-select" aria-label="Default select example"></select>
+                            		<span id="roleSelectStatus"></span>
                             	</div>
                             </div>
                             <div class="row custom-personal-register-row">
                             	<div class="col-6">
                             		<label>Building</label>
                             		<select id="bldngSelect" class="form-select custom-register-form-select" aria-label="Default select example"></select>
+                            		<span id="bldngSelectStatus"></span>
                             	</div>
                             	<div class="col-6">
                             		<label>Apartment</label>
                             		<select id="aptmntSelect" class="form-select custom-register-form-select" aria-label="Default select example"></select>
+                            		<span id="aptmntSelectStatus"></span>
                             	</div>
                             </div>
                             <div class="row custom-personal-register-row">
