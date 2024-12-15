@@ -37,5 +37,7 @@ public class LoginModel {
 		return "LoginModel [username=" + username + ", password=" + password + "]";
 	}
 	
-	
+	public LoginModel() {
+		// TODO Auto-generated constructor stub
+	}
 }
