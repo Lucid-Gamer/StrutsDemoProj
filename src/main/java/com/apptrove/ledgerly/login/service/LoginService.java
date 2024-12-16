@@ -30,6 +30,9 @@ public class LoginService {
                     Integer retryCount = (Integer) user.getLoginTries();
                     if (retryCount < 3 && !user.getAccountLocked()) {
 						loginDaoImpl.updateLoginDate(user);
+						respObj.put("user", user);
+	                    respObj.put("status", "success");
+	                    respObj.put("message", "Login succesfull");
 					} else if (retryCount >= 3) {
 						if (user.getAccountLocked()) {
 							respObj.put("user", null);

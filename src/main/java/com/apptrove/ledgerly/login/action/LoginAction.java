@@ -71,5 +71,22 @@ public class LoginAction extends ActionSupport{
 			return ERROR;
 		}
 	}
+	
+	public String logout() {
+		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+		HttpSession session = httpRequest.getSession();
+		try {
+			User user = (User) session.getAttribute("user");
+			if (user!=null) {
+				session.removeAttribute("user");
+			}
+			session.invalidate();
+			return SUCCESS;
+		} catch (Exception e) {
+			logger.error("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
 
 }

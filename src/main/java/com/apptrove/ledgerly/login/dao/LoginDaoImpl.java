@@ -154,7 +154,6 @@ public class LoginDaoImpl implements LoginDao{
 		return flag ;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getLockedAccounts() {
 		List<User> lockedAccountList = new ArrayList<User>();
