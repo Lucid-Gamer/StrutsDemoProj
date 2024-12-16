@@ -16,6 +16,7 @@
 	if (session.getAttribute("user") != null) {
 		User user = (User) session.getAttribute("user");
 		String username = user.getUsername();
+<<<<<<< HEAD
 	%>
 	<div>
 		<nav class="navbar navbar-expand-lg navbar-light custom-dashboard-navbar">
@@ -40,6 +41,11 @@
 		</nav>
 	</div>
 	<%
+=======
+%>
+	<div></div>
+<%
+>>>>>>> c929b0b649851786585b3649951a65667958449c
 	} else {
 	%>
 	<a href="../index.jsp">Please login again</a>

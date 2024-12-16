@@ -39,7 +39,6 @@ public class RegisterDaoImpl implements RegisterDao {
 			user.setCredentialBlocked(false);
 			user.setCreatedOn(today);
 			user.setLoginTries(0);
-
 			user.setIsActive(false);
 			user.setValidTill(validTill);
 			

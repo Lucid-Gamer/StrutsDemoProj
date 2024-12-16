@@ -5,12 +5,6 @@ public class LoginModel {
 	private String username;
 	private String password;
 
-	
-	public LoginModel() {
-		// TODO Auto-generated constructor stub
-	}
-
-
 	public String getUsername() {
 		return username;
 	}
@@ -43,5 +37,7 @@ public class LoginModel {
 		return "LoginModel [username=" + username + ", password=" + password + "]";
 	}
 	
-	
+	public LoginModel() {
+		// TODO Auto-generated constructor stub
+	}
 }
