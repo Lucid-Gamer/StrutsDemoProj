@@ -94,7 +94,7 @@
 	                	console.log(response);
 	                	if (response.status === "success") {
 							alert("Login Successfull");
-							window.location.href='pages/homepage.jsp';
+							window.location.href='pages/dashboard.jsp';
 						} else if(response.status === "errorLock"){
 							alert(response.message);
 							loginButton.prop('disabled',false);

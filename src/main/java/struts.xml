@@ -52,5 +52,13 @@
         		<param name="root">respObject</param>
         	</result>
         </action>
+        <action name="getMenu" method="getMenu" class="com.apptrove.ledgerly.menu.action.MenuAction">
+			<result name="success" type="json">
+				<param name="root">respObject</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">respObject</param>
+			</result>        	
+        </action>
     </package>
 </struts>

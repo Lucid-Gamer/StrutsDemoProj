@@ -31,7 +31,7 @@ public class AccountUnlockerThreadService implements Runnable {
 		AccountUnlockerThreadService accountUnlockerThreadService = new AccountUnlockerThreadService(loginDaoImpl);
 		
 		
-		accountUnlockerThread.scheduleAtFixedRate(accountUnlockerThreadService, 0, 1, TimeUnit.MINUTES);
+		accountUnlockerThread.scheduleAtFixedRate(accountUnlockerThreadService, 0, 1, TimeUnit.HOURS);
 	}
 
 	public void stopScheduler() {
