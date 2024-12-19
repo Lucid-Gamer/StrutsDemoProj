@@ -15,4 +15,16 @@
   <listener>
   	<listener-class>com.apptrove.ledgerly.admin.threads.scheduler.ApplicationListener</listener-class>
   </listener>
+  <!-- <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>Restricted Pages</web-resource-name>
+  		<url-pattern>/pages/*</url-pattern>
+  	</web-resource-collection>
+  	<auth-constraint>
+  		<role-name>Deny</role-name>
+  	</auth-constraint>
+  </security-constraint>
+  <security-role>
+  	<role-name>Deny</role-name>
+  </security-role> -->
 </web-app>

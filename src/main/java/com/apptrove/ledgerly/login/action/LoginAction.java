@@ -14,6 +14,7 @@ import org.json.JSONPropertyIgnore;
 import com.apptrove.ledgerly.admin.models.User;
 import com.apptrove.ledgerly.admin.payload.LoginModel;
 import com.apptrove.ledgerly.login.service.LoginService;
+import com.apptrove.ledgerly.menu.service.MenuService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -28,6 +29,8 @@ public class LoginAction extends ActionSupport{
 	private Map<String,Object> respObject = new HashMap<String,Object>();
 
 	private LoginService loginService = new LoginService();
+	
+	private MenuService menuService = new MenuService();
 
 	public Map<String, Object> getRespObject() {
 		return respObject;
@@ -51,9 +54,16 @@ public class LoginAction extends ActionSupport{
 		try {
 			respObject = loginService.loginUser(loginModel);
 			if (respObject.containsKey("user") && respObject.get("user")!=null) {
-				User user = (User) respObject.get("user"); 
-				session.setAttribute("user", user);
-				return SUCCESS;
+				User user = (User) respObject.get("user");
+				respObject = menuService.getMenuHeaderAndOptions();
+				if (respObject.get("menuHeaders") != null && respObject.get("menuOptions") != null) {
+					session.setAttribute("user", user);
+					session.setAttribute("menuHeaders", respObject.get("menuHeaders"));
+					session.setAttribute("menuOptions", respObject.get("menuOptions"));
+					return SUCCESS;
+				} else {
+					return ERROR;
+				}
 			} else {
 				return ERROR;
 			}
@@ -74,6 +84,24 @@ public class LoginAction extends ActionSupport{
 			}
 			session.invalidate();
 			return SUCCESS;
+		} catch (Exception e) {
+			logger.error("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+	
+	public String getMenu() {
+		try {
+			logger.info("Inside getMenu method:::::::::::::::::::::::::::::::::::::");
+			respObject = menuService.getMenuHeaderAndOptions();
+			if (!respObject.isEmpty()) {
+				logger.info("Exiting getMenu method:::::::::::::::::::::::::::::::::::::");
+				return SUCCESS;
+			} else {
+				logger.info("An error occurred::::::::::::::::::::::::::::::::::::::::::");
+				return ERROR;
+			}
 		} catch (Exception e) {
 			logger.error("An error occurred: "+e.getMessage());
 			e.printStackTrace();

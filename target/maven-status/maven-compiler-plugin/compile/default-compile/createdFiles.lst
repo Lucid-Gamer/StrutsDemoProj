@@ -22,6 +22,7 @@ com/apptrove/ledgerly/admin/utils/CommonUtils.class
 com/apptrove/ledgerly/admin/models/MenuMst.class
 com/apptrove/ledgerly/menu/service/MenuService.class
 com/apptrove/ledgerly/admin/threads/scheduler/AccountUnlockerThreadService.class
+com/apptrove/ledgerly/admin/interceptor/SecurityInterceptor.class
 com/apptrove/ledgerly/register/dao/RegisterDaoImpl.class
 com/apptrove/ledgerly/login/dao/LoginDao.class
 com/apptrove/ledgerly/admin/payload/LoginModel.class

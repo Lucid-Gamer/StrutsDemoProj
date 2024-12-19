@@ -58,7 +58,7 @@
 			</result>
 			<result name="error" type="json">
 				<param name="root">respObject</param>
-			</result>        	
+			</result>
         </action>
     </package>
 </struts>

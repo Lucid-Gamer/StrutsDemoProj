@@ -62,7 +62,5 @@ public class MenuAction extends ActionSupport{
 	public void setRespObject(Map<String, Object> respObject) {
 		this.respObject = respObject;
 	}
-
-	
 	
 }
