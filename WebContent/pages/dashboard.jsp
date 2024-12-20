@@ -1,3 +1,4 @@
+<%@page import="com.apptrove.ledgerly.admin.models.Role"%>
 <%@page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 <%@page import="com.apptrove.ledgerly.admin.models.MenuItemMst"%>
 <%@page import="com.apptrove.ledgerly.admin.models.MenuMst"%>
@@ -23,9 +24,11 @@
 <body>
 	<%
 	if (session.getAttribute("user") != null && session.getAttribute("menuHeaders") != null
-			&& session.getAttribute("menuOptions") != null) {
+			&& session.getAttribute("menuOptions") != null && session.getAttribute("role") != null) {
 		User user = (User) session.getAttribute("user");
+		Role role = (Role) session.getAttribute("role");
 		String username = user.getUsername();
+		String roleName = role.getRoleName().substring(5).toLowerCase();
 	%>
 	<div>
 		<nav class="navbar navbar-expand-lg navbar-light custom-dashboard-navbar">
@@ -39,9 +42,9 @@
 				<button class="btn btn-outline-light dropdown-toggle me-auto custom-navbar-user-button" data-toggle="dropdown" id="navbarCustomUserButton" type="button">Welcome, <%= username %></button>
 				<div class="dropdown-menu dropdown-menu-right custom-dashboard-navbar-dropdown-menu" aria-labelledby="navbarCustomUserButton">
 					<a class="dropdown-item">Username: <%= user.getFirstName() %> <%= user.getLastName() %></a>
-					<a class="dropdown-item">Role: </a>
+					<a class="dropdown-item">Role: <%= roleName %></a>
 					<div class="dropdown-divider"></div>
-                	<a class="dropdown-item text-danger" href="logoutAction">Logout</a>
+                	<a class="dropdown-item custom-dashboard-logout-button-dropdown-item"><button class="btn btn-outline-danger custom-dashboard-logout-button" id="userLogoutButton" onclick="logoutAction()">Logout</button></a>
 				</div>
 			</div>
 		</nav>
@@ -58,6 +61,28 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true" >
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+					<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" >
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid"> Are you sure you want to logout?</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger" id="confirmLogoutButton">Logout</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
 	<%
 	} else {

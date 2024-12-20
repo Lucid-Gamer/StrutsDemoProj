@@ -29,4 +29,15 @@ CREATE TABLE `com_ldgr_dbrd_menu_items_mst` (
 
 =======================================================================================================================================================================
 
+ALTER TABLE com_ldgr_dbrd_menu_items_mst 
+ADD COLUMN item_menu_action VARCHAR(255) 
+GENERATED ALWAYS AS (
+    CONCAT(
+        '/', 
+        LOWER(SUBSTRING_INDEX(menu_item_name, ' ', 1)),  -- First word in lowercase
+        UPPER(SUBSTRING(menu_item_name, LENGTH(SUBSTRING_INDEX(menu_item_name, ' ', 1)) + 2, 1)),  -- Capitalize first character of the second word
+        LOWER(SUBSTRING(menu_item_name, LENGTH(SUBSTRING_INDEX(menu_item_name, ' ', 1)) + 3))  -- Rest of the second word in lowercase
+    )
+) STORED;
 
+========================================================================================================================================================================

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "com_ldgr_dbrd_menu_items_mst")
-public class MenuItemMst implements Serializable{
+public class MenuItemMst implements Serializable {
 
 	private static final long serialVersionUID = 3715113576170086062L;
 
@@ -20,37 +20,40 @@ public class MenuItemMst implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
-	
+
 	@Column(name = "menu_id")
 	private Integer menuId;
-	
+
 	@Column(name = "menu_item_name")
 	private String menuItemName;
 
 	@Column(name = "menu_item_name_id")
 	private String menuItemNameId;
-	
+
 	@Column(name = "maker_cd")
 	private Integer makerCd;
-	
+
 	@Column(name = "maker_dt")
 	private Date makerDt;
-	
+
 	@Column(name = "author_cd")
 	private Integer authorCd;
-	
+
 	@Column(name = "author_dt")
 	private Date authorDt;
-	
+
 	@Column(name = "is_active")
 	private Boolean isActive;
-	
+
+	@Column(name = "item_menu_action")
+	private String itemMenuAction;
+
 	public MenuItemMst() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public MenuItemMst(Integer id, Integer menuId, String menuItemName, String menuItemNameId, Integer makerCd,
-			Date makerDt, Integer authorCd, Date authorDt, Boolean isActive) {
+			Date makerDt, Integer authorCd, Date authorDt, Boolean isActive, String itemMenuAction) {
 		this.id = id;
 		this.menuId = menuId;
 		this.menuItemName = menuItemName;
@@ -60,6 +63,7 @@ public class MenuItemMst implements Serializable{
 		this.authorCd = authorCd;
 		this.authorDt = authorDt;
 		this.isActive = isActive;
+		this.itemMenuAction = itemMenuAction;
 	}
 
 	public Integer getId() {
@@ -133,12 +137,20 @@ public class MenuItemMst implements Serializable{
 	public void setMenuItemNameId(String menuItemNameId) {
 		this.menuItemNameId = menuItemNameId;
 	}
+	
+	public String getItemMenuAction() {
+		return itemMenuAction;
+	}
+
+	public void setItemMenuAction(String itemMenuAction) {
+		this.itemMenuAction = itemMenuAction;
+	}
 
 	@Override
 	public String toString() {
 		return "MenuItemMst [id=" + id + ", menuId=" + menuId + ", menuItemName=" + menuItemName + ", menuItemNameId="
 				+ menuItemNameId + ", makerCd=" + makerCd + ", makerDt=" + makerDt + ", authorCd=" + authorCd
-				+ ", authorDt=" + authorDt + ", isActive=" + isActive + "]";
+				+ ", authorDt=" + authorDt + ", isActive=" + isActive +", itemMenuAction=" + itemMenuAction + "]";
 	}
-	
+
 }

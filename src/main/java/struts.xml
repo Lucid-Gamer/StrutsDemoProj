@@ -61,4 +61,18 @@
 			</result>
         </action>
     </package>
+    
+    <package name="default" namespace="/" extends="struts-default,json-default">
+    	<action name="logout" method="logout" class="com.apptrove.ledgerly.login.action.LoginAction">
+    		<result name="success" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    		<result name="error" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    	</action>
+    	<action name="userMaker">
+    		<result>/pages/UserMaker.jsp</result>
+    	</action>
+    </package>
 </struts>

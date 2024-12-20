@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import com.apptrove.ledgerly.admin.models.Role;
 import com.apptrove.ledgerly.admin.models.User;
 
 public interface LoginDao {
@@ -25,5 +26,9 @@ public interface LoginDao {
     public List<User> getLockedAccounts();
     
     public Integer getLoginTries(String username);
+    
+    public Role getUserRoleForLogin(User user);
+    
+    public boolean existsRoleByUserId(Integer userId);
 
 }

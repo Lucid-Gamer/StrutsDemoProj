@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+:root {
+	--nav-header-button-color: #07203f; 
+}
+
 .custom-dashboard-card {
 	box-shadow: 4px 8px 12px rgba(0, 0, 0, 0.2);
 	height: 90%;
@@ -66,7 +70,7 @@
 	flex: 1; 
 	padding: 10px 15px;
 	font-size: 14px;
-	background-color: #07203f; 
+	background-color: var(--nav-header-button-color); 
 	color: white;
 	border: 1px solid white; 
 	border-radius: 0; 
@@ -112,4 +116,14 @@
 .custom-dashboard-nav-item-dropdown ul li:hover {
 	background-color: #f1f1f1; 
 	color: #0056b3;
+}
+
+.custom-dashboard-logout-button-dropdown-item {
+	width: 100%;
+	padding: 5px 15px 5px 15px;
+}
+
+.custom-dashboard-logout-button {
+	 width: 100%; /* Adjust this value as needed */
+    text-align: center;
 }

@@ -1,3 +1,4 @@
+<%@page import="com.apptrove.ledgerly.admin.models.Role"%>
 <%@page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 <%@page import="com.apptrove.ledgerly.admin.models.MenuItemMst"%>
 <%@page import="com.apptrove.ledgerly.admin.models.MenuMst"%>
@@ -23,84 +24,35 @@
 <body>
 	<%
 	if (session.getAttribute("user") != null && session.getAttribute("menuHeaders") != null
-			&& session.getAttribute("menuOptions") != null) {
+			&& session.getAttribute("menuOptions") != null && session.getAttribute("role") != null) {
 		User user = (User) session.getAttribute("user");
-		List<MenuMst> menuHeadersList = (List<MenuMst>) session.getAttribute("menuHeaders");
-		List<MenuItemMst> menuOptionsList = (List<MenuItemMst>) session.getAttribute("menuOptions");
+		Role role = (Role) session.getAttribute("role");
 		String username = user.getUsername();
-
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		String menuHeadersJson = objectMapper.writeValueAsString(menuHeadersList);
-		String menuOptionsJson = objectMapper.writeValueAsString(menuOptionsList);
+		String roleName = role.getRoleName().substring(5).toLowerCase();
 	%>
-	<script type="application/json" id="menuHeadersJson"><%=menuHeadersJson%></script>
-    <script type="application/json" id="menuOptionsJson"><%=menuOptionsJson%></script>
 	<div>
-		<nav
-			class="navbar navbar-expand-lg navbar-light custom-dashboard-navbar">
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarTogglerDemo01"
-				aria-controls="navbarTogglerDemo01" aria-expanded="false"
-				aria-label="Toggle navigation">
+		<nav class="navbar navbar-expand-lg navbar-light custom-dashboard-navbar">
+			<button class="navbar-toggler" id="custom-dashboard-navbar-toggler-button" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 				<a class="navbar-brand custom-dashboard-navbar-brand" href="#">Ledgerly</a>
 			</div>
-			<button
-				class="btn btn-outline-light me-auto custom-navbar-user-button"
-				type="button">
-				Welcome, <%= username %></button>
+			<div class="dropdown">
+				<button class="btn btn-outline-light dropdown-toggle me-auto custom-navbar-user-button" data-toggle="dropdown" id="navbarCustomUserButton" type="button">Welcome, <%= username %></button>
+				<div class="dropdown-menu dropdown-menu-right custom-dashboard-navbar-dropdown-menu" aria-labelledby="navbarCustomUserButton">
+					<a class="dropdown-item">Username: <%= user.getFirstName() %> <%= user.getLastName() %></a>
+					<a class="dropdown-item">Role: <%= roleName %></a>
+					<div class="dropdown-divider"></div>
+                	<a class="dropdown-item custom-dashboard-logout-button-dropdown-item"><button class="btn btn-outline-danger custom-dashboard-logout-button" id="userLogoutButton" onclick="logoutAction()">Logout</button></a>
+				</div>
+			</div>
 		</nav>
-
 		<div class="custom-dashboard-container">
 			<div class="card custom-dashboard-card">
-				<div class="custom-dashboard-nav-buttons-div"
-					id="dashboardNavButtonDiv">
-					<div
-						class="nav nav-pills btn btn-grp custom-dashboard-nav-buttons-div-pills"
-						id="dashboardNavButtonTab">
-						<ul class="nav nav-pills custom-dashboard-nav-buttons-div-pills"
-							id="dashboardNavButtonTab">
-							<!-- <li
-								class="nav-item dropdown custom-dashboard-nav-item-dropdown show">
-								<button class="btn nav-link dropdown-toggle" href="#"
-									id="customusrMngmntDropdown" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="true">User
-									Management</button>
-								<div class="dropdown-menu show"
-									aria-labelledby="customusrMngmntDropdown"
-									id="usrMngmntDropdownMenu"></div>
-							</li>
-							<li class="nav-item dropdown custom-dashboard-nav-item-dropdown">
-								<button class="btn nav-link dropdown-toggle" href="#"
-									id="custombldngMngmntDropdown" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">Building
-									Management</button>
-								<div class="dropdown-menu"
-									aria-labelledby="custombldngMngmntDropdown"
-									id="bldngMngmntDropdownMenu"></div>
-							</li>
-							<li class="nav-item dropdown custom-dashboard-nav-item-dropdown">
-								<button class="btn nav-link dropdown-toggle" href="#"
-									id="customaptmntMngmntDropdown" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">Apartment
-									Management</button>
-								<div class="dropdown-menu"
-									aria-labelledby="customaptmntMngmntDropdown"
-									id="aptmntMngmntDropdownMenu"></div>
-							</li>
-							<li class="nav-item dropdown custom-dashboard-nav-item-dropdown">
-								<button class="btn nav-link dropdown-toggle" href="#"
-									id="customoccpntMngmntDropdown" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">Occupant
-									Management</button>
-								<div class="dropdown-menu"
-									aria-labelledby="customoccpntMngmntDropdown"
-									id="occpntMngmntDropdownMenu"></div>
-							</li> -->
-						</ul>
+				<div class="custom-dashboard-nav-buttons-div" id="dashboardNavButtonDiv">
+					<div class="nav nav-pills btn btn-grp custom-dashboard-nav-buttons-div-pills" id="dashboardNavButtonTab">
+						
 					</div>
 				</div>
 				<div class="custom-dashboard-main-content" id="dashboardMainContent">
@@ -109,6 +61,28 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true" >
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+					<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" >
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid"> Are you sure you want to logout?</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger" id="confirmLogoutButton">Logout</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
 	<%
 	} else {

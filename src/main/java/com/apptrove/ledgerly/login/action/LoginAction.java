@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.json.JSONPropertyIgnore;
 
+import com.apptrove.ledgerly.admin.models.Role;
 import com.apptrove.ledgerly.admin.models.User;
 import com.apptrove.ledgerly.admin.payload.LoginModel;
 import com.apptrove.ledgerly.login.service.LoginService;
@@ -53,11 +54,14 @@ public class LoginAction extends ActionSupport{
 		HttpSession session = httpRequest.getSession();
 		try {
 			respObject = loginService.loginUser(loginModel);
-			if (respObject.containsKey("user") && respObject.get("user")!=null) {
+			if (respObject.containsKey("user") && respObject.get("user")!=null && respObject.containsKey("role") && respObject.get("user") != null) {
 				User user = (User) respObject.get("user");
+				Role role = (Role) respObject.get("role");
 				respObject = menuService.getMenuHeaderAndOptions();
-				if (respObject.get("menuHeaders") != null && respObject.get("menuOptions") != null) {
+				if (respObject.get("menuHeaders") != null && respObject.get("menuOptions") != null && role != null) {
 					session.setAttribute("user", user);
+					session.setAttribute("role", role);
+					session.setAttribute("roleName", role.getRoleName());
 					session.setAttribute("menuHeaders", respObject.get("menuHeaders"));
 					session.setAttribute("menuOptions", respObject.get("menuOptions"));
 					return SUCCESS;
@@ -75,15 +79,13 @@ public class LoginAction extends ActionSupport{
 	}
 	
 	public String logout() {
-		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
-		HttpSession session = httpRequest.getSession();
 		try {
-			User user = (User) session.getAttribute("user");
-			if (user!=null) {
-				session.removeAttribute("user");
+			respObject = loginService.logoutUser();
+			if (respObject.containsKey("status") && respObject.get("status").equals("success")) {
+				return SUCCESS;
+			} else {
+				return ERROR;
 			}
-			session.invalidate();
-			return SUCCESS;
 		} catch (Exception e) {
 			logger.error("An error occurred: "+e.getMessage());
 			e.printStackTrace();

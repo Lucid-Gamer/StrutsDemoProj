@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.apptrove.ledgerly.admin.models.Role;
 import com.apptrove.ledgerly.admin.models.User;
 import com.apptrove.ledgerly.database.utils.DatabaseUtils;
 
@@ -186,6 +187,46 @@ public class LoginDaoImpl implements LoginDao{
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public Role getUserRoleForLogin(User user) {
+		Role role = new Role();
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			logger.info("Inside getUserRoleForLogin method for username: "+user.getUsername()+" :::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			String hql1 = "SELECT role_id FROM com_ldgr_user_roles where user_id=:user_id";
+			Query<?> query1 = session.createNativeQuery(hql1);
+			query1.setParameter("user_id", user.getUserId());
+			Integer roleId = (Integer) query1.uniqueResult();
+			String hql2 = "FROM Role where roleId=:roleId";
+			Query<Role> query2 = session.createQuery(hql2);
+			query2.setParameter("roleId", roleId);
+			role = query2.getSingleResult();
+			logger.info("Exiting getUserRoleForLogin method:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+		} catch (Exception e) {
+			logger.info("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+		}
+		return role;
+	}
+
+	@Override
+	public boolean existsRoleByUserId(Integer userId) {
+		boolean flag = false;
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			logger.info("Inside existsRoleByUserId method for userId: "+userId+" :::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			String hql = "SELECT COUNT(*) FROM com_ldgr_user_roles WHERE user_id = :userId";
+	        Query<?> query = session.createNativeQuery(hql);
+	        query.setParameter("userId", userId);
+	        
+	        Integer count = ((Number) query.uniqueResult()).intValue(); 
+	        flag = count > 0;
+			logger.info("Exiting existsRoleByUserId method for userId: "+userId+" :::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+		} catch (Exception e) {
+			logger.error("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+		}
+		return flag;
 	}
     
 }
