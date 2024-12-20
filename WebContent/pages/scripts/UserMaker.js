@@ -5,7 +5,24 @@
 $(document).ready(function() {
 
 	var contextPath = window.location.pathname.split('/')[1];
-	var roleName = sessionStorage.getItem("roleName");
+	var roleName ;
+	
+	$.ajax({
+		url: '/' + contextPath + '/getRole',
+		method: 'GET',
+		success: function(response) {
+			if(response.status === "success") {
+				roleName = response.roleName;
+			}	else {
+				window.location.href = '/error/error.jsp';
+				return;
+			}
+		},error: function(xhr,status,error) {
+			console.error("An error occurred: ",error);
+		}
+	});
+	
+	
 	$.ajax({
 		url: "/" + contextPath + "/register/getAllRoles",
 		method: "GET",

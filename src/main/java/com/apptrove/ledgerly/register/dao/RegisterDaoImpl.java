@@ -69,7 +69,7 @@ public class RegisterDaoImpl implements RegisterDao {
 			Query<Role> query = session.createQuery(hqlBuilder.toString(),Role.class);
 			roleList = query.getResultList();
 			for(Role role : roleList) {
-				logger.info(role.toString());
+				/* logger.info(role.toString()); */
 				roleDtoList.add(CommonUtils.roleToRoleDTO(role));
 			}
 			logger.info("Exiting getAllRoles method:::::::::::::::::::::::::::::::::::::");

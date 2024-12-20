@@ -110,5 +110,29 @@ public class LoginAction extends ActionSupport{
 			return ERROR;
 		}
 	}
+	
+	public String getRole() {
+		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+		HttpSession session = httpRequest.getSession(); 
+		try {
+			Role role = (Role) session.getAttribute("role");
+			if (role != null) {
+				respObject.put("roleName",role.getRoleName());
+				respObject.put("status", "success");
+				return SUCCESS;
+			} else {
+				respObject.put("roleName",null);
+				respObject.put("status", "failed");
+				return ERROR;
+			}
+			
+		} catch (Exception e) {
+			logger.error("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+			respObject.put("roleName",null);
+			respObject.put("status", "failed");
+			return ERROR;
+		}
+	}
 
 }
