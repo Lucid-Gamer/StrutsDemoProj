@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "com_ldgr_dbrd_menu_items_mst")
 public class MenuItemMst implements Serializable {
@@ -33,12 +35,14 @@ public class MenuItemMst implements Serializable {
 	@Column(name = "maker_cd")
 	private Integer makerCd;
 
+	@DateTimeFormat
 	@Column(name = "maker_dt")
 	private Date makerDt;
 
 	@Column(name = "author_cd")
 	private Integer authorCd;
 
+	@DateTimeFormat
 	@Column(name = "author_dt")
 	private Date authorDt;
 

@@ -453,16 +453,6 @@
                         	<div class="btn-grp text-center">
                         		<button class="btn btn-outline-success" id="registerFormSubmit" type="button" >Submit</button>
 								<button class="btn btn-outline-danger" type="reset">Cancel</button>
-                        			<input type="password" name="password" id="password" class="form-control custom-register-form-control custom-register-password" placeholder="Enter Password">
-                        		</div>
-                        		<div class="col-6">
-                        			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
-                        			<input type="password" id="confirmPassword" class="form-control custom-register-form-control custom-register-confirm-password" placeholder="Confirm Password">
-                        		</div>
-                        	</div>
-                        	<div class="btn-grp text-center">
-                        		<button class="btn btn-outline-success" id="registerFormSubmit" type="submit" >Submit</button>
-                        		<button class="btn btn-outline-danger" type="reset">Cancel</button>
                         	</div>
                         </div>
                         

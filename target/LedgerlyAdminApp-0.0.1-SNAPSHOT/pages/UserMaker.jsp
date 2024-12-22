@@ -9,6 +9,7 @@
 <script type="text/javascript" src="../resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
 <script src="../resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
 <link href="./style/usermaker.css" type="text/css" rel="stylesheet">
+<link href="./style/dashboard.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="./scripts/UserMaker.js"></script>
 <title>User Maker</title>
 </head>

@@ -10,6 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+/**
+ * 
+ */
 @Entity
 @Table(name = "com_ldgr_user_mst")
 public class User implements Serializable{
@@ -39,6 +44,7 @@ public class User implements Serializable{
 	@Column(name = "contact_num")
 	private String contactNum;
 	
+	@DateTimeFormat
 	@Column(name = "created_on")
 	private Date createdOn;
 	
@@ -62,6 +68,20 @@ public class User implements Serializable{
 	
 	@Column(name = "aptmnt_id")
 	private Integer apartmentId;
+	
+	@Column(name = "maker_cd")
+	private Integer makerCd;
+
+	@DateTimeFormat
+	@Column(name = "maker_dt")
+	private Date makerDt;
+	
+	@Column(name = "author_cd")
+	private Integer authorCd;
+	
+	@DateTimeFormat
+	@Column(name = "authorDt")
+	private Date authorDt;
 	
 	public User() {
 		// TODO Auto-generated constructor stub
@@ -207,8 +227,36 @@ public class User implements Serializable{
 		this.apartmentId = apartmentId;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Integer getMakerCd() {
+		return makerCd;
+	}
+
+	public void setMakerCd(Integer makerCd) {
+		this.makerCd = makerCd;
+	}
+
+	public Integer getAuthorCd() {
+		return authorCd;
+	}
+
+	public void setAuthorCd(Integer authorCd) {
+		this.authorCd = authorCd;
+	}
+	
+	public Date getMakerDt() {
+		return makerDt;
+	}
+
+	public void setMakerDt(Date makerDt) {
+		this.makerDt = makerDt;
+	}
+
+	public Date getAuthorDt() {
+		return authorDt;
+	}
+
+	public void setAuthorDt(Date authorDt) {
+		this.authorDt = authorDt;
 	}
 
 	@Override
@@ -217,7 +265,9 @@ public class User implements Serializable{
 				+ username + ", password=" + password + ", emailId=" + emailId + ", contactNum=" + contactNum
 				+ ", createdOn=" + createdOn + ", validTill=" + validTill + ", loginTries=" + loginTries
 				+ ", lastLoginDate=" + lastLoginDate + ", isActive=" + isActive + ", credentialBlocked="
-				+ credentialBlocked + ", accountLocked=" + accountLocked + ", apartmentId=" + apartmentId + "]";
+				+ credentialBlocked + ", accountLocked=" + accountLocked + ", apartmentId="
+				+ apartmentId + ", makerCd=" + makerCd + ", authorCd=" + authorCd + ", makerDt="
+				+ makerDt + ", authorDt=" + authorDt + "]";
 	}
 	
 	
