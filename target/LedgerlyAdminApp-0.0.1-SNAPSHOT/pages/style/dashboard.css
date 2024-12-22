@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+:root {
+	--nav-header-button-color: #07203f; 
+}
+
 .custom-dashboard-card {
 	box-shadow: 4px 8px 12px rgba(0, 0, 0, 0.2);
 	height: 90%;
@@ -66,7 +70,7 @@
 	flex: 1; 
 	padding: 10px 15px;
 	font-size: 14px;
-	background-color: #07203f; 
+	background-color: var(--nav-header-button-color); 
 	color: white;
 	border: 1px solid white; 
 	border-radius: 0; 
