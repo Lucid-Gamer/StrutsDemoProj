@@ -33,7 +33,12 @@ public class LoginService {
 
 				if (user != null && loginDaoImpl.existsRoleByUserId(user.getUserId())) {
 					Integer retryCount = user.getLoginTries() == null ? 0 : user.getLoginTries();
-					if (retryCount < 3 && !user.getAccountLocked()) {
+					if (!user.getIsActive()) {
+						respObj.put("user", null);
+						respObj.put("role", null);
+						respObj.put("status", "failed");
+						respObj.put("message", "User not yet Active");
+					} else if (retryCount < 3 && !user.getAccountLocked()) {
 						loginDaoImpl.updateLoginDate(user);
 						Role role = loginDaoImpl.getUserRoleForLogin(user);
 						respObj.put("user", user);

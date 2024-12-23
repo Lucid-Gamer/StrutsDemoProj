@@ -14,5 +14,5 @@ public interface UserDao {
 	
 	public User authorizeUser(Integer userId);
 	
-	
+	public boolean existsByRoleId(Integer roleId);
 }

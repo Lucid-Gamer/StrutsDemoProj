@@ -159,19 +159,20 @@ $(document).ready(function() {
 		};
 
 		$.ajax({
-			url: "/" + contextPath + "/register/registerUserAlt",
+			url: "/" + contextPath + "/user/makerAction",
 			type: 'POST',
 			data: formData,
 			success: function(response) {
 				if (response.status === "success") {
 					alert("Registration successfull");
-					window.location.href = "welcome.jsp";
+					window.location.href = "/index.jsp";
 				} else if (response.status === "error") {
-					alert("Registration failed!!");
+					alert(response.message);
 				}
 			},
 			error: function(xhr, status, error) {
 				alert("An error occurred: " + error);
+				console.error(error);
 			}
 		});
 	});

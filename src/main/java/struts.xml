@@ -83,4 +83,14 @@
     		</result>
     	</action>
     </package>
+    <package name="userPackage" namespace="/user" extends="struts-default,json-default">
+    	<action name="makerAction" method="makerAction" class="com.apptrove.ledgerly.user.action.UserAction">
+    		<result name="success" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    		<result name="error" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    	</action>
+    </package>
 </struts>

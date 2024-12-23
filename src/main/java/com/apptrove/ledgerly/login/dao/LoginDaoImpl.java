@@ -160,9 +160,10 @@ public class LoginDaoImpl implements LoginDao{
 		List<User> lockedAccountList = new ArrayList<User>();
 		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
 			logger.info("Inside getLockedAccounts method:::::::::::::::::::::::::::::::::::::::::::::::");
-			String hql = "FROM User WHERE accountLocked = :accountLocked";
+			String hql = "FROM User WHERE accountLocked = :accountLocked AND isActive = :isActive";
 			Query<?> query = session.createQuery(hql);
 			query.setParameter("accountLocked", true);
+			query.setParameter("isActive", true);
 			lockedAccountList = (List<User>) query.getResultList();
 			logger.info("Found "+lockedAccountList.size()+" locked Accounts:::::::::::::::::::::::::::::::::::::::::::::::::::::::");
 			logger.info("Exiting getLockedAccounts method:::::::::::::::::::::::::::::::::::::::::::::::");

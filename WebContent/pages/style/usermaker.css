@@ -57,19 +57,19 @@
 }
 
 
-.reg-user-cred-password-input.valid{
+.maker-user-cred-password-input.valid{
 	border: 3px solid green;
 }
 
-.reg-user-cred-password-input.invalid{
+.maker-user-cred-password-input.invalid{
 	border: 3px solid red;
 }
 
-.reg-user-cred-confirm-password-input.valid{
+.maker-user-cred-confirm-password-input.valid{
 	border: 3px solid green;
 }
 
-.reg-user-cred-confirm-password-input.invalid{
+.maker-user-cred-confirm-password-input.invalid{
 	border: 3px solid red;
 }
 

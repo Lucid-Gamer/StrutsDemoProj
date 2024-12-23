@@ -80,7 +80,7 @@ public class User implements Serializable{
 	private Integer authorCd;
 	
 	@DateTimeFormat
-	@Column(name = "authorDt")
+	@Column(name = "author_dt")
 	private Date authorDt;
 	
 	public User() {

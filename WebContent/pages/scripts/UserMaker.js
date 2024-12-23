@@ -5,24 +5,24 @@
 $(document).ready(function() {
 
 	var contextPath = window.location.pathname.split('/')[1];
-	var roleName ;
-	
+	var roleName;
+
 	$.ajax({
 		url: '/' + contextPath + '/getRole',
 		method: 'GET',
 		success: function(response) {
-			if(response.status === "success") {
+			if (response.status === "success") {
 				roleName = response.roleName;
-			}	else {
+			} else {
 				window.location.href = '/error/error.jsp';
 				return;
 			}
-		},error: function(xhr,status,error) {
-			console.error("An error occurred: ",error);
+		}, error: function(xhr, status, error) {
+			console.error("An error occurred: ", error);
 		}
 	});
-	
-	
+
+
 	$.ajax({
 		url: "/" + contextPath + "/register/getAllRoles",
 		method: "GET",
@@ -36,13 +36,12 @@ $(document).ready(function() {
 				disabled: true,
 				selected: true
 			}))
-			
-			debugger;
-			
+
+
 			$.each(roleList, function(index, role) {
 
-				
-				
+
+
 				if (roleName === "ROLE_ADMIN") {
 
 					roleSelect.append($('<option>', {
@@ -159,26 +158,24 @@ $(document).ready(function() {
 		};
 
 		$.ajax({
-			url: "/" + contextPath + "/register/registerUserAlt",
+			url: "/" + contextPath + "/user/makerAction",
 			type: 'POST',
 			data: formData,
 			success: function(response) {
 				if (response.status === "success") {
 					alert("Registration successfull");
-					window.location.href = "welcome.jsp";
+					window.location.href = "/" + contextPath + "/index.jsp";
 				} else if (response.status === "error") {
-					alert("Registration failed!!");
+					alert(response.message);
 				}
 			},
 			error: function(xhr, status, error) {
 				alert("An error occurred: " + error);
+				console.error(error);
 			}
 		});
 	});
-});
 
-
-document.addEventListener('DOMContentLoaded', function() {
 	const passwordInput = document.getElementById('password');
 	const confirmPasswordInput = document.getElementById('confirmPassword');
 
@@ -196,60 +193,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-	const passwordInput = document.getElementById('password');
-	const confirmPasswordInput = document.getElementById('confirmPassword');
-
-	confirmPasswordInput.addEventListener('input', function() {
-		confirmPasswordInput.classList.remove('invalid', 'valid');
-		passwordInput.classList.remove('invalid', 'valid');
-
-		if (passwordInput.value === confirmPasswordInput.value) {
-			confirmPasswordInput.classList.add('valid');
-			passwordInput.classList.add('valid');
-		} else {
-			confirmPasswordInput.classList.add('invalid');
-			passwordInput.classList.add('invalid');
-		}
-	});
-
-	/*document.getElementById('registerForm').onsubmit = function(event) {
-		event.preventDefault();
-		handleRegisterUser();
-	};
-
-	function handleRegisterUser() {
-		const formData = {
-			"registerModel.user.firstName": document.getElementById("firstName").value,
-			"registerModel.user.lastName": document.getElementById("lastName").value,
-			"registerModel.user.username": document.getElementById("username").value,
-			"registerModel.user.password": document.getElementById("password").value,
-			"registerModel.user.apartmentId": document.getElementById("aptmntSelect").value,
-			"registerModel.user.emailId": document.getElementById("emailId").value,
-			"registerModel.user.contactNum": document.getElementById("contactNum").value,
-			"registerModel.roleId":document.getElementById("roleSelect").value
-		};
-
-		fetch('register/registerUserAlt', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(formData)
-		})
-		.then(response => response.json())
-		.then(data => {
-			if (data.success === true) {
-				alert("Registration Succesfull");
-				window.location.href="welcome.jsp";	
-			} else {
-				alert("Something went wrong. Please try again later!");
-				console.log("An error occurred: "+data.errorMsg);
-			}
-			
-		})
-		.catch(error => {
-			alert("An error occurred: "+error.message);
-	});
-  } */
-})
+/*document.addEventListener('DOMContentLoaded', function() {
+	
+})*/
