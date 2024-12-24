@@ -41,3 +41,71 @@ GENERATED ALWAYS AS (
 ) STORED;
 
 ========================================================================================================================================================================
+
+
+<!-- Modal for Editing User -->
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <s:form id="editUserForm" action="updateUser" method="post" theme="simple">
+                    <s:hidden name="user.id" id="userId" />
+                    <div class="form-group">
+                        <label>Username:</label>
+                        <s:textfield name="user.username" id="username" cssClass="form-control" />
+                        <s:fielderror fieldName="user.username" cssClass="text-danger" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <s:textfield name="user.email" id="email" cssClass="form-control" />
+                        <s:fielderror fieldName="user.email" cssClass="text-danger" />
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="updateUser()">Save</button>
+                </s:form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Fetch user data and populate modal
+function editUser(userId) {
+    $.ajax({
+        url: 'fetchUserById',
+        type: 'GET',
+        data: { userId: userId },
+        success: function(response) {
+            $('#userId').val(response.user.id);
+            $('#username').val(response.user.username);
+            $('#email').val(response.user.email);
+            $('#editUserModal').modal('show');
+        },
+        error: function() {
+            alert('Failed to fetch user data');
+        }
+    });
+}
+
+// Update user
+function updateUser() {
+    $.ajax({
+        url: 'updateUser',
+        type: 'POST',
+        data: $('#editUserForm').serialize(),
+        success: function() {
+            alert('User updated successfully');
+            $('#editUserModal').modal('hide');
+            location.reload();
+        },
+        error: function() {
+            alert('Failed to update user');
+        }
+    });
+}
+</script>
+
+==================================================================================================================================================================

@@ -20,6 +20,9 @@
 				<h1>Registration Form</h1>
 			</div>
 			<div class="card-body custom-register-card-body">
+			<div id="errorMsgDiv" hidden="true">
+				<p id="errorMsg"></p>
+			</div>
 				<form id="registerForm" action="javascript:void(0);">
                     <!-- Tab navigation -->
                     <ul class="nav nav-tabs custom-register-nav-tabs" id="myTab" role="tablist">
@@ -112,13 +115,13 @@
                         		</div>
                         	</div>
                         	<div class="row custom-personal-register-row register-user-cred-pass-div">
-                        		<div class="col-6 reg-user-cred-password-div">
+                        		<div class="col-6 maker-user-cred-password-div">
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Password</label>
-                        			<input type="password" name="password" id="password" autocomplete="off" class="form-control custom-register-form-control reg-user-cred-password-input" placeholder="Enter Password">
+                        			<input type="password" name="password" id="password" autocomplete="off" class="form-control custom-register-form-control maker-user-cred-password-input" placeholder="Enter Password">
                         		</div>
-                        		<div class="col-6 reg-user-cred-confirm-password-div">
+                        		<div class="col-6 maker-user-cred-confirm-password-div">
                         			<label class="form-label custom-register-form-label" for="username" id="usernameLabel">Confirm Password</label>
-                        			<input type="password" id="confirmPassword" autocomplete="off" class="form-control custom-register-form-control reg-user-cred-confirm-password-input" placeholder="Confirm Password">
+                        			<input type="password" id="confirmPassword" autocomplete="off" class="form-control custom-register-form-control maker-user-cred-confirm-password-input" placeholder="Confirm Password">
                         		</div>
                         	</div>
                         	<div class="btn-grp text-center">

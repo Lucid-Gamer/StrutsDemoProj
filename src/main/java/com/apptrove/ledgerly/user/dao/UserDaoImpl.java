@@ -1,5 +1,6 @@
 package com.apptrove.ledgerly.user.dao;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +43,7 @@ public class UserDaoImpl implements UserDao {
 			user.setIsActive(false);
 			user.setCredentialBlocked(true);
 			user.setValidTill(validTill);
+			user.setCreatedOn(now);
 			User makerUser = (User) httpSession.getAttribute("user");
 			user.setMakerCd(makerUser.getUserId());
 			user.setMakerDt(now);
@@ -72,8 +74,21 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> unauthorizedUserList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> unauthorizedUserList = new ArrayList<User>();
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()) {
+			String hql = "FROM User WHERE isActive = :isActive AND accountLocked = :accountLocked AND credentialBlocked = :credentialBlocked AND authorCd = :authorCd and authorDt = :authorDt";
+			Query<User> query = session.createQuery(hql);
+			query.setParameter("isActive", false);
+			query.setParameter("accountLocked", true);
+			query.setParameter("credentialBlocked", true);
+			query.setParameter("authorCd", null);
+			query.setParameter("authorDt", null);
+			unauthorizedUserList = query.getResultList();
+		} catch (Exception e) {
+			logger.info("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+		}
+		return unauthorizedUserList;
 	}
 
 	@Override

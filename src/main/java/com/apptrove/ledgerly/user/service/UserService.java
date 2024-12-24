@@ -1,6 +1,7 @@
 package com.apptrove.ledgerly.user.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -40,6 +41,34 @@ public class UserService {
 		
 		return respObject;
 		
+	}
+	
+	public Map<String, Object> getUnauthUserList() {
+		Map<String, Object> respObject = new HashMap<String, Object>();
+		try {
+			logger.info("Inside getUnauthUserList method :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			List<User> userList = userDaoImpl.unauthorizedUserList();
+			logger.info("Users List found: "+userList.size());
+			if (userList != null && !userList.isEmpty()) {
+				respObject.put("unauthorizedUserList", userList);
+				respObject.put("status", "success");
+				respObject.put("message","Users List found: "+userList.size());
+				respObject.put("errorCode", "000");
+			} else {
+				respObject.put("unauthorizedUserList", null);
+				respObject.put("status","success");
+				respObject.put("message", "No Users found");
+				respObject.put("errorCode", "000");
+			}
+		} catch (Exception e) {
+			logger.info("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+			respObject.put("status", "failed");
+			respObject.put("message", e.getMessage());
+			respObject.put("errorCode", "-2");
+		}
+		
+		return respObject;
 	}
 
 }

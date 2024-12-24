@@ -5,24 +5,24 @@
 $(document).ready(function() {
 
 	var contextPath = window.location.pathname.split('/')[1];
-	var roleName ;
-	
+	var roleName;
+
 	$.ajax({
 		url: '/' + contextPath + '/getRole',
 		method: 'GET',
 		success: function(response) {
-			if(response.status === "success") {
+			if (response.status === "success") {
 				roleName = response.roleName;
-			}	else {
+			} else {
 				window.location.href = '/error/error.jsp';
 				return;
 			}
-		},error: function(xhr,status,error) {
-			console.error("An error occurred: ",error);
+		}, error: function(xhr, status, error) {
+			console.error("An error occurred: ", error);
 		}
 	});
-	
-	
+
+
 	$.ajax({
 		url: "/" + contextPath + "/register/getAllRoles",
 		method: "GET",
@@ -36,15 +36,11 @@ $(document).ready(function() {
 				disabled: true,
 				selected: true
 			}))
-			
-			debugger;
-			
+
+
 			$.each(roleList, function(index, role) {
 
-				
-				
 				if (roleName === "ROLE_ADMIN") {
-
 					roleSelect.append($('<option>', {
 						value: role.roleId,
 						text: role.roleName.substring(5)
@@ -147,16 +143,73 @@ $(document).ready(function() {
 	});
 
 	$('#registerFormSubmit').click(function() {
+		var firstName = $('#firstName').val();
+		var lastName = $("#lastName").val();
+		var username = $('#username').val();
+		var password = $('#password').val();
+		var confirmPassword = $('#confirmPassword').val();
+		var bldngId = $('#bldngSelect').val();
+		var apartmentId = $('#aptmntSelect').val();
+		var emailId = $('#emailId').val();
+		var contactNum = $('#contactNum').val();
+		var roleId = $('#roleSelect').val();
+		
 		var formData = {
-			"registerModel.user.firstName": $("#firstName").val(),
-			"registerModel.user.lastName": $("#lastName").val(),
-			"registerModel.user.username": $("#username").val(),
-			"registerModel.user.password": $("#password").val(),
-			"registerModel.user.apartmentId": $("#aptmntSelect").val(),
-			"registerModel.user.emailId": $("#emailId").val(),
-			"registerModel.user.contactNum": $("#contactNum").val(),
-			"registerModel.roleId": $("#roleSelect").val()
+			"registerModel.user.firstName": firstName,
+			"registerModel.user.lastName": lastName,
+			"registerModel.user.username": username,
+			"registerModel.user.password": password,
+			"registerModel.user.apartmentId": apartmentId,
+			"registerModel.user.emailId": emailId,
+			"registerModel.user.contactNum": contactNum,
+			"registerModel.roleId": roleId
 		};
+
+		var errorMsgDiv = $('#errorMsgDiv');
+		var errorMsg = $('#errorMsg');
+
+		var flag = false;
+
+		if (firstName === '') {
+			errorMsgDiv.show();
+			errorMsg.text('First Name is required').css('color','red');
+		} else if (lastName === '') {
+			errorMsgDiv.show();
+			errorMsg.text('Last name is required').css('color','red');
+		} else if (username === '') {
+			errorMsgDiv.show();
+			errorMsg.text('Username is required.').css('color','red');
+		} else if (password === '') {
+			errorMsgDiv.show();
+			errorMsg.text('Password is required.').css('color','red');
+		} else if (password !== confirmPassword) {
+			errorMsgDiv.show();
+			errorMsg.text('Password and confirm password should be the same.').css('color','red');
+		} else if (bldngId === '') {
+			errorMsgDiv.show();
+			errorMsg.text('Please select a building.').css('color','red');
+		} else if (apartmentId === '') {
+			errorMsgDiv.show();
+			errorMsg.text('Please select an apartment number.').css('color','red');
+		} else if (emailId === '') {
+			errorMsgDiv.show();
+			errorMsg.text('Enter your Email Id.').css('color','red');		
+		} else if (contactNum === '') {
+			errorMsgDiv.show();
+			errorMsg.text('Enter your Contact Number.').css('color','red');	
+		} else if (roleId === '') {
+			errorMsgDiv.show();
+			errorMsg.text('Select a role id.').css('color','red');	
+		} else {
+			errorMsgDiv.hide();
+			errorMsg.text('');	
+			flag = true;
+		} 
+
+
+		if(!flag) {
+			return false;
+		}
 
 		$.ajax({
 			url: "/" + contextPath + "/user/makerAction",
@@ -165,7 +218,7 @@ $(document).ready(function() {
 			success: function(response) {
 				if (response.status === "success") {
 					alert("Registration successfull");
-					window.location.href = "/index.jsp";
+					window.location.href = "/" + contextPath + "/index.jsp";
 				} else if (response.status === "error") {
 					alert(response.message);
 				}
@@ -176,10 +229,7 @@ $(document).ready(function() {
 			}
 		});
 	});
-});
 
-
-document.addEventListener('DOMContentLoaded', function() {
 	const passwordInput = document.getElementById('password');
 	const confirmPasswordInput = document.getElementById('confirmPassword');
 
@@ -197,60 +247,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-	const passwordInput = document.getElementById('password');
-	const confirmPasswordInput = document.getElementById('confirmPassword');
-
-	confirmPasswordInput.addEventListener('input', function() {
-		confirmPasswordInput.classList.remove('invalid', 'valid');
-		passwordInput.classList.remove('invalid', 'valid');
-
-		if (passwordInput.value === confirmPasswordInput.value) {
-			confirmPasswordInput.classList.add('valid');
-			passwordInput.classList.add('valid');
-		} else {
-			confirmPasswordInput.classList.add('invalid');
-			passwordInput.classList.add('invalid');
-		}
-	});
-
-	/*document.getElementById('registerForm').onsubmit = function(event) {
-		event.preventDefault();
-		handleRegisterUser();
-	};
-
-	function handleRegisterUser() {
-		const formData = {
-			"registerModel.user.firstName": document.getElementById("firstName").value,
-			"registerModel.user.lastName": document.getElementById("lastName").value,
-			"registerModel.user.username": document.getElementById("username").value,
-			"registerModel.user.password": document.getElementById("password").value,
-			"registerModel.user.apartmentId": document.getElementById("aptmntSelect").value,
-			"registerModel.user.emailId": document.getElementById("emailId").value,
-			"registerModel.user.contactNum": document.getElementById("contactNum").value,
-			"registerModel.roleId":document.getElementById("roleSelect").value
-		};
-
-		fetch('register/registerUserAlt', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(formData)
-		})
-		.then(response => response.json())
-		.then(data => {
-			if (data.success === true) {
-				alert("Registration Succesfull");
-				window.location.href="welcome.jsp";	
-			} else {
-				alert("Something went wrong. Please try again later!");
-				console.log("An error occurred: "+data.errorMsg);
-			}
-			
-		})
-		.catch(error => {
-			alert("An error occurred: "+error.message);
-	});
-  } */
-})
+/*document.addEventListener('DOMContentLoaded', function() {
+	
+})*/
