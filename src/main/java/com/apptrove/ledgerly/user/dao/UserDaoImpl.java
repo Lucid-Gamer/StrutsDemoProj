@@ -76,13 +76,11 @@ public class UserDaoImpl implements UserDao {
 	public List<User> unauthorizedUserList() {
 		List<User> unauthorizedUserList = new ArrayList<User>();
 		try (Session session = DatabaseUtils.getSessionFactory().openSession()) {
-			String hql = "FROM User WHERE isActive = :isActive AND accountLocked = :accountLocked AND credentialBlocked = :credentialBlocked AND authorCd = :authorCd and authorDt = :authorDt";
+			String hql = "FROM User WHERE isActive = :isActive AND accountLocked = :accountLocked AND credentialBlocked = :credentialBlocked AND authorCd IS NULL and authorDt IS NULL";
 			Query<User> query = session.createQuery(hql);
 			query.setParameter("isActive", false);
 			query.setParameter("accountLocked", true);
 			query.setParameter("credentialBlocked", true);
-			query.setParameter("authorCd", null);
-			query.setParameter("authorDt", null);
 			unauthorizedUserList = query.getResultList();
 		} catch (Exception e) {
 			logger.info("An error occurred: "+e.getMessage());
