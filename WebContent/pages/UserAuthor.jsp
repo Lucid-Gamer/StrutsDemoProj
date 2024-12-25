@@ -30,8 +30,29 @@
 						<th>User ID</th>
 						<th>Name</th>
 						<th>Username</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
+				<tbody>
+					<s:iterator value="userList" var="user">
+						<tr>
+							<td><s:property value="#user.userId" /></td>
+							<td><s:property value="#user.firstName" /></td>
+							<td><s:property value="#user.username" /></td>
+							<td>
+								<!-- Approve Button --> <s:form action="approveUser"
+									method="post" cssClass="d-inline">
+									<s:hidden name="userId" value="#user.userId" />
+									<button type="submit" class="btn btn-success btn-sm">Approve</button>
+								</s:form> <!-- Reject Button --> <s:form action="rejectUser"
+									method="post" cssClass="d-inline">
+									<s:hidden name="userId" value="#user.userId" />
+									<button type="submit" class="btn btn-danger btn-sm">Reject</button>
+								</s:form>
+							</td>
+						</tr>
+					</s:iterator>
+				</tbody>
 			</table>
 		</div>
 	</div>

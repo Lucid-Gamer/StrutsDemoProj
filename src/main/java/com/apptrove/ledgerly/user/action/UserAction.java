@@ -31,10 +31,11 @@ public class UserAction extends ActionSupport {
 
 	private Map<String, Object> respObject = new HashMap<String, Object>();
 
-	public UserAction(RegisterModel registerModel, Map<String, Object> respObject) {
+	public UserAction(RegisterModel registerModel, Map<String, Object> respObject, List<User> userList) {
 		super();
 		this.registerModel = registerModel;
 		this.respObject = respObject;
+		this.userList = userList;
 	}
 
 	public UserAction() {
@@ -85,35 +86,26 @@ public class UserAction extends ActionSupport {
 					"Inside makerAction method:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
 			String roleName = (String) session.getAttribute("roleName");
 			if (session.getAttribute("user") == null) {
-				respObject.put("status", "failed");
-				respObject.put("message", "User Session Expired");
-				respObject.put("errorCode", "001");
 				addActionError("User Session Expired");
 				return ERROR;
 			}
 
 			if (roleName != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_AUTHOR"))) {
-				respObject = userService.getUnauthUserList();
-				if (respObject.containsKey("unauthorizedUserList")) {
-					userList = (List<User>) respObject.get("unauthorizedUserList");
+				userList = userService.getUnauthUserList();
+				if (userList != null && !userList.isEmpty()) {
 					return SUCCESS;
 				} else {
+					addActionError("No users found!");
 					return ERROR;
 				}
-				
+
 			} else {
-				respObject.put("status", "failed");
-				respObject.put("message", "User not authorized for this role");
-				respObject.put("errorCode", "002");
 				addActionError("User not authorized for this role");
 				return ERROR;
 			}
 		} catch (Exception e) {
 			logger.error("An error occurred: " + e.getMessage());
 			e.printStackTrace();
-			respObject.put("status", "failed");
-			respObject.put("message", e.getMessage());
-			respObject.put("errorCode", "003");
 			addActionError(e.getMessage());
 			return ERROR;
 		}
