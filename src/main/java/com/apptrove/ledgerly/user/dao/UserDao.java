@@ -12,7 +12,9 @@ public interface UserDao {
 	
 	public List<User> unauthorizedUserList();
 	
-	public User authorizeUser(Integer userId);
+	public boolean authorizeUser(Integer userId);
 	
 	public boolean existsByRoleId(Integer roleId);
+	
+	public boolean existsByUserId(Integer userId);
 }

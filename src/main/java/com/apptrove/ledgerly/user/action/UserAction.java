@@ -30,12 +30,15 @@ public class UserAction extends ActionSupport {
 	private List<User> userList;
 
 	private Map<String, Object> respObject = new HashMap<String, Object>();
+	
+	private Integer userId;
 
-	public UserAction(RegisterModel registerModel, Map<String, Object> respObject, List<User> userList) {
+	public UserAction(RegisterModel registerModel, Map<String, Object> respObject, List<User> userList, Integer userId) {
 		super();
 		this.registerModel = registerModel;
 		this.respObject = respObject;
 		this.userList = userList;
+		this.userId=userId;
 	}
 
 	public UserAction() {
@@ -110,6 +113,36 @@ public class UserAction extends ActionSupport {
 			return ERROR;
 		}
 	}
+	
+	public String authorizeUser() {
+		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+		HttpSession session = httpRequest.getSession();
+		try {
+			if (session.getAttribute("user") != null && session.getAttribute("roleName") != null) {
+				User user = (User) session.getAttribute("user");
+				String roleName = (String) session.getAttribute("roleName");
+				if (roleName != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_AUTHOR"))) {
+					if (userId == null) {
+						addActionError("Something went wrong.");
+						return ERROR;
+					}
+					respObject = userService.authorizeUser(userId);
+					return SUCCESS;
+				} else {
+					addActionError("User not authorized for this role");
+					return ERROR;
+				}
+			} else {
+				addActionError("User Session Expired");
+				return ERROR;
+			}
+		} catch (Exception e) {
+			logger.error("An error occurred: " + e.getMessage());
+			e.printStackTrace();
+			addActionError(e.getMessage());
+			return ERROR;
+		}
+	}
 
 	public RegisterModel getRegisterModel() {
 		return registerModel;
@@ -134,5 +167,15 @@ public class UserAction extends ActionSupport {
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
 	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	
+	
 
 }

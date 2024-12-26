@@ -143,73 +143,117 @@ $(document).ready(function() {
 	});
 
 	$('#registerFormSubmit').click(function() {
-		var firstName = $('#firstName').val();
-		var lastName = $("#lastName").val();
-		var username = $('#username').val();
-		var password = $('#password').val();
-		var confirmPassword = $('#confirmPassword').val();
-		var bldngId = $('#bldngSelect').val();
-		var apartmentId = $('#aptmntSelect').val();
-		var emailId = $('#emailId').val();
-		var contactNum = $('#contactNum').val();
-		var roleId = $('#roleSelect').val();
-		
+		var firstName = $('#firstName');
+		var lastName = $("#lastName");
+		var username = $('#username');
+		var password = $('#password');
+		var confirmPassword = $('#confirmPassword');
+		var bldngId = $('#bldngSelect');
+		var apartmentId = $('#aptmntSelect');
+		var emailId = $('#emailId');
+		var contactNum = $('#contactNum');
+		var roleId = $('#roleSelect');
+
 		var formData = {
-			"registerModel.user.firstName": firstName,
-			"registerModel.user.lastName": lastName,
-			"registerModel.user.username": username,
-			"registerModel.user.password": password,
-			"registerModel.user.apartmentId": apartmentId,
-			"registerModel.user.emailId": emailId,
-			"registerModel.user.contactNum": contactNum,
-			"registerModel.roleId": roleId
+			"registerModel.user.firstName": firstName.val(),
+			"registerModel.user.lastName": lastName.val(),
+			"registerModel.user.username": username.val(),
+			"registerModel.user.password": password.val(),
+			"registerModel.user.apartmentId": apartmentId.val(),
+			"registerModel.user.emailId": emailId.val(),
+			"registerModel.user.contactNum": contactNum.val(),
+			"registerModel.roleId": roleId.val()
 		};
 
 		var errorMsgDiv = $('#errorMsgDiv');
 		var errorMsg = $('#errorMsg');
 
-		var flag = false;
+		/*var flag = false;*/
 
-		if (firstName === '') {
-			errorMsgDiv.show();
-			errorMsg.text('First Name is required').css('color','red');
-		} else if (lastName === '') {
-			errorMsgDiv.show();
-			errorMsg.text('Last name is required').css('color','red');
-		} else if (username === '') {
-			errorMsgDiv.show();
-			errorMsg.text('Username is required.').css('color','red');
-		} else if (password === '') {
-			errorMsgDiv.show();
-			errorMsg.text('Password is required.').css('color','red');
-		} else if (password !== confirmPassword) {
-			errorMsgDiv.show();
-			errorMsg.text('Password and confirm password should be the same.').css('color','red');
-		} else if (bldngId === '') {
-			errorMsgDiv.show();
-			errorMsg.text('Please select a building.').css('color','red');
-		} else if (apartmentId === '') {
-			errorMsgDiv.show();
-			errorMsg.text('Please select an apartment number.').css('color','red');
-		} else if (emailId === '') {
-			errorMsgDiv.show();
-			errorMsg.text('Enter your Email Id.').css('color','red');		
-		} else if (contactNum === '') {
-			errorMsgDiv.show();
-			errorMsg.text('Enter your Contact Number.').css('color','red');	
-		} else if (roleId === '') {
-			errorMsgDiv.show();
-			errorMsg.text('Select a role id.').css('color','red');	
-		} else {
-			errorMsgDiv.hide();
-			errorMsg.text('');	
-			flag = true;
-		} 
-
-
-		if(!flag) {
+		// First Name Validation
+		if (firstName.val().trim() === '') {
+			$('#errorMsg').text('First Name is required.').css('color', 'red');
+			$('#errorMsgDiv').show();
+			$('#firstName').focus();
 			return false;
 		}
+
+		// Last Name Validation
+		if (lastName.val().trim() === '') {
+			$('#errorMsg').text('Last Name is required.').css('color', 'red');
+			$('#errorMsgDiv').show();
+			$('#lastName').focus();
+			return false;
+		}
+
+		// Password Validation
+		if (password.val().trim() === '') {
+			$('#errorMsg').text('Password is required.').css('color', 'red');
+			$('#errorMsgDiv').show();
+			$('#password').focus();
+			return false;
+		}
+
+		if (confirmPassword.val().trim() === '') {
+			$('#errorMsg').text('Confirm Password is required.').css('color', 'red');
+			$('#errorMsgDiv').show();
+			$('#confirmPassword').focus();
+			return false;
+		}
+
+		if (password.val().trim() !== confirmPassword.val().trim()) {
+			console.log("Password: ",password.val().trim());
+			console.log("Confirm password: ",confirmPassword.val().trim());
+			$('#errorMsg').text('Passwords do not match.').css('color', 'red');
+			$('#errorMsgDiv').show();
+			$('#confirmPassword').focus();
+			return false;
+		}
+
+		// Building ID Validation
+		if (bldngId.val() === null || bldngId.val() === '') {
+			$('#errorMsg').text('Please select a building.').css('color', 'red');
+			$('#errorMsgDiv').show();
+			bldngId.focus();
+			return false;
+		}
+
+		// Apartment ID Validation
+		if (apartmentId.val() === null || apartmentId.val() === '') {
+			$('#errorMsg').text('Please select an apartment number.').css('color', 'red');
+			$('#errorMsgDiv').show();
+			apartmentId.focus();
+			return false;
+		}
+
+		// Email Validation
+		if (emailId.val().trim() === '') {
+			$('#errorMsg').text('Enter your Email Id.').css('color', 'red');
+			$('#errorMsgDiv').show();
+			emailId.focus();
+			return false;
+		}
+
+		// Contact Number Validation
+		if (contactNum.val().trim() === '') {
+			$('#errorMsg').text('Enter your Contact Number.').css('color', 'red');
+			$('#errorMsgDiv').show();
+			contactNum.focus();
+			return false;
+		}
+
+		// Role ID Validation
+		if (roleId.val() === null || roleId.val() === '') {
+			$('#errorMsg').text('Select a role id.').css('color', 'red');
+			$('#errorMsgDiv').show();
+			roleId.focus();
+			return false;
+		}
+
+
+
+		errorMsgDiv.hide();
+		errorMsg.text('');
 
 		$.ajax({
 			url: "/" + contextPath + "/user/makerAction",
@@ -218,7 +262,7 @@ $(document).ready(function() {
 			success: function(response) {
 				if (response.status === "success") {
 					alert("Registration successfull");
-					window.location.href = "/" + contextPath + "/index.jsp";
+					window.location.href = "/" + contextPath + "/pages/dashboard.jsp";
 				} else if (response.status === "error") {
 					alert(response.message);
 				}

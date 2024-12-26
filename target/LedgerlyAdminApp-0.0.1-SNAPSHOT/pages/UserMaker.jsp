@@ -20,8 +20,8 @@
 				<h1>Registration Form</h1>
 			</div>
 			<div class="card-body custom-register-card-body">
-			<div id="errorMsgDiv" hidden="true">
-				<p id="errorMsg"></p>
+			<div id="errorMsgDiv" style="display: none;">
+    			<span id="errorMsg"></span>
 			</div>
 				<form id="registerForm" action="javascript:void(0);">
                     <!-- Tab navigation -->

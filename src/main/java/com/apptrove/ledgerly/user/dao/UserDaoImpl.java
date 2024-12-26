@@ -90,9 +90,34 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User authorizeUser(Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean authorizeUser(Integer userId) {
+		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+		HttpSession httpSession = httpRequest.getSession();
+		Date currentDate = new Date();
+		boolean flag = false;
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			logger.info("Inside authorizeUser method for user id: "+userId+" ::::::::::::::::::::::::::::::::::::::::::");
+			Transaction transaction = session.getTransaction();
+			transaction.begin();
+			User authorUser = (User) httpSession.getAttribute("user");
+			String hql = "UPDATE User SET isActive = :isActive , credentialBlocked = :credentialBlocked , accountLocked = :accountLocked,  authorCd = :authorCd , authorDt = :authorDt WHERE userId = :userId";
+			Query<?> query = session.createQuery(hql);
+			query.setParameter("isActive", true);
+			query.setParameter("credentialBlocked", false);
+			query.setParameter("accountLocked", false);
+			query.setParameter("authorCd", authorUser.getUserId());
+			query.setParameter("authorDt", currentDate);
+			query.setParameter("userId", userId);
+
+			int rowsAffected = query.executeUpdate();
+			logger.info("Rows affected: " + rowsAffected + " :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			flag = rowsAffected > 0 ? true : false;
+			logger.info("Exiting authorizeUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+		} catch (Exception e) {
+			logger.info("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+		}
+		return flag;
 	}
 
 	@Override
@@ -114,6 +139,24 @@ public class UserDaoImpl implements UserDao {
 			logger.info("Exiting existsByRoleId method :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
 		} catch (Exception e) {
 			logger.info("An error occurred: "+e.getMessage());
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean existsByUserId(Integer userId) {
+		boolean flag = false;
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			logger.info("Inside existsByUserId method for user id: " + userId + " ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			String hql = "SELECT COUNT(*) FROM User WHERE userId = :userId";
+			Query<Long> query = session.createQuery(hql,Long.class);
+			query.setParameter("userId", userId);
+			Long result = query.uniqueResult();
+			flag = result > 0 ? true : false;
+			logger.info("Exiting existsByUserId method:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+		} catch (Exception e) {
+			logger.info("An error occurred: "+e.getMessage());
+			e.printStackTrace();
 		}
 		return flag;
 	}
