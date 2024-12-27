@@ -4,12 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
-<script src="./resources/jquery.min.js" type="text/javascript"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
-<link rel="stylesheet" type="text/css" href="./resources/bootstrap-4.5.3-dist/css/bootstrap.min.css">
-<script type="text/javascript" src="./resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
-<script src="./resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jquery.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/css/bootstrap.min.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/scripts/index.js"></script>
 <title>Index Page</title>
 <style type="text/css">
 .custom-login-card {
@@ -73,56 +72,6 @@
 </style>
 </head>
 <body>
-<script>
-		$(document).ready(function() {
-
-			
-	        $("#customLoginButton").click(function(event)  {
-	        	event.preventDefault();
-	        	var loginButton = $(this);
-	        	loginButton.addClass('disabled');
-	        	loginButton.prop('disabled',true);
-	        	var formdata = {
-	        		    "loginModel.username": $("#username").val(),
-	        		    "loginModel.password": $("#password").val()
-	        		};
-	            $.ajax({
-	                url: "login/loginUser",
-	                method: "POST",
-	                data: formdata,
-	                success: function(response) {
-	                	console.log(response);
-	                	if (response.status === "success") {
-							alert("Login Successfull");
-							
-							window.location.href='pages/dashboard.jsp';
-						} else if(response.status === "errorLock"){
-							alert(response.message);
-							loginButton.prop('disabled',false);
-							loginButton.removeClass('disabled');
-						} else if(response.status === "errorPass") {
-							alert(response.message);
-							loginButton.prop('disabled',false);
-							loginButton.removeClass('disabled');
-						} else if(response.status === "errorUname") {
-							alert(response.message);
-							loginButton.prop('disabled',false);
-							loginButton.removeClass('disabled');
-						} else {
-							alert(response.message);
-							loginButton.prop('disabled',false);
-							loginButton.removeClass('disabled');
-						}
-	                },
-	                error : function(xhr,status,error) {
-	                    console.log(error);
-	                    loginButton.prop('disabled',false);
-	                    loginButton.removeClass('disabled');
-	                }
-	            });
-	        });
-	    });
-</script>
 	<div class="container custom-login-container">
 		<div class="card custom-login-card">
 			<div class="card-header custom-login-card-header text-center">
@@ -132,28 +81,14 @@
 				<form id="customLoginForm" autocomplete="off" class="custom-login-form">
 					<div data-mdb-input-init class="row mb-4 custom-login-input-div">
 						<label class="form-label text-center login-form-label col-3">Username</label>
-						<input class="form-control custom-login-input col-8" 
-							   type="text" 
-							   id="username" 
-							   placeholder="Enter username" 
-							   name="username"
-							   required
-							   autocomplete="off"
-							   >
+						<input class="form-control custom-login-input col-8" type="text" id="username" placeholder="Enter username" name="username" required autocomplete="off">
 					</div>
 					<div>
 						<span id="customLoginUsernameStatus"></span>
 					</div>
 					<div class="row mb-4 custom-login-input-div">
 						<label class="form-label custom-login-form-label text-center col-3">Password</label>
-						<input class="form-control custom-login-input col-8" 
-							   type="password" 
-							   id="password" 
-							   placeholder="Enter Password" 
-							   name="password"
-							   required
-							   autocomplete="off"
-							   >
+						<input class="form-control custom-login-input col-8" type="password" id="password" placeholder="Enter Password" name="password" required autocomplete="off">
 					</div>
 					<div>
 						<span id="customLoginPasswordStatus"></span>
@@ -168,5 +103,41 @@
 			</div>
 		</div>
 	</div>
+	<!-- Button trigger modal -->
+	<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
+	  Launch
+	</button> -->
+	
+	<!-- Modal -->
+	<div class="modal fade" id="loginPageModal" tabindex="-1" role="dialog" aria-labelledby="loginPageModalTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+					<div class="modal-header">
+							<h5 class="modal-title" id="loginPageModalTitle"></h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+						</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save</button> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- <script>
+		$('#exampleModal').on('show.bs.modal', event => {
+			var button = $(event.relatedTarget);
+			var modal = $(this);
+			// Use above variables to manipulate the DOM
+			
+		});
+	</script> -->
 </body>
 </html>

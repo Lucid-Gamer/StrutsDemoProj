@@ -64,6 +64,7 @@ public class UserAction extends ActionSupport {
 				respObject = userService.registerUser(registerModel.getUser(), registerModel.getRoleId());
 				return SUCCESS;
 			} else {
+				addActionError("User not authorized to access this page.");
 				respObject.put("status", "failed");
 				respObject.put("message", "User not authorized to register another user");
 				respObject.put("errorCode", "002");

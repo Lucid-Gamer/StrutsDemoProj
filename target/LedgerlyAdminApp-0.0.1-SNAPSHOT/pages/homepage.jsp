@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="../resources/bootstrap-4.5.3-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="./style/dashboard.css" type="text/css" rel="stylesheet">
-    <script src="../resources/jquery.min.js" type="text/javascript"></script>
-    <script src="../resources/popper.min.js" type="text/javascript"></script>
-    <script src="../resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
+    <link href="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/pages/style/dashboard.css" type="text/css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/jquery.min.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/resources/popper.min.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
     <meta charset="UTF-8">
     <title>Dashboard Page</title>
 </head>

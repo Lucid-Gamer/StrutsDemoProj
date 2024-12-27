@@ -1,30 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>Proj</display-name>
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
-  <filter>
-    <filter-name>struts2</filter-name>
-    <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>struts2</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <listener>
-  	<listener-class>com.apptrove.ledgerly.admin.threads.scheduler.ApplicationListener</listener-class>
-  </listener>
-  <!-- <security-constraint>
-  	<web-resource-collection>
-  		<web-resource-name>Restricted Pages</web-resource-name>
-  		<url-pattern>/pages/*</url-pattern>
-  	</web-resource-collection>
-  	<auth-constraint>
-  		<role-name>Deny</role-name>
-  	</auth-constraint>
-  </security-constraint>
-  <security-role>
-  	<role-name>Deny</role-name>
-  </security-role> -->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>Proj</display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<listener>
+		<listener-class>com.apptrove.ledgerly.admin.threads.scheduler.ApplicationListener</listener-class>
+	</listener>
+	<!-- <security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Static Resources</web-resource-name>
+			<url-pattern>/resources/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			No auth constraint for static resources
+		</auth-constraint>
+	</security-constraint>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Restricted Pages</web-resource-name>
+			<url-pattern>/pages/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>ADMIN</role-name>
+			<role-name>AUTHOR</role-name>
+			<role-name>MAKER</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<security-role>
+		<role-name>ADMIN</role-name>
+	</security-role>
+	<security-role>
+		<role-name>MAKER</role-name>
+	</security-role>
+	<security-role>
+		<role-name>AUTHOR</role-name>
+	</security-role> -->
 </web-app>

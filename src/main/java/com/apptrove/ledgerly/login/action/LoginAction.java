@@ -84,6 +84,7 @@ public class LoginAction extends ActionSupport{
 			if (respObject.containsKey("status") && respObject.get("status").equals("success")) {
 				return SUCCESS;
 			} else {
+				addActionError((String) respObject.get("message"));
 				return ERROR;
 			}
 		} catch (Exception e) {

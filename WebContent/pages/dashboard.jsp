@@ -10,13 +10,13 @@
 <html>
 
 <head>
-<link href="../resources/bootstrap-4.5.3-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="./style/dashboard.css" type="text/css" rel="stylesheet">
-<link href="./style/usermaker.css" type="text/css" rel="stylesheet">
-<script src="../resources/jquery.min.js" type="text/javascript"></script>
-<script src="../resources/popper.min.js" type="text/javascript"></script>
-<script src="../resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
-<script src="./scripts/dashboard.js"></script>
+<link href="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/style/dashboard.css" type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/style/usermaker.css" type="text/css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/jquery.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/popper.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/scripts/dashboard.js"></script>
 <meta charset="UTF-8">
 <title>Dashboard Page</title>
 </head>
@@ -77,17 +77,29 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-danger" id="confirmLogoutButton">Logout</button>
+					<button type="button" class="btn btn-danger" onclick="logoutAction()" id="confirmLogoutButton">Logout</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+	<script type="text/javascript">
+	var contextPath = window.location.pathname.split('/')[1];
+	var logoutUrl = '/' + contextPath + '/logout'
+
+	$("#userLogoutButton").click(function(e) {
+		e.preventDefault();
+		$('#logoutModal').modal('show');
+	});
+
+	function logoutAction() {
+		window.location.href=logoutUrl;	
+	}
+	</script>
 
 	<%
 	} else {
 	%>
-	<a href="../index.jsp">Please login again</a>
+	<a href="${pageContext.request.contextPath}/index.jsp">Please login again</a>
 	<%
 	}
 	%>

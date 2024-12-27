@@ -5,13 +5,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="../resources/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="../resources/bootstrap-4.5.3-dist/css/bootstrap.min.css">
-<script type="text/javascript" src="../resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
-<script src="../resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="../resources/popper.min.js"></script>
-<link href="./style/dashboard.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="./scripts/UserAuthor.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/css/bootstrap.min.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/popper.min.js"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/dashboard.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/userauthor.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/scripts/UserAuthor.js"></script>
 <title>User Authorization Page</title>
 </head>
 <body>

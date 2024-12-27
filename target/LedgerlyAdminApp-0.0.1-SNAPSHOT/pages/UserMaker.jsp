@@ -4,16 +4,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="../resources/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="../resources/bootstrap-4.5.3-dist/css/bootstrap.min.css">
-<script type="text/javascript" src="../resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
-<script src="../resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
-<link href="./style/usermaker.css" type="text/css" rel="stylesheet">
-<link href="./style/dashboard.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="./scripts/UserMaker.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/css/bootstrap.min.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
+<link href="${pageContext.request.contextPath}/resources/style/usermaker.css" type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/style/dashboard.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/scripts/UserMaker.js"></script>
 <title>User Maker</title>
 </head>
 <body>
+	<%
+		String roleName = (String) session.getAttribute("roleName");
+		if (roleName != null && (roleName.equals("ROLE_MAKER") || roleName.equals("ROLE_ADMIN"))) 
+		{
+	%>
 	<div class="container custom-registration-container">
 		<div class="card custom-register-card">
 			<div class="card-header custom-register-card-header text-center">
@@ -139,5 +144,12 @@
 			</div>
 		</div>
 	</div>
+	<%
+		} else {
+	%>
+	<div>
+		<span class="text text-danger">You are not authorized to make a user</span>
+	</div>
+	<% } %>
 </body>
 </html>

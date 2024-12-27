@@ -64,12 +64,8 @@
     
     <package name="default" namespace="/" extends="struts-default,json-default">
     	<action name="logout" method="logout" class="com.apptrove.ledgerly.login.action.LoginAction">
-    		<result name="success" type="json">
-    			<param name="root">respObject</param>
-    		</result>
-    		<result name="error" type="json">
-    			<param name="root">respObject</param>
-    		</result>
+    		<result name="success" type="redirect">/index.jsp</result>
+    		<result name="error" type="redirect">/index.jsp</result>
     	</action>
     	<action name="userMaker">
     		<result name="success">/pages/UserMaker.jsp</result>
@@ -78,6 +74,10 @@
     	<action name="userAuthor" method="getUnauthUserList" class="com.apptrove.ledgerly.user.action.UserAction">
     		<result name="success">/pages/UserAuthor.jsp</result>
     		<result name="error">/pages/UserAuthor.jsp</result>
+    	</action>
+    	<action name="dashboard">
+    		<result name="success">/pages/dashboard.jsp</result>
+    		<result name="error">/error/error.jsp</result>
     	</action>
     	<action name="getRole" method="getRole" class="com.apptrove.ledgerly.login.action.LoginAction">
     		<result name="success" type="json">
