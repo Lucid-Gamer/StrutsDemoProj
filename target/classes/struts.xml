@@ -97,7 +97,15 @@
     			<param name="root">respObject</param>
     		</result>
     	</action>
-    	<action name="authorAction" method="authorizeUser" class="com.apptrove.ledgerly.user.action.UserAction">
+    	<action name="authorizeAction" method="authorizeUser" class="com.apptrove.ledgerly.user.action.UserAction">
+    		<result name="success" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    		<result name="error" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    	</action>
+    	<action name="rejectAction" method="rejectUser" class="com.apptrove.ledgerly.user.action.UserAction">
     		<result name="success" type="json">
     			<param name="root">respObject</param>
     		</result>

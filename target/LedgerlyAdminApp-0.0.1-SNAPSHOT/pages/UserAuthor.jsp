@@ -10,7 +10,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/popper.min.js"></script>
-<link href="${pageContext.request.contextPath}/resources/style/dashboard.css" type="text/css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/dashboard.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/userauthor.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/scripts/UserAuthor.js"></script>
 <title>User Authorization Page</title>
 </head>
@@ -43,14 +44,15 @@
 								<td><s:property value="#user.firstName" /> <s:property value="#user.lastName" /></td>
 								<td><s:property value="#user.username" /></td>
 								<td>
-									<s:form cssClass="d-inline">
+									<%-- <s:form cssClass="d-inline">
 										<s:hidden name="userId" value="#user.userId" />
 										<button type="button" class="btn btn-success btn-sm" onclick="authorizeUser(${user.userId})">Approve</button>
 									</s:form> 
 									<s:form cssClass="d-inline">
 										<s:hidden name="userId" value="#user.userId" />
 										<button type="button" class="btn btn-danger btn-sm">Reject</button>
-									</s:form>
+									</s:form> --%>
+									<button class="btn btn-outline-secondary btn-sm" type="button" onclick="showUserDetails('<s:property value="#user.toJSON()" />')">Show Details</button>
 								</td>
 							</tr>
 						</s:iterator>
@@ -58,6 +60,63 @@
 				</table>
 			</div>
 		</div>
+	</div>
+	<div class="modal fade" id="viewUserDetailStaticModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="viewUserDetailStaticModalLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<h5 class="modal-title me-auto" id="viewUserDetailStaticModalLabel"></h5>
+        			<span id="viewUserDetailStaticModalLabelDate"></span>
+        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          				<span aria-hidden="true">&times;</span>
+        			</button>
+      			</div>
+      			<div class="modal-body">
+        			<table class="table table-bordered text-center">
+        				<tr>
+        					<th>User Id</th>
+        					<td class="custom-author-user-modal-user-id"></td>
+        				</tr>
+        				<tr>
+        					<th>Name</th>
+        					<td class="custom-author-user-modal-user-name"></td>
+        				</tr>
+        				<tr>
+        					<th>Username</th>
+        					<td class="custom-author-user-modal-user-username"></td>
+        				</tr>
+        				<tr>
+        					<th>Email Id</th>
+        					<td class="custom-author-user-modal-user-email"></td>
+        				</tr>
+        				<tr>
+        					<th>Contact Number</th>
+        					<td class="custom-author-user-modal-user-contact"></td>
+        				</tr>
+        				<tr>
+        					<th>Created On</th>
+        					<td class="custom-author-user-modal-user-creation"></td>
+        				</tr>
+        				<tr>
+        					<th>Valid Till</th>
+        					<td class="custom-author-user-modal-user-validity"></td>
+        				</tr>
+        				<tr>
+        					<th>Maker Id</th>
+        					<td class="custom-author-user-modal-user-makerid"></td>
+        				</tr>
+        				<tr>
+        					<th>Maker Date</th>
+        					<td class="custom-author-user-modal-user-makerdt"></td>
+        				</tr>
+        			</table>
+      			</div>
+      			<div class="modal-footer">
+        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        			<button type="button" class="btn btn-primary">Understood</button>
+      			</div>
+    		</div>
+  		</div>
 	</div>
 </body>
 </html>

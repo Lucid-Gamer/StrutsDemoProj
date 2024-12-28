@@ -122,12 +122,42 @@ public class UserAction extends ActionSupport {
 			if (session.getAttribute("user") != null && session.getAttribute("roleName") != null) {
 				User user = (User) session.getAttribute("user");
 				String roleName = (String) session.getAttribute("roleName");
-				if (roleName != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_AUTHOR"))) {
+				if (roleName != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_AUTHOR")) && user != null) {
 					if (userId == null) {
 						addActionError("Something went wrong.");
 						return ERROR;
 					}
 					respObject = userService.authorizeUser(userId);
+					return SUCCESS;
+				} else {
+					addActionError("User not authorized for this role");
+					return ERROR;
+				}
+			} else {
+				addActionError("User Session Expired");
+				return ERROR;
+			}
+		} catch (Exception e) {
+			logger.error("An error occurred: " + e.getMessage());
+			e.printStackTrace();
+			addActionError(e.getMessage());
+			return ERROR;
+		}
+	}
+	
+	public String rejectUser() {
+		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+		HttpSession session = httpRequest.getSession();
+		try {
+			if (session.getAttribute("user") != null && session.getAttribute("roleName") != null) {
+				User user = (User) session.getAttribute("user");
+				String roleName = (String) session.getAttribute("roleName");
+				if (roleName != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_AUTHOR")) && user != null) {
+					if (userId == null) {
+						addActionError("Something went wrong.");
+						return ERROR;
+					}
+					respObject = userService.rejectUser(userId);
 					return SUCCESS;
 				} else {
 					addActionError("User not authorized for this role");
