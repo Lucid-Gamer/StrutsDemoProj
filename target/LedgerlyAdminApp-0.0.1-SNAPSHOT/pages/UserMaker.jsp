@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -147,8 +148,13 @@
 	<%
 		} else {
 	%>
-	<div>
-		<span class="text text-danger">You are not authorized to make a user</span>
+	<s:if test="hasActionErrors()">
+		<div class="alert alert-danger">
+			<s:actionerror />
+		</div>
+	</s:if>
+	<div class="alert alert-danger">
+		<span>User not authorized to access this page.</span>
 	</div>
 	<% } %>
 </body>

@@ -270,6 +270,27 @@ public class User implements Serializable{
 				+ makerDt + ", authorDt=" + authorDt + "]";
 	}
 	
-	
+	public String toJSON() {
+	    return "{"
+	        + "\"userId\":" + userId + ","
+	        + "\"firstName\":\"" + escapeJson(firstName) + "\","
+	        + "\"lastName\":\"" + escapeJson(lastName) + "\","
+	        + "\"username\":\"" + escapeJson(username) + "\","
+	        + "\"emailId\":\"" + escapeJson(emailId) + "\","
+	        + "\"contactNum\":\"" + escapeJson(contactNum) + "\","
+	        + "\"createdOn\":\"" + createdOn + "\","
+	        + "\"validTill\":\"" + validTill + "\","
+	        + "\"makerCd\":" + makerCd + ","
+	        + "\"makerDt\":\"" + makerDt + "\""
+	        + "}";
+	}
+
+	// Helper method to escape JSON strings
+	private String escapeJson(String value) {
+	    if (value == null) {
+	        return "";
+	    }
+	    return value.replace("\"", "\\\"");
+	}
 	
 }

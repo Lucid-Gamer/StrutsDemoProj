@@ -98,5 +98,42 @@ public class UserService {
 		}
 		return respObject;
 	}
+	
+	public Map<String, Object> rejectUser(Integer userId) {
+		Map<String, Object> respObject = new HashMap<String, Object>();
+		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+		HttpSession session = httpRequest.getSession();
+		boolean flag = false;
+		try {
+			logger.info("Inside rejectUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			if (userDaoImpl.existsByUserId(userId) && session.getAttribute("user") != null) {
+				flag = userDaoImpl.rejectUser(userId);
+			} else {
+				respObject.put("status", "failed");
+				respObject.put("message","User Rejection unsuccessfull.User not found.");
+				respObject.put("errorCd","001");
+				return respObject;
+			}
+			
+			
+			if (flag) {
+				respObject.put("status", "success");
+				respObject.put("message","User Rejection succesfull");
+				respObject.put("errorCd","000");
+			} else {
+				respObject.put("status", "failed");
+				respObject.put("message","User Authorization unsuccesfull. An error occurred. ");
+				respObject.put("errorCd","002");
+			}
+			logger.info("Exiting rejectUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+		} catch (Exception e) {
+			logger.info("An error occurred: "+e.getMessage());
+			respObject.put("status", "failed");
+			respObject.put("message","An error occurred: "+e.getMessage());
+			respObject.put("errorCd","-1");
+			e.printStackTrace();
+		}
+		return respObject;
+	}
 
 }

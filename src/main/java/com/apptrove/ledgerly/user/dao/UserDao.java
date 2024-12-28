@@ -17,4 +17,6 @@ public interface UserDao {
 	public boolean existsByRoleId(Integer roleId);
 	
 	public boolean existsByUserId(Integer userId);
+	
+	public boolean rejectUser(Integer userId);
 }
