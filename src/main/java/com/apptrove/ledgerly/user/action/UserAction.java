@@ -174,6 +174,40 @@ public class UserAction extends ActionSupport {
 			return ERROR;
 		}
 	}
+	
+	public String getAllActiveUsers() {
+		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		HttpSession session = httpRequest.getSession();
+		try {
+			logger.info(
+					"Inside makerAction method:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			String roleName = (String) session.getAttribute("roleName");
+			if (session.getAttribute("user") == null) {
+				addActionError("User Session Expired");
+				return ERROR;
+			}
+
+			if (roleName != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_AUTHOR") || roleName.equals("ROLE_USER"))) {
+				userList = userService.getAllActiveUsers();
+				if (userList != null && !userList.isEmpty()) {
+					return SUCCESS;
+				} else {
+					addActionError("No users found!");
+					return ERROR;
+				}
+
+			} else {
+				addActionError("User not authorized for this role");
+				return ERROR;
+			}
+		} catch (Exception e) {
+			logger.error("An error occurred: " + e.getMessage());
+			e.printStackTrace();
+			addActionError(e.getMessage());
+			return ERROR;
+		}
+	}
 
 	public RegisterModel getRegisterModel() {
 		return registerModel;

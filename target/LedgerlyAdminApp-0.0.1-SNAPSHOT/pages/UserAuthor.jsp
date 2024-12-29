@@ -65,8 +65,8 @@
   		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     		<div class="modal-content">
       			<div class="modal-header">
-        			<h5 class="modal-title me-auto" id="viewUserDetailStaticModalLabel"></h5>
-        			<span id="viewUserDetailStaticModalLabelDate"></span>
+        			<h5 class="modal-title" id="viewUserDetailStaticModalLabel"></h5>
+        			<%-- <span id="viewUserDetailStaticModalLabelDate" class="ms-auto"></span> --%>
         			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           				<span aria-hidden="true">&times;</span>
         			</button>
@@ -111,9 +111,7 @@
         				</tr>
         			</table>
       			</div>
-      			<div class="modal-footer">
-        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        			<button type="button" class="btn btn-primary">Understood</button>
+      			<div class="modal-footer btn-group">
       			</div>
     		</div>
   		</div>

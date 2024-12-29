@@ -135,5 +135,18 @@ public class UserService {
 		}
 		return respObject;
 	}
+	
+	public List<User> getAllActiveUsers() {
+		List<User> userList = new ArrayList<User>();
+		try {
+			logger.info("Inside getUnauthUserList method :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			userList = userDaoImpl.getAllActiveUsers();
+			logger.info("Users List found: "+userList.size());
+		} catch (Exception e) {
+			logger.info("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+		}
+		return userList;
+	}
 
 }

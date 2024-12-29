@@ -97,11 +97,12 @@ public class UserDaoImpl implements UserDao {
 				.get(ServletActionContext.HTTP_REQUEST);
 		HttpSession httpSession = httpRequest.getSession();
 		Date currentDate = new Date();
+		Transaction transaction = null;
 		boolean flag = false;
 		try (Session session = DatabaseUtils.getSessionFactory().openSession()) {
 			logger.info("Inside authorizeUser method for user id: " + userId
 					+ " ::::::::::::::::::::::::::::::::::::::::::");
-			Transaction transaction = session.getTransaction();
+			transaction = session.getTransaction();
 			transaction.begin();
 			User authorUser = (User) httpSession.getAttribute("user");
 			String hql = "UPDATE User SET isActive = :isActive , credentialBlocked = :credentialBlocked , accountLocked = :accountLocked,  authorCd = :authorCd , authorDt = :authorDt WHERE userId = :userId";
@@ -119,9 +120,13 @@ public class UserDaoImpl implements UserDao {
 			flag = rowsAffected > 0 ? true : false;
 			logger.info(
 					"Exiting authorizeUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			transaction.commit();
 		} catch (Exception e) {
 			logger.info("An error occurred: " + e.getMessage());
 			e.printStackTrace();
+			if (transaction != null) {
+				transaction.rollback();
+			}
 		}
 		return flag;
 	}
@@ -177,11 +182,12 @@ public class UserDaoImpl implements UserDao {
 				.get(ServletActionContext.HTTP_REQUEST);
 		HttpSession httpSession = httpRequest.getSession();
 		Date currentDate = new Date();
+		Transaction transaction = null;
 		try (Session session = DatabaseUtils.getSessionFactory().openSession()) {
 			logger.info("Inside rejectUser method for user id: " + userId
 					+ " :::::::::::::::::::::::::::::::::::::::::::::::::");
 			User authorUser = (User) httpSession.getAttribute("user");
-			Transaction transaction = session.getTransaction();
+			transaction = session.getTransaction();
 			transaction.begin();
 			String hql = "UPDATE User SET isActive = :isActive , credentialBlocked = :credentialBlocked , accountLocked = :accountLocked,  authorCd = :authorCd , authorDt = :authorDt WHERE userId = :userId";
 			Query<?> query = session.createQuery(hql);
@@ -194,12 +200,34 @@ public class UserDaoImpl implements UserDao {
 			int res = query.executeUpdate();
 			logger.info("Rows updated: "+res+" :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
 			logger.info("Exiting rejectUser method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			transaction.commit();
 			return res > 0 ? true : false;
 		} catch (Exception e) {
 			logger.error("An error occurred: "+e.getMessage());
 			e.printStackTrace();
+			if (transaction != null) {
+				transaction.rollback();
+			}
 			return false;
 		}
+	}
+
+	@Override
+	public List<User> getAllActiveUsers() {
+		List<User> userList = new ArrayList<User>();
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			logger.info("Inside getAllActiveUsers method::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			String hql = "FROM User WHERE isActive = :isActive";
+			Query<User> query = session.createQuery(hql,User.class);
+			query.setParameter("isActive", true);
+			userList = query.getResultList();
+			logger.info("Found "+userList.size()+" active users:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			logger.info("Exiting getAllActiveUsers method:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+		} catch (Exception e) {
+			logger.info("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+		}
+		return userList;
 	}
 
 }
