@@ -29,4 +29,5 @@ com\apptrove\ledgerly\login\dao\LoginDaoImpl.class
 com\apptrove\ledgerly\menu\service\MenuService.class
 com\apptrove\ledgerly\admin\payload\RegisterModel.class
 com\apptrove\ledgerly\admin\threads\scheduler\ApplicationListener.class
+com\apptrove\ledgerly\user\action\BuildingAction.class
 com\apptrove\ledgerly\login\dao\LoginDao.class

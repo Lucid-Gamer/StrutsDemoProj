@@ -19,4 +19,6 @@ public interface UserDao {
 	public boolean existsByUserId(Integer userId);
 	
 	public boolean rejectUser(Integer userId);
+	
+	public List<User> getAllActiveUsers();
 }
