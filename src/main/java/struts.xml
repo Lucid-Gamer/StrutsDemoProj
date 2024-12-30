@@ -79,6 +79,10 @@
     		<result name="success">/pages/UserReader.jsp</result>
     		<result name="error">/pages/UserReader.jsp</result>
     	</action>
+    	<action name="userUpdater" method="getAllActiveUsers" class="com.apptrove.ledgerly.user.action.UserAction">
+    		<result name="success">/pages/UserEditor.jsp</result>
+    		<result name="error">/pages/UserEditor.jsp</result>
+    	</action>
     	<action name="dashboard">
     		<result name="success">/pages/dashboard.jsp</result>
     		<result name="error">/error/error.jsp</result>

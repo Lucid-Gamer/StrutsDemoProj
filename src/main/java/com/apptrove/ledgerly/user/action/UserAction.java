@@ -28,6 +28,8 @@ public class UserAction extends ActionSupport {
 	private UserService userService = new UserService();
 
 	private List<User> userList;
+	
+	
 
 	private Map<String, Object> respObject = new HashMap<String, Object>();
 	

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <package name="register" namespace="/register" extends="struts-default,json-default">
+        <action name="getAllRoles" method="getAllRoles" class="com.apptrove.ledgerly.register.action.RegisterAction">
+        	<result name="success" type="json">
+        		<param name="root">roleList</param>
+        	</result>
+        </action>
+        <action name="getAllBuildings" method="getAllBuildings" class="com.apptrove.ledgerly.register.action.RegisterAction">
+        	<result name="success" type="json">
+        		<param name="root">bldngList</param>
+        	</result>
+        </action>
+        <action name="getAptmntByBldng" method="getAptmntByBldng" class="com.apptrove.ledgerly.register.action.RegisterAction">
+        	<result name="success" type="json">
+        		<param name="root">aptmntList</param>
+        	</result>
+        </action>
+        <action name="checkUsernameValidity" method="checkUsernameValidity" class="com.apptrove.ledgerly.register.action.RegisterAction">
+        	<result name="success" type="json">
+        		<param name="root">response</param>
+        		<param name="excludeNullProperties">true</param> 
+        	</result>
+        	<result name="error" type="json">
+        		<param name="root">response</param>
+        		<param name="excludeNullProperties">true</param> 
+        	</result>
+        	<result name="input" type="json">
+        		<param name="root">response</param>
+        		<param name="excludeNullProperties">true</param> 
+        	</result>
+        </action>
+        <action name="registerUserAlt" method="registerUser" class="com.apptrove.ledgerly.register.action.RegisterAction">
+        	<result name="success" type="json">
+        		<param name="root">respObj</param>
+        	</result>
+        	<result name="error" type="json">
+        		<param name="root">respObj</param>
+        	</result>
+        </action>
+    </package>
+    <package name="login" namespace="/login" extends="struts-default,json-default">
+    	<action name="loginUser" method="login" class="com.apptrove.ledgerly.login.action.LoginAction">
+        	<result name="success" type="json">
+        		<param name="root">respObject</param>
+        	</result>
+        	<result name="error" type="json">
+        		<param name="root">respObject</param>
+        	</result>
+        </action>
+        <action name="getMenu" method="getMenu" class="com.apptrove.ledgerly.menu.action.MenuAction">
+			<result name="success" type="json">
+				<param name="root">respObject</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">respObject</param>
+			</result>
+        </action>
+    </package>
+    
+    <package name="default" namespace="/" extends="struts-default,json-default">
+    	<action name="logout" method="logout" class="com.apptrove.ledgerly.login.action.LoginAction">
+    		<result name="success" type="redirect">/index.jsp</result>
+    		<result name="error" type="redirect">/index.jsp</result>
+    	</action>
+    	<action name="userMaker">
+    		<result name="success">/pages/UserMaker.jsp</result>
+    		<result name="error">/error/error.jsp</result>
+    	</action>
+    	<action name="userAuthor" method="getUnauthUserList" class="com.apptrove.ledgerly.user.action.UserAction">
+    		<result name="success">/pages/UserAuthor.jsp</result>
+    		<result name="error">/pages/UserAuthor.jsp</result>
+    	</action>
+    	<action name="userReader" method="getAllActiveUsers" class="com.apptrove.ledgerly.user.action.UserAction">
+    		<result name="success">/pages/UserReader.jsp</result>
+    		<result name="error">/pages/UserReader.jsp</result>
+    	</action>
+    	<action name="userUpdater" method="getAllActiveUsers" class="com.apptrove.ledgerly.user.action.UserAction">
+    		<result name="success">/pages/UserEditor.jsp</result>
+    		<result name="error">/pages/UserEditor.jsp</result>
+    	</action>
+    	<action name="dashboard">
+    		<result name="success">/pages/dashboard.jsp</result>
+    		<result name="error">/error/error.jsp</result>
+    	</action>
+    	<action name="getRole" method="getRole" class="com.apptrove.ledgerly.login.action.LoginAction">
+    		<result name="success" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    		<result name="error" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    	</action>
+    </package>
+    <package name="userPackage" namespace="/user" extends="struts-default,json-default">
+    	<action name="makerAction" method="makerAction" class="com.apptrove.ledgerly.user.action.UserAction">
+    		<result name="success" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    		<result name="error" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    	</action>
+    	<action name="authorizeAction" method="authorizeUser" class="com.apptrove.ledgerly.user.action.UserAction">
+    		<result name="success" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    		<result name="error" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    	</action>
+    	<action name="rejectAction" method="rejectUser" class="com.apptrove.ledgerly.user.action.UserAction">
+    		<result name="success" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    		<result name="error" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    	</action>
+    </package>
+</struts>

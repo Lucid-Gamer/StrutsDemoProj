@@ -11,6 +11,7 @@
 <script src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/popper.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/UserReader.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/dashboard.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/scripts/UserReader.js"></script>
 <title>Read User List Page</title>
 </head>

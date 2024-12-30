@@ -70,8 +70,21 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User updateUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		Transaction transaction = null;
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			transaction = session.beginTransaction();
+			logger.info("In updateUser method for userId: "+user.getUserId()+" :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			session.saveOrUpdate(user);
+			transaction.commit();
+			logger.info("Exiting updateUser method:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+		} catch (Exception e) {
+			logger.error("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+			if (transaction != null) {
+				transaction.rollback();
+			}
+		}
+		return user;
 	}
 
 	@Override

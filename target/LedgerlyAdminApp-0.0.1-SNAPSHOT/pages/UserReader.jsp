@@ -10,13 +10,15 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/popper.min.js"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/UserReader.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/dashboard.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/scripts/UserReader.js"></script>
 <title>Read User List Page</title>
 </head>
 <body>
 	<div class="container custom-user-reader-container">
 		<div class="card custom-user-reader-card">
-			<div class="card-header">
+			<div class="card-header text-center">
 				<h1>Active Users List</h1>
 			</div>
 			<div class="card-body custom-user-reader-card-body">
@@ -62,7 +64,7 @@
   		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     		<div class="modal-content">
       			<div class="modal-header">
-        			<h5 class="modal-title" id="viewUserDetailStaticModalLabel"></h5>
+        			<h5 class="modal-title custom-user-reader-modal-title" id="viewUserDetailStaticModalLabel"></h5>
         			<%-- <span id="viewUserDetailStaticModalLabelDate" class="ms-auto"></span> --%>
         			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           				<span aria-hidden="true">&times;</span>
@@ -72,7 +74,7 @@
         			<table class="table table-bordered text-center">
         				<tr>
         					<th>User Id</th>
-        					<td class="custom-reader-user-modal-user-id"></td>
+        					<td class="custom-user-reader-modal-user-id"></td>
         				</tr>
         				<tr>
         					<th>Name</th>
