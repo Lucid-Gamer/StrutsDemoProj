@@ -10,9 +10,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.json.JSONObject;
 
 import com.apptrove.ledgerly.admin.models.User;
 import com.apptrove.ledgerly.admin.payload.RegisterModel;
+import com.apptrove.ledgerly.admin.payload.UpdateModel;
 import com.apptrove.ledgerly.user.service.UserService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -29,7 +31,7 @@ public class UserAction extends ActionSupport {
 
 	private List<User> userList;
 	
-	
+	private UpdateModel updatedData;
 
 	private Map<String, Object> respObject = new HashMap<String, Object>();
 	
@@ -209,6 +211,32 @@ public class UserAction extends ActionSupport {
 			addActionError(e.getMessage());
 			return ERROR;
 		}
+	}
+	
+	public String userUpdate() {
+		try {
+			if (updatedData != null) {
+				respObject.put("status", "success");
+				logger.info(updatedData.toString());
+				return SUCCESS;
+			} else {
+				respObject.put("status", "failed");
+				addActionError("Error Sending data");
+				return ERROR;
+			}
+		} catch (Exception e) {
+			logger.error("An error occurred"+e.getMessage());
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+
+	public UpdateModel getUpdatedData() {
+		return updatedData;
+	}
+
+	public void setUpdatedData(UpdateModel updatedData) {
+		this.updatedData = updatedData;
 	}
 
 	public RegisterModel getRegisterModel() {

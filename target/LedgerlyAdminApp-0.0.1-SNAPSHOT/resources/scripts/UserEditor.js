@@ -2,90 +2,115 @@
  * 
  */
 
+var inputs = document.querySelectorAll("#viewUserDetailStaticModal input");
+var originalData = {};
+var editableData = ['username', 'emailId', 'contactNum', 'validTill'];
+var editBtn = document.getElementById("editUserDetailsBtn");
+var saveBtn = document.getElementById("saveUserDetailsBtn");
+
+
+
 function showUserDetails(userJson) {
 	try {
-		const user = JSON.parse(userJson); // Parse JSON string into an object
+		var user = JSON.parse(userJson); // Parse JSON string into an object
+		/*console.log("User: ", user);*/
 
 		// Populate modal input fields with user data
 		document.getElementById('userId').value = user.userId || '';
-		document.getElementById('userName').value = user.firstName + ' '
-				+ user.lastName || '';
-		document.getElementById('userUsername').value = user.username || '';
-		document.getElementById('userEmail').value = user.email || '';
-		document.getElementById('userContact').value = user.contactNumber || '';
-		document.getElementById('userValidTill').value = user.validTill || '';
+		document.getElementById('name').value = user.firstName + ' '
+			+ user.lastName || '';
+		document.getElementById('username').value = user.username || '';
+		document.getElementById('emailId').value = user.emailId || '';
+		document.getElementById('contactNum').value = user.contactNum || '';
+		document.getElementById('makerCd').value = user.makerCd || '';
 
-		// Show the modal
+		if (user.validTill) {
+			var formattedDate = user.validTill.split(' ')[0]; // Extract 'YYYY-MM-DD'
+			document.getElementById('validTill').value = formattedDate;
+		} else {
+			document.getElementById('validTill').value = '';
+		}
+
+		if (user.makerDt) {
+			var formattedDate = user.makerDt.split(' ')[0];
+			document.getElementById('makerDt').value = formattedDate;
+		} else {
+			document.getElementById('makerDt').value = '';
+		}
+
 		$('#viewUserDetailStaticModal').modal('show');
+		storeOriginalData();
 	} catch (e) {
 		console.error('Failed to parse user details:', e);
 	}
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const editBtn = document.getElementById("editUserDetailsBtn");
-    const saveBtn = document.getElementById("saveUserDetailsBtn");
-    const inputs = document.querySelectorAll("#viewUserDetailStaticModal input");
+function storeOriginalData() {
+	inputs.forEach(input => {
+		originalData[input.id] = input.value;
+	});
 
-    let originalData = {};
+	/*console.log("Original Data: ", originalData);*/
+}
 
-    // Store Original Data When Modal Opens
-    function storeOriginalData() {
-        originalData = {};
-        inputs.forEach(input => {
-            originalData[input.className.split(' ').pop()] = input.value;
-        });
-    }
+function editfunction() {
+	inputs.forEach(input => {
+		if (editableData.includes(input.id || input.name)) {
+			input.removeAttribute("readonly");
+		}
+	});
+	editBtn.style.display = "none";
+	saveBtn.style.display = "inline-block";
+}
 
-    // Open Modal and Store Initial Data
-    $('#viewUserDetailStaticModal').on('shown.bs.modal', storeOriginalData);
+function saveFunction() {
+	var contextPath = window.location.pathname.split('/')[1];
+	let updatedData = {};
+	$('#viewUserDetailStaticModal').modal('hide');
+	$('.modal-backdrop').remove();
+	inputs.forEach(input => {
+		var key = input.id;
+		if (originalData[key] !== input.value) {
+			updatedData[key] = input.value;
+					
+		}
+		input.setAttribute("readonly", "readonly");
+	});
 
-    // Toggle Edit Mode
-    editBtn.addEventListener("click", () => {
-        inputs.forEach(input => input.removeAttribute("readonly"));
-        editBtn.style.display = "none";
-        saveBtn.style.display = "inline-block";
-    });
+	if (Object.keys(updatedData).length > 0) {
+		console.log("Modified Data:", updatedData);
+		
+		$.ajax({
+			url: '/' + contextPath + '/user/userUpdate',
+			type: 'POST',
+			data: updatedData,
+			success: function(response) {
+				if (response.status === 'success') {
+					loadPage('/userUpdater');
+					console.log('Success:', data);
+					alert('User details updated successfully!');
+				} else {
+					loadPage('/userUpdater');
+					console.error('Error');
+					alert('Failed to update user details!');
+				}
+			},
+			error: function(xhr, status, error) {
+				alert("An error occurred: " + error);
+				console.error(error);
+			}
+		});
+	} else {
+		alert('No changes detected!');
+	}
 
-    // Save Changes
-    saveBtn.addEventListener("click", () => {
-        let updatedData = {};
-        $('#viewUserDetailStaticModal').modal('hide');
-    	$('.modal-backdrop').remove();
-        inputs.forEach(input => {
-            const key = input.className.split(' ').pop();
-            if (originalData[key] !== input.value) {
-                updatedData[key] = input.value; // Only include modified fields
-            }
-            input.setAttribute("readonly", "readonly");
-        });
+	editBtn.style.display = "inline-block";
+	saveBtn.style.display = "none";
+}
 
-        if (Object.keys(updatedData).length > 0) {
-            console.log("Modified Data:", updatedData); 
-            
-            // Send to Backend
-            fetch('/users/updateUpdater', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updatedData)
-            })
-            .then(response => response.json())
-            .then(data => {
-            	loadPage('/userAuthor');
-                console.log('Success:', data);
-                alert('User details updated successfully!');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('Failed to update user details!');
-            });
-        } else {
-            alert('No changes detected!');
-        }
+function closeModal() {
+	editBtn.style.display = "inline-block";
+	saveBtn.style.display = "none";
+	$('#viewUserDetailStaticModal').modal('hide');
 
-        editBtn.style.display = "inline-block";
-        saveBtn.style.display = "none";
-    });
-});
+} 

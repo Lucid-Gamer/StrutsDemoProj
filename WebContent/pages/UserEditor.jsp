@@ -11,6 +11,7 @@
 <script src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/popper.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/scripts/UserEditor.js"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/dashboard.css">
 <title>User Editor Page</title>
 </head>
 <body>
@@ -76,30 +77,38 @@
                     	</tr>
                     	<tr>
                         	<th>Name</th>
-                        	<td><input type="text" id="userName" class="form-control" /></td>
+                        	<td><input type="text" id="name" readonly class="form-control" /></td>
                     	</tr>
                     	<tr>
                         	<th>Username</th>
-                        	<td><input type="text" id="userUsername" class="form-control" /></td>
+                        	<td><input type="text" id="username" readonly class="form-control" /></td>
                     	</tr>
                     	<tr>
                         	<th>Email Id</th>
-                        	<td><input type="text" id="userEmail" class="form-control" /></td>
+                        	<td><input type="text" id="emailId" readonly class="form-control" /></td>
                     	</tr>
                     	<tr>
                         	<th>Contact Number</th>
-                        	<td><input type="text" id="userContact" class="form-control" /></td>
+                        	<td><input type="text" id="contactNum" readonly class="form-control" /></td>
+                    	</tr>
+                    	<tr>
+                    		<th>Created On</th>
+                    		<td><input type="date" id='makerDt' readonly class="form-control"></td>
+                    	</tr>
+                    	<tr>
+                    		<th>Created By</th>
+                    		<td><input type="text" id="makerCd" readonly class="form-control"></td>
                     	</tr>
                     	<tr>
                         	<th>Valid Till</th>
-                        	<td><input type="date" id="userValidTill" class="form-control" /></td>
+                        	<td><input type="date" id="validTill" readonly class="form-control" /></td>
                     	</tr>
                 	</table>
       			</div>
       			<div class="modal-footer btn-group">
-      				<button id="editUserDetailsBtn" class="btn btn-primary">Edit</button>
-                	<button id="saveUserDetailsBtn" class="btn btn-success" style="display:none;">Save</button>
-                	<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+      				<button id="editUserDetailsBtn" class="btn btn-primary" onclick="editfunction()">Edit</button>
+                	<button id="saveUserDetailsBtn" class="btn btn-success" style="display:none;" onclick="saveFunction()">Save</button>
+                	<button class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
       			</div>
     		</div>
   		</div>
