@@ -72,18 +72,19 @@ function saveFunction() {
 		var key = input.id;
 		if (originalData[key] !== input.value) {
 			updatedData[key] = input.value;
-					
+
 		}
 		input.setAttribute("readonly", "readonly");
 	});
 
 	if (Object.keys(updatedData).length > 0) {
 		console.log("Modified Data:", updatedData);
-		
+
 		$.ajax({
 			url: '/' + contextPath + '/user/userUpdate',
 			type: 'POST',
-			data: updatedData,
+			contentType: 'application/json', 
+			data: JSON.stringify({ updatedData: updatedData }) ,
 			success: function(response) {
 				if (response.status === 'success') {
 					loadPage('/userUpdater');
@@ -91,7 +92,7 @@ function saveFunction() {
 					alert('User details updated successfully!');
 				} else {
 					loadPage('/userUpdater');
-					console.error('Error');
+					/*console.error('Error');*/
 					alert('Failed to update user details!');
 				}
 			},
