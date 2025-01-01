@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
-import org.json.JSONObject;
 
 import com.apptrove.ledgerly.admin.models.User;
 import com.apptrove.ledgerly.admin.payload.RegisterModel;
@@ -30,19 +29,21 @@ public class UserAction extends ActionSupport {
 	private UserService userService = new UserService();
 
 	private List<User> userList;
-	
+
 	private UpdateModel updatedData;
 
 	private Map<String, Object> respObject = new HashMap<String, Object>();
-	
+
 	private Integer userId;
 
-	public UserAction(RegisterModel registerModel, Map<String, Object> respObject, List<User> userList, Integer userId) {
+	public UserAction(RegisterModel registerModel, Map<String, Object> respObject, List<User> userList, Integer userId,
+			UpdateModel updatedData) {
 		super();
 		this.registerModel = registerModel;
 		this.respObject = respObject;
 		this.userList = userList;
-		this.userId=userId;
+		this.userId = userId;
+		this.updatedData = updatedData;
 	}
 
 	public UserAction() {
@@ -118,15 +119,17 @@ public class UserAction extends ActionSupport {
 			return ERROR;
 		}
 	}
-	
+
 	public String authorizeUser() {
-		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext()
+				.get(ServletActionContext.HTTP_REQUEST);
 		HttpSession session = httpRequest.getSession();
 		try {
 			if (session.getAttribute("user") != null && session.getAttribute("roleName") != null) {
 				User user = (User) session.getAttribute("user");
 				String roleName = (String) session.getAttribute("roleName");
-				if (roleName != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_AUTHOR")) && user != null) {
+				if (roleName != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_AUTHOR"))
+						&& user != null) {
 					if (userId == null) {
 						addActionError("Something went wrong.");
 						return ERROR;
@@ -148,15 +151,17 @@ public class UserAction extends ActionSupport {
 			return ERROR;
 		}
 	}
-	
+
 	public String rejectUser() {
-		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext()
+				.get(ServletActionContext.HTTP_REQUEST);
 		HttpSession session = httpRequest.getSession();
 		try {
 			if (session.getAttribute("user") != null && session.getAttribute("roleName") != null) {
 				User user = (User) session.getAttribute("user");
 				String roleName = (String) session.getAttribute("roleName");
-				if (roleName != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_AUTHOR")) && user != null) {
+				if (roleName != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_AUTHOR"))
+						&& user != null) {
 					if (userId == null) {
 						addActionError("Something went wrong.");
 						return ERROR;
@@ -178,7 +183,7 @@ public class UserAction extends ActionSupport {
 			return ERROR;
 		}
 	}
-	
+
 	public String getAllActiveUsers() {
 		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext()
 				.get(ServletActionContext.HTTP_REQUEST);
@@ -192,7 +197,8 @@ public class UserAction extends ActionSupport {
 				return ERROR;
 			}
 
-			if (roleName != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_AUTHOR") || roleName.equals("ROLE_USER"))) {
+			if (roleName != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_AUTHOR")
+					|| roleName.equals("ROLE_USER"))) {
 				userList = userService.getAllActiveUsers();
 				if (userList != null && !userList.isEmpty()) {
 					return SUCCESS;
@@ -212,7 +218,7 @@ public class UserAction extends ActionSupport {
 			return ERROR;
 		}
 	}
-	
+
 	public String userUpdate() {
 		try {
 			if (updatedData != null) {
@@ -225,7 +231,7 @@ public class UserAction extends ActionSupport {
 				return ERROR;
 			}
 		} catch (Exception e) {
-			logger.error("An error occurred"+e.getMessage());
+			logger.error("An error occurred" + e.getMessage());
 			e.printStackTrace();
 			return ERROR;
 		}
@@ -270,7 +276,5 @@ public class UserAction extends ActionSupport {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	
-	
 
 }

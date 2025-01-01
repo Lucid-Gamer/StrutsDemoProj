@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <script src="${pageContext.request.contextPath}/resources/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jquery-ui.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/jquery-ui.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/popper.min.js"></script>
@@ -70,40 +72,44 @@
         			</button>
       			</div>
       			<div class="modal-body">
+      				<s:form method="POST" action="userUpdate">
         			<table class="table table-bordered text-center">
                     	<tr>
                         	<th>User Id</th>
-                        	<td><input type="text" id="userId" readonly class="form-control" /></td>
+                        	<td><s:textfield name="updateModel.userId" readonly class="form-control" /></td>
                     	</tr>
                     	<tr>
-                        	<th>Name</th>
-                        	<td><input type="text" id="name" readonly class="form-control" /></td>
+                        	<th>First Name</th>
+                        	<td><s:textfield name="updateModel.firstName" readonly class="form-control" /></td>
+                        	<th>Last Name</th>
+                        	<td><s:textfield name="updateModel.lastName" readonly class="form-control" /></td>
                     	</tr>
                     	<tr>
                         	<th>Username</th>
-                        	<td><input type="text" id="username" readonly class="form-control" /></td>
+                        	<td><s:textfield  name="updateModel.username" readonly class="form-control" /></td>
                     	</tr>
                     	<tr>
                         	<th>Email Id</th>
-                        	<td><input type="text" id="emailId" readonly class="form-control" /></td>
+                        	<td><s:textfield  name="updateModel.emailId" readonly class="form-control" /></td>
                     	</tr>
                     	<tr>
                         	<th>Contact Number</th>
-                        	<td><input type="text" id="contactNum" readonly class="form-control" /></td>
+                        	<td><s:textfield  name="updateModel.contactNum" readonly class="form-control" /></td>
                     	</tr>
                     	<tr>
                     		<th>Created On</th>
-                    		<td><input type="date" id='makerDt' readonly class="form-control"></td>
+                    		<td><s:date format="dd-mm-YYYY" name="updateModel.makerDt"  readonly/></td>
                     	</tr>
                     	<tr>
                     		<th>Created By</th>
-                    		<td><input type="text" id="makerCd" readonly class="form-control"></td>
+                    		<td><s:textfield  name="updateModel.makerCd" readonly class="form-control" /></td>
                     	</tr>
                     	<tr>
                         	<th>Valid Till</th>
-                        	<td><input type="date" id="validTill" readonly class="form-control" /></td>
+                        	<td><s:date format="dd-mm-YYYY" name="updateModel.validTill" readonly class="form-control" /></td>
                     	</tr>
                 	</table>
+                	</s:form>
       			</div>
       			<div class="modal-footer btn-group">
       				<button id="editUserDetailsBtn" class="btn btn-primary" onclick="editfunction()">Edit</button>

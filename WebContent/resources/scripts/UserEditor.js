@@ -12,10 +12,9 @@ var saveBtn = document.getElementById("saveUserDetailsBtn");
 
 function showUserDetails(userJson) {
 	try {
-		var user = JSON.parse(userJson); // Parse JSON string into an object
+		var user = JSON.parse(userJson);
 		/*console.log("User: ", user);*/
 
-		// Populate modal input fields with user data
 		document.getElementById('userId').value = user.userId || '';
 		document.getElementById('name').value = user.firstName + ' '
 			+ user.lastName || '';
