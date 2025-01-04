@@ -4,7 +4,7 @@
 
 var inputs = document.querySelectorAll("#viewUserDetailStaticModal input");
 var originalData = {};
-var editableData = ['username', 'emailId', 'contactNum', 'validTill'];
+var editableData = ['user.username', 'user.emailId', 'user.contactNum', 'user.validTill'];
 var editBtn = document.getElementById("editUserDetailsBtn");
 var saveBtn = document.getElementById("saveUserDetailsBtn");
 
@@ -12,30 +12,29 @@ var saveBtn = document.getElementById("saveUserDetailsBtn");
 
 function showUserDetails(userJson) {
 	try {
-		var user = JSON.parse(userJson); // Parse JSON string into an object
+		var user = JSON.parse(userJson);
 		/*console.log("User: ", user);*/
 
-		// Populate modal input fields with user data
-		document.getElementById('userId').value = user.userId || '';
-		document.getElementById('name').value = user.firstName + ' '
-			+ user.lastName || '';
-		document.getElementById('username').value = user.username || '';
-		document.getElementById('emailId').value = user.emailId || '';
-		document.getElementById('contactNum').value = user.contactNum || '';
-		document.getElementById('makerCd').value = user.makerCd || '';
+		document.getElementById('user.userId').value = user.userId || '';
+		document.getElementById('user.firstName').value = user.firstName || ' ';
+		document.getElementById('user.lastName').value =  user.lastName || '';
+		document.getElementById('user.username').value = user.username || '';
+		document.getElementById('user.emailId').value = user.emailId || '';
+		document.getElementById('user.contactNum').value = user.contactNum || '';
+		document.getElementById('user.makerCd').value = user.makerCd || '';
 
 		if (user.validTill) {
 			var formattedDate = user.validTill.split(' ')[0]; // Extract 'YYYY-MM-DD'
-			document.getElementById('validTill').value = formattedDate;
+			document.getElementById('user.validTill').value = formattedDate;
 		} else {
-			document.getElementById('validTill').value = '';
+			document.getElementById('user.validTill').value = '';
 		}
 
 		if (user.makerDt) {
 			var formattedDate = user.makerDt.split(' ')[0];
-			document.getElementById('makerDt').value = formattedDate;
+			document.getElementById('user.makerDt').value = formattedDate;
 		} else {
-			document.getElementById('makerDt').value = '';
+			document.getElementById('user.makerDt').value = '';
 		}
 
 		$('#viewUserDetailStaticModal').modal('show');

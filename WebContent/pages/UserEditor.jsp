@@ -75,38 +75,39 @@
       				<s:form method="POST" action="userUpdate">
         			<table class="table table-bordered text-center">
                     	<tr>
-                        	<th>User Id</th>
-                        	<td><s:textfield name="updateModel.userId" readonly class="form-control" /></td>
+                        	<td><s:textfield name="updateModel.userId" readonly="true" class="form-control"/></td>
                     	</tr>
                     	<tr>
-                        	<th>First Name</th>
-                        	<td><s:textfield name="updateModel.firstName" readonly class="form-control" /></td>
-                        	<th>Last Name</th>
-                        	<td><s:textfield name="updateModel.lastName" readonly class="form-control" /></td>
+                        	<td>First Name</td>
+                        	<td><s:textfield name="updateModel.firstName" readonly="true" class="form-control"/></td>
+                        </tr>
+                        <tr>
+                        	<td>Last Name</td>
+                        	<td><s:textfield name="updateModel.lastName" readonly="true" class="form-control"/></td>
                     	</tr>
                     	<tr>
-                        	<th>Username</th>
-                        	<td><s:textfield  name="updateModel.username" readonly class="form-control" /></td>
+                        	<td>Username</td>
+                        	<td><s:textfield  name="updateModel.username" readonly="true" class="form-control"/></td>
                     	</tr>
                     	<tr>
-                        	<th>Email Id</th>
-                        	<td><s:textfield  name="updateModel.emailId" readonly class="form-control" /></td>
+                        	<td>Email Id</td>
+                        	<td><s:textfield  name="updateModel.emailId" readonly="true" class="form-control"/></td>
                     	</tr>
                     	<tr>
-                        	<th>Contact Number</th>
-                        	<td><s:textfield  name="updateModel.contactNum" readonly class="form-control" /></td>
+                        	<td>Contact Number</td>
+                        	<td><s:textfield  name="updateModel.contactNum" readonly="true" class="form-control"/></td>
                     	</tr>
                     	<tr>
-                    		<th>Created On</th>
-                    		<td><s:date format="dd-mm-YYYY" name="updateModel.makerDt"  readonly/></td>
+                    		<td>Created On</td>
+                    		<td><s:date format="dd/MM/yyyy" name="updateModel.makerDt"/></td>
                     	</tr>
                     	<tr>
-                    		<th>Created By</th>
-                    		<td><s:textfield  name="updateModel.makerCd" readonly class="form-control" /></td>
+                    		<td>Created By</td>
+                    		<td><s:textfield  name="updateModel.makerCd" readonly="true" class="form-control"/></td>
                     	</tr>
                     	<tr>
-                        	<th>Valid Till</th>
-                        	<td><s:date format="dd-mm-YYYY" name="updateModel.validTill" readonly class="form-control" /></td>
+                        	<td>Valid Till</td>
+                        	<td><s:date format="dd/MM/yyyy" name="updateModel.validTill"/></td>
                     	</tr>
                 	</table>
                 	</s:form>

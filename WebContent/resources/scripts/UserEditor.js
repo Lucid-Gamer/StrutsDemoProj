@@ -4,7 +4,7 @@
 
 var inputs = document.querySelectorAll("#viewUserDetailStaticModal input");
 var originalData = {};
-var editableData = ['username', 'emailId', 'contactNum', 'validTill'];
+var editableData = ['user.username', 'user.emailId', 'user.contactNum', 'user.validTill'];
 var editBtn = document.getElementById("editUserDetailsBtn");
 var saveBtn = document.getElementById("saveUserDetailsBtn");
 
@@ -15,26 +15,26 @@ function showUserDetails(userJson) {
 		var user = JSON.parse(userJson);
 		/*console.log("User: ", user);*/
 
-		document.getElementById('userId').value = user.userId || '';
-		document.getElementById('name').value = user.firstName + ' '
-			+ user.lastName || '';
-		document.getElementById('username').value = user.username || '';
-		document.getElementById('emailId').value = user.emailId || '';
-		document.getElementById('contactNum').value = user.contactNum || '';
-		document.getElementById('makerCd').value = user.makerCd || '';
+		document.getElementsByName('updateModel.userId').value = user.userId || '';
+		document.getElementsByName('updateModel.firstName').value = user.firstName || ' ';
+		document.getElementsByName('updateModel.lastName').value =  user.lastName || '';
+		document.getElementsByName('updateModel.username').value = user.username || '';
+		document.getElementsByName('updateModel.emailId').value = user.emailId || '';
+		document.getElementsByName('updateModel.contactNum').value = user.contactNum || '';
+		document.getElementsByName('updateModel.makerCd').value = user.makerCd || '';
 
 		if (user.validTill) {
 			var formattedDate = user.validTill.split(' ')[0]; // Extract 'YYYY-MM-DD'
-			document.getElementById('validTill').value = formattedDate;
+			document.getElementsByName('updateModel.validTill').value = formattedDate;
 		} else {
-			document.getElementById('validTill').value = '';
+			document.getElementsByName('updateModel.validTill').value = '';
 		}
 
 		if (user.makerDt) {
 			var formattedDate = user.makerDt.split(' ')[0];
-			document.getElementById('makerDt').value = formattedDate;
+			document.getElementsByName('updateModel.makerDt').value = formattedDate;
 		} else {
-			document.getElementById('makerDt').value = '';
+			document.getElementsByName('updateModel.makerDt').value = '';
 		}
 
 		$('#viewUserDetailStaticModal').modal('show');
