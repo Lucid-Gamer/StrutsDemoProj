@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.json.JSONObject;
 
 import com.apptrove.ledgerly.admin.models.User;
 import com.apptrove.ledgerly.admin.payload.RegisterModel;
@@ -222,11 +223,11 @@ public class UserAction extends ActionSupport {
 	public String userUpdate() {
 		try {
 			if (updatedData != null) {
-				respObject.put("status", "success");
-				logger.info(updatedData.toString());
+				respObject = userService.updateUser(updatedData);
 				return SUCCESS;
 			} else {
 				respObject.put("status", "failed");
+				respObject.put("message", "User update failed!!!");
 				addActionError("Error Sending data");
 				return ERROR;
 			}

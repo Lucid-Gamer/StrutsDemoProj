@@ -3,12 +3,13 @@ package com.apptrove.ledgerly.user.dao;
 import java.util.List;
 
 import com.apptrove.ledgerly.admin.models.User;
+import com.apptrove.ledgerly.admin.payload.UpdateModel;
 
 public interface UserDao {
 
 	public User makerMethod(User user,Integer roleId);
 	
-	public User updateUser(User user);
+	public boolean updateUser(UpdateModel updateModel);
 	
 	public List<User> unauthorizedUserList();
 	

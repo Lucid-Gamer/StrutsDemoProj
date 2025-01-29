@@ -3,7 +3,11 @@ package com.apptrove.ledgerly.user.dao;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +21,7 @@ import org.hibernate.query.Query;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.apptrove.ledgerly.admin.models.User;
+import com.apptrove.ledgerly.admin.payload.UpdateModel;
 import com.apptrove.ledgerly.database.utils.DatabaseUtils;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -69,13 +74,57 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User updateUser(User user) {
+	public boolean updateUser(UpdateModel updateModel) {
 		Transaction transaction = null;
+		boolean flag = false;
+		StringBuilder hql = new StringBuilder();
+		Query<Integer> query = null;
+		Map<String,Object> parameters = new HashMap<String,Object>();
 		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			if (updateModel.getUserId() == null) {
+				throw new RuntimeException("UserId not found");
+			}
 			transaction = session.beginTransaction();
-			logger.info("In updateUser method for userId: "+user.getUserId()+" :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-			session.saveOrUpdate(user);
+			logger.info("In updateUser method for userId: "+updateModel.getUserId()+" :::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			hql.append("UPDATE User SET ");
+			if (updateModel.getUsername() != null) {
+				hql.append(" username=:username, ");
+				parameters.put("username", updateModel.getUsername());
+			}
+			
+			if (updateModel.getContactNum() != null) {
+				hql.append(" contactNum=:contactNum, ");
+				parameters.put("contactNum", updateModel.getContactNum());
+			}
+			
+			if (updateModel.getEmailId() != null) {
+				hql.append(" emailId=:emailId, ");
+				parameters.put("emailId", updateModel.getEmailId());
+			}
+			
+			if (updateModel.getValidTill() != null) {
+				hql.append(" validTill=:validTill, ");
+				parameters.put("validTill", updateModel.getValidTill());
+			}
+			
+			
+			if (!parameters.isEmpty()) {
+				hql.setLength(hql.length() - 2);
+			} else {
+				logger.warn("No fields to update userId: "+updateModel.getUserId());
+				return false;
+			}
+			hql.append(" WHERE userId=:userId ");
+			parameters.put("userId", updateModel.getUserId());
+			query = session.createQuery(hql.toString());
+			
+			for (Map.Entry<String, Object> entry: parameters.entrySet()) {
+				query.setParameter(entry.getKey(), entry.getValue());
+			}
+			
+			int res = query.executeUpdate();
 			transaction.commit();
+			flag = res > 0 ? true : false;
 			logger.info("Exiting updateUser method:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
 		} catch (Exception e) {
 			logger.error("An error occurred: "+e.getMessage());
@@ -84,7 +133,7 @@ public class UserDaoImpl implements UserDao {
 				transaction.rollback();
 			}
 		}
-		return user;
+		return flag;
 	}
 
 	@Override
