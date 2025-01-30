@@ -22,4 +22,6 @@ public interface UserDao {
 	public boolean rejectUser(Integer userId);
 	
 	public List<User> getAllActiveUsers();
+	
+	public boolean deactivateUser(Integer userId);
 }

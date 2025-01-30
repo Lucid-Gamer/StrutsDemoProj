@@ -130,6 +130,13 @@
     			<param name="root">respObject</param>
     		</result>
     	</action>
-    	 
+    	<action name="deactivateUser" method="deactivateUserAccount" class="com.apptrove.ledgerly.user.action.UserAction">
+    		<result name="success" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    		<result name="error" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    	</action>
     </package>
 </struts>

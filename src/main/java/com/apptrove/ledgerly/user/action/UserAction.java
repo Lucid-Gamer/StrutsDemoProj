@@ -221,9 +221,46 @@ public class UserAction extends ActionSupport {
 	}
 
 	public String userUpdate() {
+		HttpServletRequest httpRequest = (HttpServletRequest) ActionContext.getContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		HttpSession session = httpRequest.getSession();
 		try {
-			if (updatedData != null) {
-				respObject = userService.updateUser(updatedData);
+			if (session.getAttribute("user") == null) {
+				addActionError("User Session Expired");
+				return ERROR;
+			}
+			
+			if (session.getAttribute("user") != null && session.getAttribute("roleName") != null) {
+				String roleName = session.getAttribute("roleName").toString();
+				User user = (User) session.getAttribute("user");
+				if (roleName != null && user != null && (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_MAKER"))) {
+					if (updatedData != null) {
+						respObject = userService.updateUser(updatedData);
+						return SUCCESS;
+					} else {
+						respObject.put("status", "failed");
+						respObject.put("message", "User update failed!!!");
+						addActionError("Error Sending data");
+						return ERROR;
+					}
+				} else {
+					addActionError("You are not authorized to access this page.");
+					return ERROR;
+				}
+			} else {
+				return ERROR;
+			}
+		} catch (Exception e) {
+			logger.error("An error occurred" + e.getMessage());
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+	
+	public String deactivateUserAccount() {
+		try {
+			if (userId != null) {
+				respObject = userService.deactivateUser(userId);
 				return SUCCESS;
 			} else {
 				respObject.put("status", "failed");

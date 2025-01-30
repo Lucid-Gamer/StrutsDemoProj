@@ -59,6 +59,10 @@ public class LoginAction extends ActionSupport{
 				Role role = (Role) respObject.get("role");
 				respObject = menuService.getMenuHeaderAndOptions();
 				if (respObject.get("menuHeaders") != null && respObject.get("menuOptions") != null && role != null) {
+					if (session != null) {
+						session.invalidate();
+					}
+					session = httpRequest.getSession(true);
 					session.setAttribute("user", user);
 					session.setAttribute("role", role);
 					session.setAttribute("roleName", role.getRoleName());

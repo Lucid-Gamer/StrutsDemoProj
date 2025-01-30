@@ -50,7 +50,7 @@ $(document).ready(function() {
 
 					filterOptions.forEach(function(option) {
 						dropDownItem += `
-									<li><a class="dropdown-item" href="#" id="custom${option.menuItemNameId}" onclick="loadPage('${option.itemMenuAction}')">${option.menuItemName}</a></li>
+									<li><a class="dropdown-item custom-dashboard-dropdown-menu-item" href="#" id="custom${option.menuItemNameId}" onclick="loadPage('${option.itemMenuAction}')">${option.menuItemName}</a></li>
 								`;
 					});
 

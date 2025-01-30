@@ -39,8 +39,9 @@ public class MenuDaoImpl implements MenuDao{
 		List<MenuItemMst> menuItemList = new ArrayList<MenuItemMst>();
 		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
 			logger.info("Inside getMenuOptions method:::::::::::::::::::::::::::::::::::::::::::::::::::::");
-			String hql = "FROM MenuItemMst";
+			String hql = "FROM MenuItemMst WHERE isActive=:isActive";
 			Query<MenuItemMst> query = session.createQuery(hql);
+			query.setParameter("isActive", true);
 			menuItemList = query.getResultList();
 			logger.info("Acquired "+menuItemList.size()+" menu options:::::::::::::::::::::::::::::::::::::");
 			logger.info("Exiting getMenuOptions method:::::::::::::::::::::::::::::::::::::::::::::::::::::");

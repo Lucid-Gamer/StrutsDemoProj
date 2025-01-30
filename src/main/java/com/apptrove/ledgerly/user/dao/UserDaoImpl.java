@@ -292,4 +292,34 @@ public class UserDaoImpl implements UserDao {
 		return userList;
 	}
 
+	@Override
+	public boolean deactivateUser(Integer userId) {
+		boolean flag = false;
+		try (Session session = DatabaseUtils.getSessionFactory().openSession()){
+			logger.info("Inside deactivateUser method for userId: "+userId+":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			session.beginTransaction();
+			String hql = "UPDATE User SET isActive = :isActive , credentialBlocked = :credentialBlocked , accountLocked = :accountLocked WHERE userId = :userId";
+			Query<Integer> query = session.createQuery(hql);
+			query.setParameter("isActive", false);
+			query.setParameter("credentialBlocked", true);
+			query.setParameter("accountLocked", true);
+			query.setParameter("userId", userId);
+			
+			Integer res = query.executeUpdate();
+			session.getTransaction().commit();
+			flag = res > 0 ? true : false;
+			if (flag) {
+				logger.info("User successfully deactivated:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+			} else {
+				logger.info("User not deactivated. Something went wrong.");
+			}
+		} catch (Exception e) {
+			logger.info("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+		}
+		return flag;
+	}
+	
+	
+
 }

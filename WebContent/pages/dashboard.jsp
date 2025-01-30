@@ -24,7 +24,7 @@
 <body>
 	<%
 	if (session.getAttribute("user") != null && session.getAttribute("menuHeaders") != null
-			&& session.getAttribute("menuOptions") != null && session.getAttribute("role") != null) {
+			&& session.getAttribute("menuOptions") != null && session.getAttribute("role") != null && session.getAttribute("roleName") != null) {
 		User user = (User) session.getAttribute("user");
 		Role role = (Role) session.getAttribute("role");
 		String username = user.getUsername();

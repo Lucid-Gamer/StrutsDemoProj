@@ -17,8 +17,14 @@
 <title>User Editor Page</title>
 </head>
 <body>
+	<%
+		String roleName = (String) session.getAttribute("roleName");
+		if(roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_MAKER")) 
+		{	
+	%>
 	<div class="container custom-user-reader-container">
 		<div class="card custom-user-reader-card">
+		
 			<div class="card-header text-center">
 				<h1>Active Users List</h1>
 			</div>
@@ -67,7 +73,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title custom-user-reader-modal-title" id="viewUserDetailStaticModalLabel"></h5>
         			<%-- <span id="viewUserDetailStaticModalLabelDate" class="ms-auto"></span> --%>
-        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        			<button type="button" class="close" onclick="closeModal()" aria-label="Close">
           				<span aria-hidden="true">&times;</span>
         			</button>
       			</div>
@@ -116,10 +122,18 @@
       			<div class="modal-footer btn-group">
       				<button id="editUserDetailsBtn" class="btn btn-primary" onclick="editfunction()">Edit</button>
                 	<button id="saveUserDetailsBtn" class="btn btn-success" style="display:none;" onclick="saveFunction()">Save</button>
+                	<button type="button" id="deleteUserBtn" class="btn btn-danger" onclick="deactivateUser()">Delete</button>
                 	<button class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
       			</div>
     		</div>
   		</div>
 	</div>
+	<%
+		} else {
+	%>
+		<div class="alert alert-danger" role="alert">User is not authorized to access this page!</div>
+	<%
+		}
+	%>
 </body>
 </html>
