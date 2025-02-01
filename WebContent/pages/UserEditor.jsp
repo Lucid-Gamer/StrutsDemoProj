@@ -17,8 +17,14 @@
 <title>User Editor Page</title>
 </head>
 <body>
+	<%
+		String roleName = (String) session.getAttribute("roleName");
+		if(roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_MAKER")) 
+		{	
+	%>
 	<div class="container custom-user-reader-container">
 		<div class="card custom-user-reader-card">
+		
 			<div class="card-header text-center">
 				<h1>Active Users List</h1>
 			</div>
@@ -67,58 +73,67 @@
       			<div class="modal-header">
         			<h5 class="modal-title custom-user-reader-modal-title" id="viewUserDetailStaticModalLabel"></h5>
         			<%-- <span id="viewUserDetailStaticModalLabelDate" class="ms-auto"></span> --%>
-        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        			<button type="button" class="close" onclick="closeModal()" aria-label="Close">
           				<span aria-hidden="true">&times;</span>
         			</button>
       			</div>
       			<div class="modal-body">
-      				<s:form method="POST" action="userUpdate">
+      				<form>
         			<table class="table table-bordered text-center">
                     	<tr>
-                        	<td><s:textfield name="updateModel.userId" readonly="true" class="form-control"/></td>
+                        	<td>User Id</td>
+                        	<td><input type="text" name="updateModel.userId" id="userId" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
                         	<td>First Name</td>
-                        	<td><s:textfield name="updateModel.firstName" readonly="true" class="form-control"/></td>
+                        	<td><input type="text" name="updateModel.firstName" id="firstName" readonly="true" class="form-control" /></td>
                         </tr>
-                        <tr>
+                    	<tr>
                         	<td>Last Name</td>
-                        	<td><s:textfield name="updateModel.lastName" readonly="true" class="form-control"/></td>
+                        	<td><input type="text" name="updateModel.lastName" id="lastName" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
                         	<td>Username</td>
-                        	<td><s:textfield  name="updateModel.username" readonly="true" class="form-control"/></td>
+                        	<td><input  type="text" name="updateModel.username" id="username" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
                         	<td>Email Id</td>
-                        	<td><s:textfield  name="updateModel.emailId" readonly="true" class="form-control"/></td>
+                        	<td><input  type="text" name="updateModel.emailId" id="emailId" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
                         	<td>Contact Number</td>
-                        	<td><s:textfield  name="updateModel.contactNum" readonly="true" class="form-control"/></td>
+                        	<td><input  type="text" name="updateModel.contactNum" id="contactNum" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
                     		<td>Created On</td>
-                    		<td><s:date format="dd/MM/yyyy" name="updateModel.makerDt"/></td>
+                    		<td><input type="datetime" name="updateModel.makerDt" id="makerDt" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
                     		<td>Created By</td>
-                    		<td><s:textfield  name="updateModel.makerCd" readonly="true" class="form-control"/></td>
+                    		<td><input type="text"  name="updateModel.makerCd" id="makerCd" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
                         	<td>Valid Till</td>
-                        	<td><s:date format="dd/MM/yyyy" name="updateModel.validTill"/></td>
+                        	<td><input type="datetime" name="updateModel.validTill" id="validTill" readonly="true" class="form-control" /></td>
                     	</tr>
                 	</table>
-                	</s:form>
+                	</form>
       			</div>
       			<div class="modal-footer btn-group">
       				<button id="editUserDetailsBtn" class="btn btn-primary" onclick="editfunction()">Edit</button>
                 	<button id="saveUserDetailsBtn" class="btn btn-success" style="display:none;" onclick="saveFunction()">Save</button>
+                	<button type="button" id="deleteUserBtn" class="btn btn-danger" onclick="deactivateUser()">Delete</button>
                 	<button class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
       			</div>
     		</div>
   		</div>
 	</div>
+	<%
+		} else {
+	%>
+		<div class="alert alert-danger" role="alert">User is not authorized to access this page!</div>
+	<%
+		}
+	%>
 </body>
 </html>

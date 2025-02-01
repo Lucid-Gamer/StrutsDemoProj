@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class UpdateModel {
 
+	private Integer userId;
     private String username;
     private String emailId;
     private String contactNum;
@@ -13,11 +14,12 @@ public class UpdateModel {
         // Default constructor
     }
 
-    public UpdateModel(String username, String emailId, String contactNum, Date validTill) {
+    public UpdateModel(String username, String emailId, String contactNum, Date validTill,Integer userId) {
         this.username = username;
         this.emailId = emailId;
         this.contactNum = contactNum;
         this.validTill = validTill;
+        this.userId = userId;
     }
 
     // Standard Getters and Setters
@@ -53,16 +55,24 @@ public class UpdateModel {
         this.validTill = validTill;
     }
 
-    @Override
+    public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	@Override
     public String toString() {
         return "UpdateModel [username=" + username + ", emailId=" + emailId + 
-               ", contactNum=" + contactNum + ", validTill=" + validTill + "]";
+               ", contactNum=" + contactNum + ", validTill=" + validTill + ", userId=" + userId + "]";
     }
 
     public boolean isEmpty() {
         return (username == null || username.isEmpty()) &&
                (emailId == null || emailId.isEmpty()) &&
                (contactNum == null || contactNum.isEmpty()) &&
-               (validTill == null);
+               (validTill == null) && (userId != null);
     }
 }

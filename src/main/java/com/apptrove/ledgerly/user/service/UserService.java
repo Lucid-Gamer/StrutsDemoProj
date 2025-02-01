@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.apptrove.ledgerly.admin.models.User;
+import com.apptrove.ledgerly.admin.payload.UpdateModel;
 import com.apptrove.ledgerly.user.dao.UserDaoImpl;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -148,5 +149,66 @@ public class UserService {
 		}
 		return userList;
 	}
+	
+	public Map<String, Object> updateUser(UpdateModel updateModel) {
+		Map<String, Object> respObject = new HashMap<>();
+		try {
+			if (updateModel.getUserId() != null) {
+				boolean flag = userDaoImpl.updateUser(updateModel);
+				if (flag) {
+					respObject.put("status", "success");
+					respObject.put("message","User updated with user id: "+updateModel.getUserId());
+					respObject.put("errorCode", "0");
+				} else {
+					respObject.put("status","failed");
+					respObject.put("message", "User updation with user id: "+updateModel.getUserId()+" failed");
+					respObject.put("errorCode", "-1");
+				}
+				return respObject;
+			} else {
+				respObject.put("status","failed");
+				respObject.put("message", "Please provide a valid user id");
+				respObject.put("errorCode", "-2");
+			}	
+		} catch (Exception e) {
+			logger.info("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+			respObject.put("status", "failed");
+			respObject.put("message", e.getMessage());
+			respObject.put("errorCode", "-2");
+		}
+		
+		return respObject;
+	}
+	
+	public Map<String,Object> deactivateUser(Integer userId) {
+		Map<String, Object> respObject = new HashMap<>();
+		try {
+			if (userId != null) {
+				boolean flag = userDaoImpl.deactivateUser(userId);
+				if (flag) {
+					respObject.put("status", "success");
+					respObject.put("message","User deactivated with user id: "+userId);
+					respObject.put("errorCode", "0");
+				} else {
+					respObject.put("status","failed");
+					respObject.put("message", "User deactivation with user id: "+userId+" failed");
+					respObject.put("errorCode", "-1");
+				}
+				return respObject;
+			} else {
+				respObject.put("status","failed");
+				respObject.put("message", "Please provide a valid user id");
+				respObject.put("errorCode", "-2");
+			}	
+		} catch (Exception e) {
+			logger.info("An error occurred: "+e.getMessage());
+			e.printStackTrace();
+			respObject.put("status", "failed");
+			respObject.put("message", e.getMessage());
+			respObject.put("errorCode", "-2");
+		}
+		
+		return respObject;}
 
 }

@@ -43,7 +43,7 @@ $(document).ready(function() {
 				if (response.status === "success") {
 					showLoginModal(
 						'Login Successful',
-						'Tou have logged in successfully',
+						'You have logged in successfully',
 						'btn-success',
 						'OK',
 						true

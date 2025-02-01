@@ -3,7 +3,7 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
     "http://struts.apache.org/dtds/struts-2.5.dtd">
 
-<struts>
+<struts>	
     <package name="register" namespace="/register" extends="struts-default,json-default">
         <action name="getAllRoles" method="getAllRoles" class="com.apptrove.ledgerly.register.action.RegisterAction">
         	<result name="success" type="json">
@@ -130,6 +130,13 @@
     			<param name="root">respObject</param>
     		</result>
     	</action>
-    	 
+    	<action name="deactivateUser" method="deactivateUserAccount" class="com.apptrove.ledgerly.user.action.UserAction">
+    		<result name="success" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    		<result name="error" type="json">
+    			<param name="root">respObject</param>
+    		</result>
+    	</action>
     </package>
 </struts>

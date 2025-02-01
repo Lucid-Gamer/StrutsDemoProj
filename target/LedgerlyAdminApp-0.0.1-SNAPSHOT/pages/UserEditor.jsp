@@ -67,53 +67,56 @@
       			<div class="modal-header">
         			<h5 class="modal-title custom-user-reader-modal-title" id="viewUserDetailStaticModalLabel"></h5>
         			<%-- <span id="viewUserDetailStaticModalLabelDate" class="ms-auto"></span> --%>
-        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        			<button type="button" class="close" onclick="closeModal()" aria-label="Close">
           				<span aria-hidden="true">&times;</span>
         			</button>
       			</div>
       			<div class="modal-body">
-      				<s:form method="POST" action="userUpdate">
+      				<form>
         			<table class="table table-bordered text-center">
                     	<tr>
-                        	<th>User Id</th>
-                        	<td><s:textfield name="updateModel.userId" readonly="true" class="form-control" /></td>
+                        	<td>User Id</td>
+                        	<td><input type="text" name="updateModel.userId" id="userId" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
-                        	<th>First Name</th>
-                        	<td><s:textfield name="updateModel.firstName" readonly="true" class="form-control" /></td>
-                        	<th>Last Name</th>
-                        	<td><s:textfield name="updateModel.lastName" readonly="true" class="form-control" /></td>
+                        	<td>First Name</td>
+                        	<td><input type="text" name="updateModel.firstName" id="firstName" readonly="true" class="form-control" /></td>
+                        </tr>
+                    	<tr>
+                        	<td>Last Name</td>
+                        	<td><input type="text" name="updateModel.lastName" id="lastName" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
-                        	<th>Username</th>
-                        	<td><s:textfield  name="updateModel.username" readonly="true" class="form-control" /></td>
+                        	<td>Username</td>
+                        	<td><input  type="text" name="updateModel.username" id="username" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
-                        	<th>Email Id</th>
-                        	<td><s:textfield  name="updateModel.emailId" readonly="true" class="form-control" /></td>
+                        	<td>Email Id</td>
+                        	<td><input  type="text" name="updateModel.emailId" id="emailId" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
-                        	<th>Contact Number</th>
-                        	<td><s:textfield  name="updateModel.contactNum" readonly="true" class="form-control" /></td>
+                        	<td>Contact Number</td>
+                        	<td><input  type="text" name="updateModel.contactNum" id="contactNum" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
-                    		<th>Created On</th>
-                    		<td><s:date format="dd/MM/yyyy" name="updateModel.makerDt"/></td>
+                    		<td>Created On</td>
+                    		<td><input type="datetime" name="updateModel.makerDt" id="makerDt" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
-                    		<th>Created By</th>
-                    		<td><s:textfield  name="updateModel.makerCd" readonly="true" class="form-control" /></td>
+                    		<td>Created By</td>
+                    		<td><input type="text"  name="updateModel.makerCd" id="makerCd" readonly="true" class="form-control" /></td>
                     	</tr>
                     	<tr>
-                        	<th>Valid Till</th>
-                        	<td><s:date format="dd/MM/yyyy" name="updateModel.validTill"/></td>
+                        	<td>Valid Till</td>
+                        	<td><input type="datetime" name="updateModel.validTill" id="validTill" readonly="true" class="form-control" /></td>
                     	</tr>
                 	</table>
-                	</s:form>
+                	</form>
       			</div>
       			<div class="modal-footer btn-group">
       				<button id="editUserDetailsBtn" class="btn btn-primary" onclick="editfunction()">Edit</button>
                 	<button id="saveUserDetailsBtn" class="btn btn-success" style="display:none;" onclick="saveFunction()">Save</button>
+                	<button type="button" id="deleteUserBtn" class="btn btn-danger" onclick="deactivateUser()">Delete</button>
                 	<button class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
       			</div>
     		</div>
